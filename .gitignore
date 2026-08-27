@@ -1,0 +1,33 @@
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# pyenv
+.python-version
+
+# dotenv
+.env
+.env.*
+
+# virtualenv
+venv/
+ENV/
+env/
+.venv/
+
+# VS Code
+.vscode/
+
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
