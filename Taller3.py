@@ -24,7 +24,8 @@ config_clasificador = types.GenerateContentConfig(
 )
 
 # 5. Few-Shot: 3 ejemplos (shots) de entrada -> salida esperada,
-#    construidos como turnos de conversacion user -> model
+#    construidos como turnos de conversacion user -> model. Este
+#    historial se reutiliza en cada clasificacion del bucle.
 ejemplos_few_shot = [
     types.Content(
         role="user",
@@ -61,24 +62,54 @@ ejemplos_few_shot = [
     ),
 ]
 
-# 6. Resena a clasificar (turno final del usuario, la que pide el taller)
-resena_a_evaluar = types.Content(
-    role="user",
-    parts=[types.Part.from_text(
-        text="Este libro empezo bien pero el final fue muy apresurado y "
-             "decepcionante."
-    )],
-)
 
-# 7. Construir el contenido completo: ejemplos + resena nueva
-contenido_completo = ejemplos_few_shot + [resena_a_evaluar]
+def clasificar_resena(texto_resena: str) -> str:
+    # 6. Construir el turno del usuario con la resena a evaluar
+    turno_resena = types.Content(
+        role="user",
+        parts=[types.Part.from_text(text=texto_resena)],
+    )
 
-# 8. Realizar la peticion sincrona al modelo
-response = client.models.generate_content(
-    model=MODELO,
-    contents=contenido_completo,
-    config=config_clasificador,
-)
+    # 7. Contenido completo enviado al modelo: ejemplos + resena nueva
+    contenido_completo = ejemplos_few_shot + [turno_resena]
 
-# 9. Mostrar el resultado
-print("Sentimiento clasificado:", response.text.strip())
+    # 8. Realizar la peticion sincrona al modelo
+    response = client.models.generate_content(
+        model=MODELO,
+        contents=contenido_completo,
+        config=config_clasificador,
+    )
+
+    return response.text.strip()
+
+
+# 9. Presentacion de la herramienta por consola
+print("=" * 65)
+print("CLASIFICADOR DE SENTIMIENTOS - RESENAS DE LIBROS")
+print("Escribe la resena a clasificar, o 'salir' para terminar.")
+print("=" * 65)
+
+# 10. Bucle interactivo: se ingresa la resena por consola hasta que
+#     el usuario decida terminar
+while True:
+    try:
+        resena_usuario = input("\nResena del libro: ").strip()
+
+        # 11. Validar entrada vacia antes de llamar al modelo
+        if not resena_usuario:
+            print("Debes ingresar una resena para clasificar.")
+            continue
+
+        # 12. Condicion de salida del bucle
+        if resena_usuario.lower() == "salir":
+            print("\nCerrando el clasificador de sentimientos...")
+            break
+
+        # 13. Clasificar la resena ingresada y mostrar el resultado
+        sentimiento = clasificar_resena(resena_usuario)
+        print(f"\nSentimiento clasificado: {sentimiento}")
+
+    except (KeyboardInterrupt, EOFError):
+        print("\n\nCerrando el clasificador de sentimientos...")
+        break
+    

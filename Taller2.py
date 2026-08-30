@@ -51,12 +51,32 @@ def clasificar_correo(texto: str) -> str:
     return response.text.strip()
 
 
-# 7. Texto del usuario a clasificar (caso del taller: queja de factura)
-texto_usuario = (
-    "Hola, mi factura #4502 tiene un cargo doble que no reconozco. Ayuda."
-)
+# 7. Presentacion de la herramienta por consola
+print("=" * 65)
+print("FILTRO DE SOPORTE TECNICO")
+print("Escribe el texto del correo a clasificar, o 'salir' para terminar.")
+print("=" * 65)
 
-# 8. Ejecutar la clasificacion y mostrar el resultado
-resultado = clasificar_correo(texto_usuario)
-print("--- FILTRO DE SOPORTE TECNICO ---\n")
-print(resultado)
+# 8. Bucle interactivo: se ingresa texto por consola hasta que el
+#    usuario decida terminar, validando que no llegue vacio
+while True:
+    try:
+        texto_usuario = input("\nTexto del correo: ").strip()
+
+        # 9. Validar entrada vacia antes de llamar al modelo
+        if not texto_usuario:
+            print("Debes ingresar un texto para clasificar.")
+            continue
+
+        # 10. Condicion de salida del bucle
+        if texto_usuario.lower() == "salir":
+            print("\nCerrando el filtro de soporte tecnico...")
+            break
+
+        # 11. Clasificar el texto ingresado y mostrar el resultado
+        resultado = clasificar_correo(texto_usuario)
+        print(f"\nClasificacion: {resultado}")
+
+    except (KeyboardInterrupt, EOFError):
+        print("\n\nCerrando el filtro de soporte tecnico...")
+        break
