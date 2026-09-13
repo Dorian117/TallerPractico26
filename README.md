@@ -12,3 +12,10 @@ De esta forma todo funcionara correctamente, por ultimo, ejecutar cada modelo me
 Mediante este, doy finalidad al instructivo solicitado :D
 
 Proyecto desarrollado usando modelo de IA para la generacion del codigo base, configuracion y detalles especificos y onfigurables, realizados por Sergio Herrera.
+
+## Avance 1 — Asistente RAG
+
+Este avance corresponde al proyecto "Asistente Experto basado en RAG y Agentes" (enfoque: Tutor Académico Personalizado, dominio: técnicas de integración de Cálculo II), implementado en `Avance1_TutorCalculo.py`.
+- System prompting: el `system_instruction` define al modelo como tutor de Cálculo II, fija la pedagogía de pistas progresivas antes que solución completa, el formato de 6 pasos (identificar forma → plantear sustitución → simplificar → integrar → devolver la sustitución con triángulo de referencia → verificar derivando), la detección explícita de errores comunes de signo, y el formato de salida (español, Markdown, LaTeX con `$`).
+- Few-shot prompting: la lista `ejemplos_few_shot` (sección `# 5.`) contiene dos turnos completos `user`/`model` construidos con `types.Content`, uno de sustitución trigonométrica y otro de sustitución combinada con integración por partes, cada uno mostrando el formato de 6 pasos completo sin saltar álgebra.
+- Estrategia de delimitadores: la función `tutor_calculo`  envuelve el material de referencia en un bloque `<material_curso>...</material_curso>` en formato XML — en vez de comillas triples — precisamente porque el material de un curso de matemáticas puede incluir fórmulas o texto que ya contenga comillas simples, dobles o triples, lo que rompería un delimitador basado en comillas; las instrucciones de tarea y la pregunta del estudiante se ubican fuera de ese bloque para que el modelo distinga con claridad la referencia del encargo a resolver.
