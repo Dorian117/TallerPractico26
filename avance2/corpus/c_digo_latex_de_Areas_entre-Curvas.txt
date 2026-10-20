@@ -1,0 +1,253 @@
+\documentclass[11pt,letterpaper]{article}
+
+% --- PAQUETES ---
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{geometry}
+\usepackage{tcolorbox}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{multicol}
+
+% --- CONFIGURACIÓN DE PÁGINA ---
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.8em}
+
+\tcbset{
+    colback=white,
+    colframe=black!75,
+    arc=2mm,
+    boxrule=0.8pt,
+    left=10pt,
+    right=10pt,
+    top=8pt,
+    bottom=8pt
+}
+
+\begin{document}
+
+% --- ENCABEZADO INSTITUCIONAL ---
+\begin{center}
+    {\Large \textbf{FUNDACIÓN UNIVERSITARIA KONRAD LORENZ}}\\[0.2cm]
+    {\large \textbf{Facultad de Matemáticas e Ingenierías}}\\[0.15cm]
+    \textbf{Cálculo II} -- 2026\\[0.15cm]
+    \textit{Docente: Dr. Óscar Leonardo Pantano-Mogollón}\\[0.4cm]
+    \rule{\linewidth}{1pt}\\[0.3cm]
+    {\LARGE \textbf{INTEGRALES TRIGONOMÉTRICAS}}\\[0.2cm]
+    \rule{\linewidth}{1pt}
+\end{center}
+
+\textbf{Propósito:} Determinar integrales trigonométricas indefinidas.
+
+---
+
+\section{Identidades Trigonométricas Fundamentales}
+
+\begin{itemize}
+    \item \textbf{Identidad Pitagórica:}
+    \begin{equation*}
+        \sin^2(x) + \cos^2(x) = 1
+    \end{equation*}
+    \item \textbf{Identidades de reducción de potencia (ángulo medio):}
+    \begin{align*}
+        \sin^2(x) &= \frac{1 - \cos(2x)}{2} \\
+        \cos^2(x) &= \frac{1 + \cos(2x)}{2}
+    \end{align*}
+    \item \textbf{Identidades Pitagóricas para tangente y secante:}
+    \begin{align*}
+        \tan^2(x) + 1 &= \sec^2(x) \\
+        \tan^2(x) &= \sec^2(x) - 1
+    \end{align*}
+\end{itemize}
+
+---
+
+\section{Ejemplos Desarrollados: Potencias de Seno y Coseno}
+
+\subsection*{Ejemplo 1: Potencias pares de coseno}
+Evaluar la integral indefinida:
+\begin{equation*}
+    \int \cos^4(x)\,dx
+\end{equation*}
+
+\textbf{Solución:}
+\begin{align*}
+    \int \cos^4(x)\,dx &= \int \left[\cos^2(x)\right]^2\,dx \\
+    &= \int \left(\frac{1 + \cos(2x)}{2}\right)^2\,dx \\
+    &= \int \frac{\left[1 + \cos(2x)\right]^2}{2^2}\,dx \\
+    &= \frac{1}{4} \int \left[1 + 2\cos(2x) + \cos^2(2x)\right]\,dx \\
+    &= \frac{1}{4}\left[ \int dx + 2\int \cos(2x)\,dx + \int \cos^2(2x)\,dx \right] \\
+    &= \frac{1}{4}\left[ \int dx + 2\int \cos(2x)\,dx + \int \left(\frac{1 + \cos(4x)}{2}\right)\,dx \right] \\
+    &= \frac{1}{4}\left[ x + 2\int \cos(2x)\,dx + \int \left(\frac{1 + \cos(4x)}{2}\right)\,dx \right] \\
+    &= \frac{1}{4}\left[ x + \frac{2\sin(2x)}{2} + \int \left(\frac{1 + \cos(4x)}{2}\right)\,dx \right] \\
+    &= \frac{1}{4}\left[ x + \sin(2x) + \frac{1}{2}\int (1 + \cos(4x))\,dx \right] \\
+    &= \frac{1}{4}\left[ x + \sin(2x) + \frac{1}{2}\left(\int dx + \int \cos(4x)\,dx\right) \right] \\
+    &= \frac{1}{4}\left[ x + \sin(2x) + \frac{1}{2}\left(x + \frac{\sin(4x)}{4}\right) \right] + C \\
+    &= \frac{1}{4}\left[ x + \sin(2x) + \frac{x}{2} + \frac{\sin(4x)}{8} \right] + C \\
+    &= \frac{x}{4} + \frac{\sin(2x)}{4} + \frac{x}{8} + \frac{\sin(4x)}{32} + C \\
+    &= \frac{3x}{8} + \frac{\sin(2x)}{4} + \frac{\sin(4x)}{32} + C
+\end{align*}
+
+---
+
+\subsection*{Ejemplo 2: Potencia impar de seno y par de coseno}
+Evaluar la integral indefinida:
+\begin{equation*}
+    \int \sin^5(x)\cos^2(x)\,dx
+\end{equation*}
+
+\textbf{Solución:}
+\begin{align*}
+    \int \sin^5(x)\cos^2(x)\,dx &= \int \sin^4(x)\cos^2(x)\sin(x)\,dx \\
+    &= \int \left[\sin^2(x)\right]^2 \cos^2(x)\sin(x)\,dx \\
+    &= \int \left[1 - \cos^2(x)\right]^2 \cos^2(x)\sin(x)\,dx
+\end{align*}
+
+Hacemos la sustitución:
+\begin{equation*}
+    u = \cos(x) \implies du = -\sin(x)\,dx \implies -du = \sin(x)\,dx
+\end{equation*}
+
+Sustituyendo:
+\begin{align*}
+    \int \left[1 - \cos^2(x)\right]^2 \cos^2(x)\sin(x)\,dx &= -\int [1 - u^2]^2 u^2\,du \\
+    &= -\int [1 - 2u^2 + u^4]u^2\,du \\
+    &= -\int [u^2 - 2u^4 + u^6]\,du \\
+    &= -\int u^2\,du + 2\int u^4\,du - \int u^6\,du \\
+    &= -\frac{u^3}{3} + \frac{2u^5}{5} - \frac{u^7}{7} + C \\
+    &= -\frac{\cos^3(x)}{3} + \frac{2\cos^5(x)}{5} - \frac{\cos^7(x)}{7} + C
+\end{align*}
+
+---
+
+\section{Estrategia para la Evaluación de $\int \sin^m(x)\cos^n(x)\,dx$}
+
+\begin{enumerate}[label=\textbf{\alph*)}]
+    \item \textbf{Si la potencia del coseno es impar ($n = 2k + 1$):} Extraemos un factor coseno y utilizamos $\cos^2(x) = 1 - \sin^2(x)$ para expresar los factores restantes en términos del seno:
+    \begin{align*}
+        \int \sin^m(x)\cos^{2k+1}(x)\,dx &= \int \sin^m(x)(\cos^2(x))^k \cos(x)\,dx \\
+        &= \int \sin^m(x)(1 - \sin^2(x))^k \cos(x)\,dx
+    \end{align*}
+    Luego sustituimos $u = \sin(x)$, con $du = \cos(x)\,dx$.
+
+    \item \textbf{Si la potencia del seno es impar ($m = 2k + 1$):} Extraemos un factor seno y utilizamos $\sin^2(x) = 1 - \cos^2(x)$ para expresar los factores restantes en términos del coseno:
+    \begin{align*}
+        \int \sin^{2k+1}(x)\cos^n(x)\,dx &= \int (\sin^2(x))^k \cos^n(x)\sin(x)\,dx \\
+        &= \int (1 - \cos^2(x))^k \cos^n(x)\sin(x)\,dx
+    \end{align*}
+    Luego sustituimos $u = \cos(x)$, con $du = -\sin(x)\,dx$.
+
+    \textbf{Observación:} Si la potencia de ambos, seno y coseno, es impar, puede utilizarse tanto el criterio a) como el b).
+
+    \item \textbf{Si las potencias de ambos, seno y coseno, son pares:} Utilizamos las identidades de reducción de potencia (o del ángulo medio):
+    \begin{equation*}
+        \sin^2(x) = \frac{1 - \cos(2x)}{2}, \qquad \cos^2(x) = \frac{1 + \cos(2x)}{2}
+    \end{equation*}
+    En ocasiones también resulta conveniente emplear:
+    \begin{equation*}
+        \sin(x)\cos(x) = \frac{\sin(2x)}{2}, \qquad \cos(2x) = \cos^2(x) - \sin^2(x)
+    \end{equation*}
+\end{enumerate}
+
+---
+
+\section{Ejemplos Desarrollados: Potencias de Tangente y Secante}
+
+\subsection*{Ejemplo 3: Integral de $\tan^4(x)$}
+Evaluar la integral indefinida:
+\begin{equation*}
+    \int \tan^4(x)\,dx
+\end{equation*}
+
+\textbf{Solución:}
+\begin{align*}
+    \int \tan^4(x)\,dx &= \int \tan^2(x)\tan^2(x)\,dx \\
+    &= \int \tan^2(x)\left[\sec^2(x) - 1\right]\,dx \\
+    &= \int \left[\tan^2(x)\sec^2(x) - \tan^2(x)\right]\,dx \\
+    &= \int \tan^2(x)\sec^2(x)\,dx - \int \tan^2(x)\,dx \\
+    &= \int \tan^2(x)\sec^2(x)\,dx - \int \left[\sec^2(x) - 1\right]\,dx
+\end{align*}
+
+Para la primera integral tomamos $u = \tan(x) \implies du = \sec^2(x)\,dx$:
+\begin{align*}
+    &= \int u^2\,du - \int \left[\sec^2(x) - 1\right]\,dx \\
+    &= \frac{u^3}{3} - \int \left[\sec^2(x) - 1\right]\,dx \\
+    &= \frac{\tan^3(x)}{3} - \int \sec^2(x)\,dx + \int dx \\
+    &= \frac{\tan^3(x)}{3} - \tan(x) + x + C
+\end{align*}
+
+---
+
+\subsection*{Ejemplo 4: Integral de $\sec(x)$}
+Evaluar la integral indefinida:
+\begin{equation*}
+    \int \sec(x)\,dx
+\end{equation*}
+
+\textbf{Solución:}
+\begin{align*}
+    \int \sec(x)\,dx &= \int \sec(x)\left(\frac{\sec(x) + \tan(x)}{\sec(x) + \tan(x)}\right)\,dx \\
+    &= \int \frac{\sec^2(x) + \sec(x)\tan(x)}{\sec(x) + \tan(x)}\,dx
+\end{align*}
+
+Tomamos:
+\begin{align*}
+    u &= \sec(x) + \tan(x) \\
+    du &= \left[\sec(x)\tan(x) + \sec^2(x)\right]\,dx
+\end{align*}
+
+Sustituyendo:
+\begin{align*}
+    \int \frac{1}{u}\,du &= \ln|u| + C \\
+    &= \ln|\sec(x) + \tan(x)| + C
+\end{align*}
+
+---
+
+\subsection*{Ejemplo 5: Integral de $\tan^3(x)\sec(x)$}
+Evaluar la integral indefinida:
+\begin{equation*}
+    \int \tan^3(x)\sec(x)\,dx
+\end{equation*}
+
+\textbf{Solución:}
+\begin{align*}
+    \int \tan^3(x)\sec(x)\,dx &= \int \tan^2(x)\tan(x)\sec(x)\,dx \\
+    &= \int \left(\sec^2(x) - 1\right)\tan(x)\sec(x)\,dx \\
+    &= \int \left[\sec^2(x)\tan(x)\sec(x) - \tan(x)\sec(x)\right]\,dx \\
+    &= \int \sec^2(x)\tan(x)\sec(x)\,dx - \int \tan(x)\sec(x)\,dx
+\end{align*}
+
+Tomamos $u = \sec(x) \implies du = \sec(x)\tan(x)\,dx$:
+\begin{align*}
+    &= \int u^2\,du - \int \tan(x)\sec(x)\,dx \\
+    &= \frac{u^3}{3} - \sec(x) + C \\
+    &= \frac{\sec^3(x)}{3} - \sec(x) + C
+\end{align*}
+
+---
+
+\section{Estrategia para la Evaluación de $\int \tan^m(x)\sec^n(x)\,dx$}
+
+\begin{enumerate}[label=\textbf{\alph*)}]
+    \item \textbf{Si la potencia de la secante es par ($n = 2k$, con $k \ge 2$):} Extraemos un factor $\sec^2(x)$ y utilizamos $\sec^2(x) = 1 + \tan^2(x)$ para expresar los factores restantes en términos de $\tan(x)$:
+    \begin{align*}
+        \int \tan^m(x)\sec^{2k}(x)\,dx &= \int \tan^m(x)(\sec^2(x))^{k-1}\sec^2(x)\,dx \\
+        &= \int \tan^m(x)(1 + \tan^2(x))^{k-1}\sec^2(x)\,dx
+    \end{align*}
+    Luego sustituimos $u = \tan(x)$, con $du = \sec^2(x)\,dx$.
+
+    \item \textbf{Si la potencia de la tangente es impar ($m = 2k + 1$):} Extraemos un factor $\sec(x)\tan(x)$ y utilizamos $\tan^2(x) = \sec^2(x) - 1$ para expresar los factores restantes en términos de $\sec(x)$:
+    \begin{align*}
+        \int \tan^{2k+1}(x)\sec^n(x)\,dx &= \int (\tan^2(x))^k \sec^{n-1}(x)\sec(x)\tan(x)\,dx \\
+        &= \int (\sec^2(x) - 1)^k \sec^{n-1}(x)\sec(x)\tan(x)\,dx
+    \end{align*}
+    Luego sustituimos $u = \sec(x)$, con $du = \sec(x)\tan(x)\,dx$.
+\end{enumerate}
+
+---
+
+\section{Integrales de Productos de Senos y Cosenos con Argumentos Dist

@@ -1,0 +1,403 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- Paquetes requeridos ---
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+
+\title{\textbf{Cálculo II: Antiderivación}\\ \large Fundación Universitaria Konrad Lorenz\\ Facultad de Matemáticas e Ingenierías}
+\author{Dr. Óscar Leonardo Pantano-Mogollón}
+\date{2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{Propósito}
+Determinar la antiderivada general de algunas funciones.
+
+\section*{Actividad Inicial}
+\textbf{Ejercicio:} Determinar una función $F(x)$ cuya derivada sea $f(x)$:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{cll}
+\toprule
+\textbf{Ítem} & \textbf{Función $f(x)$} & \textbf{Antiderivada $F(x)$} \\
+\midrule
+a) & $f(x) = 5x^{4}$ & $F(x) = x^{5}$ \\
+b) & $f(x) = -\frac{3}{8}$ & $F(x) = -\frac{3}{8}x$ \\
+c) & $f(x) = 2x^{3}$ & $F(x) = \frac{x^{4}}{2}$ \\
+d) & $f(x) = \frac{1}{x}$ & $F(x) = \ln|x|$ \\
+e) & $f(x) = \frac{1}{x^{2}}$\footnote{Propiedad de la potenciación: potencias de exponente negativo $a^{-n} = \frac{1}{a^{n}}$} & $F(x) = -\frac{1}{x}$ \\
+f) & $f(x) = \cos(x)$ & $F(x) = \sin(x)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent\textit{Pregunta de reflexión:} Describir la estrategia o el método utilizado para determinar $F(x)$.
+
+\vspace{0.5cm}
+
+\noindent\textbf{DEFINICIÓN:} Una función $F(x)$ es una antiderivada o primitiva de $f(x)$ sobre un intervalo $I$ si $F'(x) = f(x)$ para todo $x \in I$:
+\[
+\frac{d}{dx}[F(x)] = f(x)
+\]
+
+\noindent\textbf{Ejemplo:}
+$F(x) = -\cos(x)$ es una antiderivada de $f(x) = \sin(x)$ porque:
+\[
+F'(x) = \frac{d}{dx}[-\cos(x)] = -1(-\sin(x)) = \sin(x) = f(x)
+\]
+
+\noindent\textbf{Ejemplo:} Para la siguiente derivada, determinar al menos cuatro antiderivadas:
+\[
+f(x) = 8x^{3}
+\]
+Posibles respuestas:
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+$F(x) = 2x^{4} - 3$ & $F(x) = 2x^{4} + 8$ \\ \hline
+$F(x) = 2x^{4} - \frac{1}{4}$ & $F(x) = 2x^{4} + \pi$ \\ \hline
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+
+\noindent\textbf{TEOREMA:} Si $F(x)$ es una antiderivada de $f(x)$ sobre un intervalo $I$, entonces la \textbf{antiderivada más general} de $f$ sobre $I$ es:
+\[
+F(x) + C
+\]
+donde $C$ es una constante arbitraria, llamada \textbf{constante de integración}.
+
+\vspace{0.3cm}
+
+\noindent\textbf{Ejemplo:} Considerar la función $f(x) = 5x^{2}$.
+Para esta función, vemos que la antiderivada general es:
+\[
+F(x) = \frac{5x^{3}}{3} + C, \quad C \in \mathbb{R}
+\]
+\textit{Recurso interactivo:} \url{https://www.geogebra.org/m/pkfspprx}
+
+\vspace{0.3cm}
+Al asignar valores reales específicos a la constante $C$, se obtiene una familia de antiderivadas, es decir, una familia de funciones cuyas gráficas son traslaciones verticales de una a otra. La gráfica de $F(x) + C$ se obtiene desplazando verticalmente la gráfica de $F(x)$ en $C$ unidades.
+
+\newpage
+
+\section*{Tabla de Antiderivadas Generales}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{cll}
+\toprule
+\textbf{Ítem} & \textbf{Función $f(x)$} & \textbf{Antiderivada General $F(x)$} \\
+\midrule
+a) & $f(x) = e^{x}$ & $F(x) = e^{x} + C$ \\
+b) & $f(x) = \frac{1}{x}$ & $F(x) = \ln|x| + C$ \\
+c) & $f(x) = \frac{1}{2\sqrt{x}}$ & $F(x) = \sqrt{x} + C$ \\
+d) & $f(x) = \sin(x)$ & $F(x) = -\cos(x) + C$ \\
+e) & $f(x) = \cos(x)$ & $F(x) = \sin(x) + C$ \\
+f) & $f(x) = \sec^{2}(x)$ & $F(x) = \tan(x) + C$ \\
+g) & $f(x) = \frac{1}{1+x^{2}}$ & $F(x) = \arctan(x) + C$ \\
+h) & $f(x) = x^{n},\; n \neq -1$ & $F(x) = \frac{x^{n+1}}{n+1} + C$ \\
+i) & $k f(x),\; k \in \mathbb{R},\; k \neq 0$ & $k F(x) + C$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent\textbf{Regla de la potencia para $f(x) = x^{n}$ con $n \neq -1$:\footnote{La Regla de la Potencia para Integrales establece que para integrar una potencia de $x$, se debe sumar una unidad al exponente y dividir por el nuevo exponente.}}
+\[
+\frac{d}{dx}\left[\frac{x^{n+1}}{n+1} + C\right] = \frac{(n+1)x^{n+1-1}}{n+1} = x^{n}
+\]
+Por lo tanto:
+\[
+F(x) = \frac{x^{n+1}}{n+1} + C
+\]
+
+\section*{Notación para la Integral Indefinida}
+\[
+\int f(x)\,dx = F(x) + C \iff F'(x) = f(x)
+\]
+\begin{itemize}[noitemsep]
+    \item $f(x)$: integrando.
+    \item $dx$: diferencial (indica la variable de integración).
+\end{itemize}
+
+\subsection*{Reglas Básicas de Integración}
+\begin{align*}
+\int k\,dx &= kx + C, \quad k \in \mathbb{R} \setminus \{0\} \\
+\int k f(x)\,dx &= k \int f(x)\,dx \quad \text{(Multiplication by constant)} \\
+\int [f(x) \pm g(x)]\,dx &= \int f(x)\,dx \pm \int g(x)\,dx \quad \text{(Sum and difference rule)} \\
+\int x^{n}\,dx &= \frac{x^{n+1}}{n+1} + C, \quad n \neq -1 \quad \text{(Power rule)} \\
+\int \sin(x)\,dx &= -\cos(x) + C \\
+\int \cos(x)\,dx &= \sin(x) + C \\
+\int \sec^{2}(x)\,dx &= \tan(x) + C \\
+\int \csc^{2}(x)\,dx &= -\cot(x) + C \\
+\int \sec(x)\tan(x)\,dx &= \sec(x) + C \\
+\int \csc(x)\cot(x)\,dx &= -\csc(x) + C
+\end{align*}
+
+\noindent\textbf{Tarea:} Determinar la antiderivada general de:
+\[
+f(x) = 3\sin(x) + \frac{2x^{5} - 2\sqrt{x}}{x} + 11x^{-3}
+\]
+\textit{Solución:}
+\[
+F(x) = -3\cos(x) + \frac{2x^{5}}{5} - 4\sqrt{x} - \frac{11}{2x^{2}} + C
+\]
+
+\newpage
+
+\section*{Problema de Valor Inicial (Segunda Derivada)}
+\textbf{Ejercicio:} Calcular $f(x)$ si $f''(x) = 12x^{2} + 6x - 2$, con $f(0) = 4$ y $f(1) = 3$.
+
+\subsection*{Solución paso a paso:}
+1. Integramos $f''(x)$ para hallar $f'(x)$:
+\begin{align*}
+f'(x) &= \frac{12x^{2+1}}{2+1} + \frac{6x^{1+1}}{1+1} - 2x + C \\
+f'(x) &= 4x^{3} + 3x^{2} - 2x + C
+\end{align*}
+
+2. Integramos $f'(x)$ para hallar $f(x)$:
+\begin{align*}
+f(x) &= \frac{4x^{3+1}}{3+1} + \frac{3x^{2+1}}{2+1} - \frac{2x^{1+1}}{1+1} + Cx + D \\
+f(x) &= x^{4} + x^{3} - x^{2} + Cx + D
+\end{align*}
+
+3. Aplicamos la primera condición $f(0) = 4$:
+\begin{align*}
+f(0) &= 0^{4} + 0^{3} - 0^{2} + C(0) + D = 4 \\
+\implies D &= 4
+\end{align*}
+La función toma la forma $f(x) = x^{4} + x^{3} - x^{2} + Cx + 4$.
+
+4. Aplicamos la segunda condición $f(1) = 3$:
+\begin{align*}
+f(1) &= 1^{4} + 1^{3} - 1^{2} + C(1) + 4 = 3 \\
+1 + 1 - 1 + C + 4 &= 3 \\
+5 + C &= 3 \\
+C &= -2
+\end{align*}
+
+5. Por lo tanto, la función requerida es:
+\[
+f(x) = x^{4} + x^{3} - x^{2} - 2x + 4
+\]
+
+\newpage
+
+\section*{Aplicaciones de la Antiderivación: Cinemática}
+La antiderivada permite analizar el movimiento rectilíneo de una partícula:
+\begin{itemize}[noitemsep]
+    \item Posición: $s(t)$
+    \item Velocidad: $v(t) = s'(t) \implies s(t) = \int v(t)\,dt$
+    \item Aceleración: $a(t) = v'(t) \implies v(t) = \int a(t)\,dt$
+\end{itemize}
+
+\subsection*{Ejemplo 1: Pelota lanzada desde un acantilado}
+Se lanza una pelota verticalmente hacia arriba con una rapidez de $48\text{ ft/s}$ desde el borde de un acantilado a $432\text{ ft}$ por encima del nivel del suelo.
+\begin{enumerate}[label=\alph*)]
+    \item Encontrar la altura de la pelota sobre el nivel del suelo $t$ segundos más tarde.
+    \item ¿En qué tiempo alcanza su altura máxima?
+    \item ¿En qué tiempo choca contra el suelo?
+\end{enumerate}
+
+\subsubsection*{Solución:}
+Tomando $a(t) = -32\text{ ft/s}^2$:
+\begin{align*}
+v(t) &= \int -32\,dt = -32t + C
+\end{align*}
+Como $v(0) = 48$:
+\[
+-32(0) + C = 48 \implies C = 48 \implies v(t) = -32t + 48
+\]
+Para la posición:
+\begin{align*}
+s(t) &= \int (-32t + 48)\,dt = -16t^{2} + 48t + D
+\end{align*}
+Dado que $s(0) = 432$:
+\[
+D = 432 \implies s(t) = -16t^{2} + 48t + 432
+\]
+
+\noindent\textbf{Altura máxima:} Ocurre cuando $v(t) = s'(t) = 0$:
+\[
+-32t + 48 = 0 \implies t = \frac{48}{32} = \frac{3}{2} = 1.5\text{ s}
+\]
+
+\noindent\textbf{Impacto contra el suelo:} Se resuelve $s(t) = 0$:
+\begin{align*}
+-16t^{2} + 48t + 432 &= 0 \\
+t^{2} - 3t - 27 &= 0 \\
+t &= \frac{3 \pm \sqrt{(-3)^{2} - 4(1)(-27)}}{2} = \frac{3 \pm \sqrt{117}}{2} = \frac{3 + 3\sqrt{13}}{2} \approx 6.9083\text{ s}
+\end{align*}
+\textit{Recurso interactivo:} \url{https://www.geogebra.org/m/e6hqccag}
+
+\newpage
+
+\subsection*{Ejemplo 2: Objeto soltado desde la Torre CN}
+Una piedra se deja caer desde la plataforma superior de observación de la Torre CN (450 metros de altura).
+\begin{enumerate}[label=\alph*)]
+    \item Encontrar la distancia de la piedra al nivel del suelo en el instante $t$.
+    \item ¿Cuánto tiempo tarda en llegar al suelo?
+    \item ¿Con qué velocidad choca contra el suelo?
+    \item Si se lanza hacia arriba con rapidez inicial de $5\text{ m/s}$, ¿cuánto tarda en llegar al suelo?
+\end{enumerate}
+
+\subsubsection*{Solución:}
+\noindent\textbf{Parte a):} Tomando $a(t) = -9.8\text{ m/s}^2$ y $v(0) = 0$:
+\[
+v(t) = \int -9.8\,dt = -9.8t + C \implies v(t) = -9.8t
+\]
+\[
+s(t) = \int -9.8t\,dt = -4.9t^{2} + D, \quad s(0) = 450 \implies s(t) = -4.9t^{2} + 450
+\]
+
+\noindent\textbf{Parte b):} Llega al suelo cuando $s(t) = 0$:
+\[
+-4.9t^{2} + 450 = 0 \implies t = \sqrt{\frac{450}{4.9}} \approx 9.583\text{ s}
+\]
+
+\noindent\textbf{Parte c):} Velocidad al impacto:
+\[
+v(9.583) = -9.8(9.583) \approx -93.9\text{ m/s}
+\]
+
+\noindent\textbf{Parte d):} Con $v(0) = 5\text{ m/s}$:
+\[
+v(t) = -9.8t + 5 \implies s(t) = -4.9t^{2} + 5t + 450
+\]
+Haciendo $s(t) = 0$:
+\[
+t = \frac{-5 \pm \sqrt{5^{2} - 4(-4.9)(450)}}{2(-4.9)} = \frac{-5 \pm \sqrt{8845}}{-9.8}
+\]
+Tomando la raíz físicamente admisible:
+\[
+t_1 = \frac{-5 - \sqrt{8845}}{-9.8} \approx 10.106\text{ s}
+\]
+
+\noindent\textbf{Forma general de la posición con aceleración constante:}
+\[
+s(t) = \frac{1}{2}gt^{2} + v_{0}t + s_{0}
+\]
+
+\newpage
+
+\subsection*{Ejemplo 3: Crecimiento de un arbusto}
+Un vivero vende arbustos después de 6 años. La razón de crecimiento es $\frac{dh}{dt} = 1.5t + 5$, con $h(0) = 12\text{ cm}$.
+\begin{enumerate}[label=\alph*)]
+    \item Determinar la altura después de $t$ años.
+    \item ¿Qué altura tienen cuando se venden ($t = 6$ años)?
+\end{enumerate}
+
+\subsubsection*{Solución:}
+\begin{align*}
+h(t) &= \int (1.5t + 5)\,dt = \frac{1.5}{2}t^{2} + 5t + C \\
+h(0) &= 12 \implies C = 12 \\
+h(t) &= \frac{1.5}{2}t^{2} + 5t + 12
+\end{align*}
+Para $t = 6$:
+\[
+h(6) = \frac{1.5}{2}(6)^{2} + 5(6) + 12 = 1.5(18) + 30 + 12 = 27 + 30 + 12 = 69\text{ cm}
+\]
+
+\subsection*{Ejemplo 4: Lanzamiento al Monumento a Washington}
+¿Con qué velocidad inicial debe lanzarse un objeto desde el suelo ($s_0 = 0$) para alcanzar la cima del monumento ($550\text{ ft}$)?
+\textit{Recurso interactivo:} \url{https://www.geogebra.org/classic/wtudafyy}
+
+\subsubsection*{Solución:}
+Con $a(t) = -32$:
+\[
+v(t) = -32t + v_0
+\]
+La altura máxima se alcanza cuando $v(t) = 0 \implies t = \frac{v_0}{32}$.
+La posición es:
+\[
+s(t) = -16t^{2} + v_0 t
+\]
+Evaluando en $t = \frac{v_0}{32}$ sabiendo que la altura es $550\text{ ft}$:
+\begin{align*}
+s\left(\frac{v_0}{32}\right) &= -16\left(\frac{v_0}{32}\right)^{2} + v_0\left(\frac{v_0}{32}\right) = 550 \\
+-\frac{v_0^2}{64} + \frac{v_0^2}{32} &= 550 \\
+\frac{v_0^2}{64} &= 550 \\
+v_0^2 &= 35200 \implies v_0 = \sqrt{35200} \approx 187.616\text{ ft/s}
+\end{align*}
+La función de posición es:
+\[
+s(t) = -16t^{2} + 187.616t
+\]
+
+\newpage
+
+\subsection*{Ejemplo 5: Costo Marginal}
+El costo marginal para producir $x$ artículos es $C'(x) = 1.92 - 0.002x$. Si el costo de producir 1 unidad es $\$562$, calcular el costo de producir 100 artículos.
+
+\subsubsection*{Solución:}
+\begin{align*}
+C(x) &= \int (1.92 - 0.002x)\,dx = 1.92x - 0.001x^{2} + C_0
+\end{align*}
+Condición inicial $C(1) = 562$:
+\begin{align*}
+562 &= 1.92(1) - 0.001(1)^{2} + C_0 \\
+562 &= 1.919 + C_0 \implies C_0 = 560.081
+\end{align*}
+Función de costo:
+\[
+C(x) = 1.92x - 0.001x^{2} + 560.081
+\]
+Para 100 artículos:
+\begin{align*}
+C(100) &= 1.92(100) - 0.001(100)^{2} + 560.081 \\
+&= 192 - 10 + 560.081 = 742.081
+\end{align*}
+El costo de producción de 100 ítems es de $\$742.081$.
+
+\section*{Ejercicios Propuestos}
+
+\subsection*{1. Emparejamiento (Match)}
+Empareje las funciones $(a)-(e)$ con sus correspondientes antiderivadas $(i)-(v)$:
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{Funciones} & \textbf{Antiderivadas} \\
+\midrule
+(a) $f(x) = \sin(x)$ & (i) $F(x) = \sin(x) - x\cos(x)$ \\
+(b) $f(x) = 2\sin(5x)$ & (ii) $F(x) = \cos(1-x)$ \\
+(c) $f(x) = \sin(1-x)$ & (iii) $F(x) = -\frac{1}{2}\cos(x^{2})$ \\
+(d) $f(x) = x\sin(x^{2})$ & (iv) $F(x) = -\cos(x)$ \\
+(e) $f(x) = x\sin(x)$ & (v) $F(x) = -\frac{2}{5}\cos(5x)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{2. Cálculo de Integrales Indefinidas}
+Determinar la integral indefinida y comprobar derivando:
+\begin{enumerate}[label=\alph*)]
+    \item $\displaystyle \int \left(4x^{5} - 5x^{2/3} + x^{-3}\right)dx$
+    \item $\displaystyle \int \left(\frac{7}{x^{3}} - 3x^{-11}\right)dx$
+    \item $\displaystyle \int \left(\frac{1}{3}\sin(x) - \frac{1}{4}\cos(x)\right)dx$
+    \item $\displaystyle \int \frac{x^{3} + 3x^{2} - 4}{x^{2}}\,dx$
+    \item $\displaystyle \int x(x^{2}-4)\,dx$
+\end{enumerate}
+
+\newpage
+
+\subsection*{3. Problemas Aplicados}
+\begin{enumerate}[label=\textbf{\Alph*.}]
+    \item Se lanza una pelota rodando por una superficie horizontal con una velocidad inicial de $25\text{ m/s}$. Debido al rozamiento, la velocidad disminuye a razón de $6\text{ m/s}^2$. Hallar el espacio que recorrerá la pelota hasta detenerse. \textit{(Ayres, 1971, p. 160)}
+    \item A car traveling with velocity $24\text{ m/s}$ begins to slow down at time $t=0$ with a constant deceleration of $a = -6\text{ m/s}^{2}$. Find (a) the velocity $v(t)$ at time $t$, and (b) the distance traveled before the car comes to a halt. \textit{(Rogawski, 2012, p. 240)}
+    \item Desde un globo en reposo situado a una altura de $3000\text{ m}$ sobre la tierra, se lanza un objeto verticalmente hacia abajo con una velocidad inicial de $15\text{ m/s}$. Suponiendo que la aceleración de la gravedad $g$ es de $10\text{ m/s}^2$, hallar la posición del objeto y su velocidad $20\text{ s}$ después de iniciado el descenso. \textit{(Ayres, 1971, p. 160)}
+    \item A particle located at the origin at $t=1\text{ s}$ moves along the $x$-axis with velocity $v(t) = (6t^{2} - t)\text{ m/s}$. State the differential equation with initial condition satisfied by the position $s(t)$ of the particle, and find $s(t)$.
+    \item A stone was dropped off a cliff and hit the ground with a speed of $120\text{ ft/s}$. What is the height of the cliff? \textit{(Stewart, 2016, p. 284)}
+\end{enumerate}
+
+\end{document}

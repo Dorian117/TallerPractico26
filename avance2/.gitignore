@@ -1,0 +1,19 @@
+# El .gitignore de la raiz ignora ".env.*", lo que tambien ocultaria el
+# ejemplo. Un .gitignore mas profundo gana sobre el de la raiz.
+!.env.example
+
+.env
+.venv/
+__pycache__/
+
+# Secretos de Streamlit
+.streamlit/secrets.toml
+
+# Indice vectorial: se reconstruye con `python -m rag.ingest`
+chroma_db/
+
+# Cache de respuestas del LLM: contiene texto del corpus y preguntas de estudiantes
+.cache_llm/
+
+# Corridas de evaluacion simuladas (no son resultados validos)
+eval/results/*.OFFLINE.*

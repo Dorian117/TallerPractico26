@@ -1,0 +1,1180 @@
+{
+  "nombre": "base",
+  "fecha": "2026-10-16T16:07:06",
+  "modo": "live",
+  "modelo_tutor": "claude-haiku-5-5",
+  "proveedor": "anthropic",
+  "juez_final": false,
+  "parametros": {
+    "chunk_tamano": 1800,
+    "chunk_solape": 200,
+    "top_k": 4,
+    "umbral": null,
+    "embeddings": "intfloat/multilingual-e5-small",
+    "texto_embedding": "limpio",
+    "max_tokens_respuesta": 8000
+  },
+  "dataset": {
+    "ruta": "C:\\Users\\herre\\Downloads\\TallerPractico26\\avance2\\eval\\dataset.jsonl",
+    "n": 23,
+    "sha256": "050d46d4d22c51d0"
+  },
+  "abstencion": {
+    "n_fuera_de_corpus": 5,
+    "tasa_abstencion_correcta": 1.0,
+    "tasa_alucinacion": 0.0,
+    "n_dentro_de_corpus": 18,
+    "tasa_abstencion_indebida": 0.05555555555555555,
+    "respuestas_con_citas_invalidas": 0
+  },
+  "modelo_juez": "claude-haiku-5-5",
+  "ragas": {
+    "promedios": {
+      "faithfulness": 0.540173896227512,
+      "answer_relevancy": 0.8247727087193355,
+      "context_precision": 0.7175925925462963,
+      "context_recall": 0.6666666666666666
+    },
+    "preguntas_sin_puntaje": {
+      "faithfulness": 0,
+      "answer_relevancy": 0,
+      "context_precision": 0,
+      "context_recall": 0
+    },
+    "uso_juez": {
+      "llamadas": 180,
+      "desde_cache": 0,
+      "tokens_entrada": 352086,
+      "tokens_salida": 183935
+    }
+  },
+  "filas": [
+    {
+      "question": "¿Qué es una antiderivada (o primitiva) de una función y por qué aparece la constante C?",
+      "ground_truth": "Una función F(x) es una antiderivada o primitiva de f(x) sobre un intervalo I si F'(x) = f(x) para todo x en I. Si F es una antiderivada de f, la antiderivada más general de f sobre I es F(x) + C, donde C es una constante arbitraria llamada constante de integración. Al darle valores a C se obtiene una familia de antiderivadas cuyas gráficas son traslaciones verticales unas de otras.",
+      "tipo": "definicion",
+      "fuente_esperada": "c_digo_latex_de_antiderivaci_n.txt",
+      "seccion_esperada": "Actividad Inicial",
+      "respuesta": "Una **antiderivada** (o **primitiva**) de $f(x)$ sobre un intervalo $I$ es una función $F(x)$ tal que $F'(x) = f(x)$ para todo $x \\in I$ [1].\n\n**Ejemplo:** $F(x) = -\\cos(x)$ es una antiderivada de $f(x) = \\sin(x)$, porque $F'(x) = -1\\cdot(-\\sin(x)) = \\sin(x) = f(x)$ [1].\n\nUna función puede tener muchas antiderivadas. Para $f(x) = 8x^3$, por ejemplo, tanto $2x^4 - 3$ como $2x^4 + 8$ cumplen la definición, porque ambas derivan a $8x^3$ [1].\n\n**¿Por qué aparece la constante $C$?**\n\nEl material establece que, si $F(x)$ es una antiderivada de $f(x)$ en $I$, la **antiderivada más general** es $F(x) + C$, donde $C$ es la constante de integración [1]. Puedes verlo así:\n\n- La derivada de una constante es cero: $\\frac{d}{dx}[C] = 0$.\n- Por eso, sumar $C$ a una antiderivada no cambia su derivada, y cualquier antiderivada nueva solo puede diferir de $F(x)$ en una constante.\n\nPor ejemplo, para $f(x) = 5x^2$ la antiderivada general es $F(x) = \\frac{5x^3}{3} + C$, con $C \\in \\mathbb{R}$ [2].\n\n**Interpretación gráfica:** al dar valores distintos a $C$ se obtiene una familia de antiderivadas. Sus gráficas son traslaciones verticales unas de otras: la gráfica de $F(x) + C$ se obtiene desplazando la de $F(x)$ verticalmente $C$ unidades [2].",
+      "pregunta_evaluada": "¿Qué es una antiderivada (o primitiva) de una función y por qué aparece la constante C?",
+      "contextos": [
+        "**DEFINICIÓN:** Una función $F(x)$ es una antiderivada o primitiva de $f(x)$ sobre un intervalo $I$ si $F'(x) = f(x)$ para todo $x \\in I$:\n\\[\n\\frac{d}{dx}[F(x)] = f(x)\n\\]\n\n**Ejemplo:**\n$F(x) = -\\cos(x)$ es una antiderivada de $f(x) = \\sin(x)$ porque:\n\\[\nF'(x) = \\frac{d}{dx}[-\\cos(x)] = -1(-\\sin(x)) = \\sin(x) = f(x)\n\\]\n\n**Ejemplo:** Para la siguiente derivada, determinar al menos cuatro antiderivadas:\n\\[\nf(x) = 8x^{3}\n\\]\nPosibles respuestas:\n\n| $F(x) = 2x^{4} - 3$ | $F(x) = 2x^{4} + 8$ |\n| $F(x) = 2x^{4} - \\frac{1}{4}$ | $F(x) = 2x^{4} + \\pi$ |\n\n**TEOREMA:** Si $F(x)$ es una antiderivada de $f(x)$ sobre un intervalo $I$, entonces la **antiderivada más general** de $f$ sobre $I$ es:\n\\[\nF(x) + C\n\\]\ndonde $C$ es una constante arbitraria, llamada **constante de integración**.",
+        "**Ejemplo:** Considerar la función $f(x) = 5x^{2}$.\nPara esta función, vemos que la antiderivada general es:\n\\[\nF(x) = \\frac{5x^{3}}{3} + C, \\quad C \\in \\mathbb{R}\n\\]\n*Recurso interactivo:* \\url{https://www.geogebra.org/m/pkfspprx}\n\nAl asignar valores reales específicos a la constante $C$, se obtiene una familia de antiderivadas, es decir, una familia de funciones cuyas gráficas son traslaciones verticales de una a otra. La gráfica de $F(x) + C$ se obtiene desplazando verticalmente la gráfica de $F(x)$ en $C$ unidades.",
+        "Sea $g$ una función cuyo recorrido o rango es un intervalo $I$, y sea $f$ una función continua en $I$. Si $g$ es derivable en su dominio y $F$ es una antiderivada o primitiva de $f$ en $I$, entonces:\n\nSi $u = g(x)$, entonces $du = g'(x)\\,dx$, por lo que:\n\\begin{equation*}\n    \\int f(g(x))g'(x)\\,dx = F(g(x)) + C\n\\end{equation*}\n\\begin{equation*}\n    \\int f(u)\\,du = F(u) + C\n\\end{equation*}\n\nEl método de sustitución utiliza la **regla de la cadena a la inversa**.\nEsta técnica de integración se aplica cuando el integrando está compuesto por dos expresiones donde una de ellas es la derivada de la otra (pudiendo diferir únicamente por un factor constante).",
+        "La antiderivada permite analizar el movimiento rectilíneo de una partícula:\n\n- Posición: $s(t)$\n- Velocidad: $v(t) = s'(t) \\implies s(t) = \\int v(t)\\,dt$\n- Aceleración: $a(t) = v'(t) \\implies v(t) = \\int a(t)\\,dt$"
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_antiderivaci_n.txt",
+          "seccion": "Actividad Inicial",
+          "distancia": 0.1023
+        },
+        {
+          "fuente": "c_digo_latex_de_antiderivaci_n.txt",
+          "seccion": "Actividad Inicial",
+          "distancia": 0.1111
+        },
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Antiderivación de una Función Compuesta",
+          "distancia": 0.1201
+        },
+        {
+          "fuente": "c_digo_latex_de_antiderivaci_n.txt",
+          "seccion": "Aplicaciones de la Antiderivación: Cinemática",
+          "distancia": 0.1235
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": false,
+      "tokens_entrada": 10950,
+      "tokens_salida": 995,
+      "desde_cache": true,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 0.8181818181818182,
+        "answer_relevancy": 0.9636471870542035,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "question": "¿Cuál es la regla de la potencia para integrar x^n y qué condición debe cumplir n?",
+      "ground_truth": "Para n distinto de -1, la integral de x^n dx es x^(n+1)/(n+1) + C: se suma una unidad al exponente y se divide por el nuevo exponente. La condición n ≠ -1 es necesaria porque con n = -1 el denominador n+1 se anula (la antiderivada de 1/x es ln|x| + C).",
+      "tipo": "definicion",
+      "fuente_esperada": "c_digo_latex_de_antiderivaci_n.txt",
+      "seccion_esperada": "Tabla de Antiderivadas Generales",
+      "respuesta": "La regla de la potencia está en los fragmentos [1] y [2]:\n\n$$\\int x^{n}\\,dx = \\frac{x^{n+1}}{n+1} + C$$\n\nPara integrar una potencia de $x$, se suma una unidad al exponente y se divide por el nuevo exponente [2].\n\n**Condición:** la fórmula exige $n \\neq -1$ [1][2]. Si $n = -1$, el denominador $n+1$ valdría cero y la fórmula no tiene sentido. El material que tengo no desarrolla el caso $n = -1$, así que revisa tus apuntes o pregunta a tu docente cómo se integra $x^{-1}$.\n\n**Ejemplo de verificación** (con $n = 3$):\n$$\\int x^{3}\\,dx = \\frac{x^{4}}{4} + C$$\nAl derivar: $\\frac{d}{dx}\\left[\\frac{x^{4}}{4} + C\\right] = \\frac{4x^{3}}{4} = x^{3}$, que es el integrando original.\n\nEl exponente $n$ puede ser fraccionario o negativo, siempre que no sea $-1$. Por ejemplo, en el ejercicio resuelto del material se reescribe $\\frac{x^{4}}{\\sqrt{x}} = x^{7/2}$ y luego se aplica la regla de la potencia [4].",
+      "pregunta_evaluada": "¿Cuál es la regla de la potencia para integrar x^n y qué condición debe cumplir n?",
+      "contextos": [
+        "**Regla de la potencia para $f(x) = x^{n}$ con $n \\neq -1$: (nota: La Regla de la Potencia para Integrales establece que para integrar una potencia de $x$, se debe sumar una unidad al exponente y dividir por el nuevo exponente.)**\n\\[\n\\frac{d}{dx}\\left[\\frac{x^{n+1}}{n+1} + C\\right] = \\frac{(n+1)x^{n+1-1}}{n+1} = x^{n}\n\\]\nPor lo tanto:\n\\[\nF(x) = \\frac{x^{n+1}}{n+1} + C\n\\]",
+        "**Notación para la Integral Indefinida**\n\\[\n\\int f(x)\\,dx = F(x) + C \\iff F'(x) = f(x)\n\\]\n\n- $f(x)$: integrando.\n- $dx$: diferencial (indica la variable de integración).\n\n\\begin{align*}\n\\int k\\,dx &= kx + C, \\quad k \\in \\mathbb{R} \\setminus \\{0\\} \\\\\n\\int k f(x)\\,dx &= k \\int f(x)\\,dx \\quad \\text{(Multiplication by constant)} \\\\\n\\int [f(x) \\pm g(x)]\\,dx &= \\int f(x)\\,dx \\pm \\int g(x)\\,dx \\quad \\text{(Sum and difference rule)} \\\\\n\\int x^{n}\\,dx &= \\frac{x^{n+1}}{n+1} + C, \\quad n \\neq -1 \\quad \\text{(Power rule)} \\\\\n\\int \\sin(x)\\,dx &= -\\cos(x) + C \\\\\n\\int \\cos(x)\\,dx &= \\sin(x) + C \\\\\n\\int \\sec^{2}(x)\\,dx &= \\tan(x) + C \\\\\n\\int \\csc^{2}(x)\\,dx &= -\\cot(x) + C \\\\\n\\int \\sec(x)\\tan(x)\\,dx &= \\sec(x) + C \\\\\n\\int \\csc(x)\\cot(x)\\,dx &= -\\csc(x) + C\n\\end{align*}\n\n**Tarea:** Determinar la antiderivada general de:\n\\[\nf(x) = 3\\sin(x) + \\frac{2x^{5} - 2\\sqrt{x}}{x} + 11x^{-3}\n\\]\n*Solución:*\n\\[\nF(x) = -3\\cos(x) + \\frac{2x^{5}}{5} - 4\\sqrt{x} - \\frac{11}{2x^{2}} + C\n\\]",
+        "El método tabular agiliza la integración por partes iterada cuando el integrando contiene el producto de un polinomio $P(x) = x^n$ con funciones exponenciales o trigonométricas del tipo:\n\\[\n\\int x^{n}\\sin(ax)\\,dx, \\qquad \\int x^{n}\\cos(ax)\\,dx, \\qquad \\int x^{n}e^{ax}\\,dx\n\\]",
+        "\\[\n\\int \\frac{x^{4}}{\\sqrt{x}}\\,dx\n\\]\n\n- Reescribir el denominador en forma de exponente fraccionario:\n\\[\n    = \\int \\frac{x^{4}}{x^{1/2}}\\,dx\n    \\]\n- Aplicar propiedades de potencias de igual base ($x^{a}/x^{b} = x^{a-b}$):\n\\[\n    = \\int x^{4}\\cdot x^{-1/2}\\,dx = \\int x^{7/2}\\,dx\n    \\]\n- Integrar mediante la regla de la potencia:\n\\[\n    = \\frac{x^{7/2 + 1}}{\\frac{7}{2} + 1} + C = \\frac{2x^{9/2}}{9} + C = \\frac{2\\sqrt{x^{9}}}{9} + C = \\frac{2x^{4}\\sqrt{x}}{9} + C\n    \\]"
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_antiderivaci_n.txt",
+          "seccion": "Tabla de Antiderivadas Generales",
+          "distancia": 0.0887
+        },
+        {
+          "fuente": "c_digo_latex_de_antiderivaci_n.txt",
+          "seccion": "Notación para la Integral Indefinida > Reglas Básicas de Integración",
+          "distancia": 0.1335
+        },
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "Método Tabular",
+          "distancia": 0.1381
+        },
+        {
+          "fuente": "c_digo_latex_de_simplificaci_n_algebraica.txt",
+          "seccion": "Ejercicios Resueltos > Desarrollo Paso a Paso > Ejercicio c)",
+          "distancia": 0.1383
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": false,
+      "tokens_entrada": 11120,
+      "tokens_salida": 1269,
+      "desde_cache": true,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 0.8888888888888888,
+        "answer_relevancy": 0.9895381506530923,
+        "context_precision": 0.99999999995,
+        "context_recall": 0.6666666666666666
+      }
+    },
+    {
+      "question": "¿En qué consiste el método de sustitución y cuándo se puede aplicar?",
+      "ground_truth": "El método de sustitución usa la regla de la cadena a la inversa. Se aplica cuando el integrando está compuesto por dos expresiones donde una es la derivada de la otra (pudiendo diferir solo por un factor constante). Si u = g(x), entonces du = g'(x) dx y la integral de f(g(x))g'(x) dx se convierte en la integral de f(u) du = F(u) + C = F(g(x)) + C.",
+      "tipo": "definicion",
+      "fuente_esperada": "c_digo_latex_de_sustitucion.txt",
+      "seccion_esperada": "Antiderivación de una Función Compuesta",
+      "respuesta": "El método de sustitución consiste en cambiar la variable de integración por una función de $x$ para transformar la integral en una más sencilla. Según el material, se apoya en la regla de la cadena a la inversa [3].\n\n**Idea central**\n\nSi $u = g(x)$, entonces $du = g'(x)\\,dx$, y se cumple:\n$$\\int f(g(x))\\,g'(x)\\,dx = F(g(x)) + C \\qquad \\text{con } \\int f(u)\\,du = F(u) + C$$\n[3]. Es decir, primero se integra en términos de $u$ y luego se regresa a $x$.\n\n**Cuándo aplicarlo**\n\nEl método se usa cuando el integrando está formado por dos expresiones donde una es la derivada de la otra, salvo por un factor constante [3]. En la práctica, conviene elegir como $u$ la parte interna de una función compuesta, por ejemplo [2]:\n- una cantidad elevada a una potencia o exponente;\n- el argumento de una función trigonométrica;\n- el argumento de una función logarítmica o exponencial;\n- la cantidad subradical (radicando).\n\n**Algoritmo de trabajo**\n\nSegún el material [2]:\n1. Elegir $u = g(x)$.\n2. Calcular $du = g'(x)\\,dx$.\n3. Reescribir toda la integral en términos de $u$ y $du$.\n4. Integrar la expresión resultante.\n5. Regresar a $x$ reemplazando $u$ por $g(x)$.\n6. Comprobar derivando el resultado.\n\n**Para practicar**\n\nAntes de elegir una sustitución, pregúntate: ¿qué parte del integrando es la derivada de otra parte? Si me indicas la integral que quieres trabajar, te doy pistas para identificar $u$ y $du$ y tú propones el primer paso.",
+      "pregunta_evaluada": "¿En qué consiste el método de sustitución y cuándo se puede aplicar?",
+      "contextos": [
+        "{**FUNDACIÓN UNIVERSITARIA KONRAD LORENZ**}\n\n{**Facultad de Matemáticas e Ingenierías**}\n\n**Cálculo II** -- 2026\n\n*Docente: Dr. Óscar Leonardo Pantano-Mogollón*\n\n{**MÉTODO DE INTEGRACIÓN: SUSTITUCIÓN**}\n\n**Propósito:** Utilizar el método de integración por sustitución para determinar integrales indefinidas.",
+        "- **Elegir una sustitución $u = g(x)$:** Usualmente es conveniente seleccionar la parte interna de una función compuesta:\n\n- Una cantidad elevada a una potencia o exponente.\n- El argumento de una función trigonométrica.\n- El argumento de una función logarítmica o exponencial.\n- La cantidad subradical (radicando).\n\n- **Calcular el diferencial:** Hallar $du = g'(x)\\,dx$.\n- **Reescribir la integral:** Expresar completamente el integrando en términos de la variable $u$ y su diferencial $du$.\n- **Integrar:** Resolver la integral elemental en términos de $u$.\n- **Retornar a la variable original:** Reemplazar $u$ por $g(x)$ para obtener la antiderivada en términos de $x$.\n- **Comprobar:** Verificar el resultado derivando la antiderivada obtenida.",
+        "Sea $g$ una función cuyo recorrido o rango es un intervalo $I$, y sea $f$ una función continua en $I$. Si $g$ es derivable en su dominio y $F$ es una antiderivada o primitiva de $f$ en $I$, entonces:\n\nSi $u = g(x)$, entonces $du = g'(x)\\,dx$, por lo que:\n\\begin{equation*}\n    \\int f(g(x))g'(x)\\,dx = F(g(x)) + C\n\\end{equation*}\n\\begin{equation*}\n    \\int f(u)\\,du = F(u) + C\n\\end{equation*}\n\nEl método de sustitución utiliza la **regla de la cadena a la inversa**.\nEsta técnica de integración se aplica cuando el integrando está compuesto por dos expresiones donde una de ellas es la derivada de la otra (pudiendo diferir únicamente por un factor constante).",
+        "{**FUNDACIÓN UNIVERSITARIA KONRAD LORENZ**}\n\n{**Facultad de Matemáticas e Ingenierías**}\n\n**Cálculo II** -- 2026\n\n*Docente: Dr. Óscar Leonardo Pantano-Mogollón*\n\n{**SUSTITUCIÓN TRIGONOMÉTRICA**}\n\n**Propósito:** Determinar integrales indefinidas a través de sustituciones trigonométricas."
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Introduccion",
+          "distancia": 0.1422
+        },
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Algoritmo para Realizar un Cambio de Variable",
+          "distancia": 0.1563
+        },
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Antiderivación de una Función Compuesta",
+          "distancia": 0.1564
+        },
+        {
+          "fuente": "c_digo_latex_de_susticion_trigonometrica.txt",
+          "seccion": "Introduccion",
+          "distancia": 0.1599
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": false,
+      "tokens_entrada": 10772,
+      "tokens_salida": 626,
+      "desde_cache": true,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 0.75,
+        "answer_relevancy": 0.9425007109786175,
+        "context_precision": 0.5833333333041666,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "question": "¿De dónde sale la fórmula de integración por partes?",
+      "ground_truth": "Se deduce de la regla de derivación de un producto: d/dx[u(x)v(x)] = u(x)v'(x) + v(x)u'(x). Integrando ambos lados respecto a x se obtiene u(x)v(x) = integral de u v' dx + integral de v u' dx. Con du = u'(x) dx y dv = v'(x) dx esto es uv = integral de u dv + integral de v du, y reorganizando: la integral de u dv es uv menos la integral de v du.",
+      "tipo": "definicion",
+      "fuente_esperada": "c_digo_latex_de_integraci_n_por_partes.txt",
+      "seccion_esperada": "Deducción de la Fórmula",
+      "respuesta": "La fórmula sale de la regla del producto para derivadas, lo que se explica en el material del curso [1].\n\n**Punto de partida: la derivada de un producto**\nSi $u(x)$ y $v(x)$ son funciones derivables, la regla del producto dice:\n$$\\frac{d}{dx}[u(x)v(x)] = u(x)v'(x) + v(x)u'(x)$$\n[1]\n\n**Integrar ambos lados**\nIntegrando respecto a $x$, el lado izquierdo se cancela con la integral (antiderivar una derivada devuelve la función original):\n$$u(x)v(x) = \\int u(x)v'(x)\\,dx + \\int v(x)u'(x)\\,dx$$\n[1]\n\n**Cambiar a notación diferencial**\nCon $u = u(x)$, $du = u'(x)\\,dx$, $v = v(x)$ y $dv = v'(x)\\,dx$, la relación queda:\n$$uv = \\int u\\,dv + \\int v\\,du$$\n[1]\n\n**Despejar**\nReorganizando términos se obtiene el teorema del método:\n$$\\int u\\,dv = uv - \\int v\\,du$$\n[1]\n\n**Por qué sirve**\nLa integral original $\\int u\\,dv$ se transforma en $\\int v\\,du$. Conviene elegir $u$ y $dv$ de modo que $\\int v\\,du$ sea más simple que la integral inicial. Para elegir $u$ puedes usar la prioridad ILATE [2]. Por ejemplo, en $\\int \\ln(x)\\,dx$ se toma $u=\\ln(x)$ y $dv=dx$, y el método produce $x\\ln(x) - x + C$ [4].\n\nPara practicar, intenta reconstruir la deducción tú mismo: deriva $u(x)v(x)$ con la regla del producto y observa qué término necesitas aislar. Si quieres, comparte tu intento y lo revisamos.",
+      "pregunta_evaluada": "¿De dónde sale la fórmula de integración por partes?",
+      "contextos": [
+        "La integración por partes se fundamenta en la regla de derivación de un producto:\n\\[\n\\frac{d}{dx}[u(x)v(x)] = u(x)v'(x) + v(x)u'(x)\n\\]\nIntegrando a ambos lados respecto a $x$:\n\\begin{align*}\n\\int \\frac{d}{dx}[u(x)v(x)]\\,dx &= \\int [u(x)v'(x) + v(x)u'(x)]\\,dx \\\\\nu(x)v(x) &= \\int u(x)v'(x)\\,dx + \\int v(x)u'(x)\\,dx\n\\end{align*}\nHaciendo $u = u(x)$, $du = u'(x)\\,dx$, $v = v(x)$, y $dv = v'(x)\\,dx$:\n\\[\nuv = \\int u\\,dv + \\int v\\,du\n\\]\nReorganizando los términos, se obtiene el teorema fundamental del método:\n\n**TEOREMA:** Si $u$ y $v$ son funciones de $x$ con derivadas continuas en un intervalo, entonces:\n\\[\n\\int u\\,dv = uv - \\int v\\,du\n\\]",
+        "El método tabular agiliza la integración por partes iterada cuando el integrando contiene el producto de un polinomio $P(x) = x^n$ con funciones exponenciales o trigonométricas del tipo:\n\\[\n\\int x^{n}\\sin(ax)\\,dx, \\qquad \\int x^{n}\\cos(ax)\\,dx, \\qquad \\int x^{n}e^{ax}\\,dx\n\\]",
+        "**Propósito**\nUtilizar el método de integración por partes para determinar integrales indefinidas.\n\nEsta técnica de integración puede aplicarse a una amplia variedad de funciones y es particularmente útil para integrandos que contengan productos (explícitos e implícitos) de funciones algebraicas (nota: Las funciones polinomiales y las racionales son ejemplos de funciones algebraicas. Se llama función algebraica de $x$ a aquella que puede expresarse mediante un número finito de sumas, diferencias, productos, cocientes y raíces que contengan $x^n$.) y trascendentes (nota: Las funciones no algebraicas se denominan trascendentes. Por ejemplo, las funciones logarítmicas, exponenciales, trigonométricas y trigonométricas inversas son trascendentes.).\n\nEjemplos típicos:\n\\[\n\\int x\\ln(x)\\,dx \\qquad \\int x^{2}e^{x}\\,dx \\qquad \\int e^{x}\\sin(x)\\,dx \\qquad \\int \\frac{\\cos(\\pi/x)}{x^{2}}\\,dx\n\\]",
+        "Evaluar:\n\\[\n\\int \\ln(x)\\,dx\n\\]\n**Solución:**\n\n- $u = \\ln(x) \\implies du = \\frac{1}{x}\\,dx$\n- $dv = dx \\implies v = x$\n\nAplicando la fórmula de integración por partes:\n\\begin{align*}\n\\int \\ln(x)\\,dx &= x\\ln(x) - \\int x\\left(\\frac{1}{x}\\right)dx \\\\\n&= x\\ln(x) - \\int dx \\\\\n&= x\\ln(x) - x + C\n\\end{align*}"
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "Introducción a la Integración por Partes > Deducción de la Fórmula",
+          "distancia": 0.1327
+        },
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "Método Tabular",
+          "distancia": 0.1402
+        },
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "Introducción a la Integración por Partes",
+          "distancia": 0.1411
+        },
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "Ejemplos Resueltos > Ejemplo 1: Integral del logaritmo natural",
+          "distancia": 0.1433
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": false,
+      "tokens_entrada": 10917,
+      "tokens_salida": 658,
+      "desde_cache": true,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 0.5384615384615384,
+        "answer_relevancy": 0.94702949044798,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "question": "¿Qué sustitución trigonométrica corresponde a cada una de las formas raíz de (a² − x²), raíz de (a² + x²) y raíz de (x² − a²)?",
+      "ground_truth": "Para raíz de (a² − x²) se usa x = a sen θ, con dx = a cos θ dθ. Para raíz de (a² + x²) se usa x = a tan θ, con dx = a sec²θ dθ. Para raíz de (x² − a²) se usa x = a sec θ, con dx = a sec θ tan θ dθ. En cada caso la identidad pitagórica elimina el radical: a² − a² sen²θ = a² cos²θ, a² + a² tan²θ = a² sec²θ y a² sec²θ − a² = a² tan²θ.",
+      "tipo": "definicion",
+      "fuente_esperada": "c_digo_latex_de_susticion_trigonometrica.txt",
+      "seccion_esperada": "Casos estándar de sustitución trigonométrica",
+      "respuesta": "Cada forma se elimina con la sustitución que hace que el radical use una identidad pitagórica [1]. El material indica estas correspondencias [2]:\n\n| Expresión en el integrando | Sustitución | Diferencial | Identidad que elimina el radical |\n|---|---|---|---|\n| $\\sqrt{a^2 - x^2}$ | $x = a\\sin\\theta$ | $dx = a\\cos\\theta\\,d\\theta$ | $a^2 - a^2\\sin^2\\theta = a^2\\cos^2\\theta$ |\n| $\\sqrt{a^2 + x^2}$ | $x = a\\tan\\theta$ | $dx = a\\sec^2\\theta\\,d\\theta$ | $a^2 + a^2\\tan^2\\theta = a^2\\sec^2\\theta$ |\n| $\\sqrt{x^2 - a^2}$ | $x = a\\sec\\theta$ | $dx = a\\sec\\theta\\tan\\theta\\,d\\theta$ | $a^2\\sec^2\\theta - a^2 = a^2\\tan^2\\theta$ |\n\nLas identidades que se usan son $\\sin^2\\theta + \\cos^2\\theta = 1$, $\\sec^2\\theta = \\tan^2\\theta + 1$ y $\\tan^2\\theta = \\sec^2\\theta - 1$ [1].",
+      "pregunta_evaluada": "¿Qué sustitución trigonométrica corresponde a cada una de las formas raíz de (a² − x²), raíz de (a² + x²) y raíz de (x² − a²)?",
+      "contextos": [
+        "El objetivo principal de las sustituciones trigonométricas es eliminar el radical presente en el integrando mediante el uso de identidades pitagóricas:\n\\begin{align*}\n    \\sin^2(x) + \\cos^2(x) &= 1 \\\\\n    \\sec^2(x) &= \\tan^2(x) + 1 \\\\\n    \\tan^2(x) &= \\sec^2(x) - 1\n\\end{align*}",
+        "| **Expresión en el integrando** | **Sustitución** | **Diferencial ($dx$)** | **Identidad utilizada** |\n| $\\sqrt{a^2 - x^2}$ | $x = a\\sin(\\theta)$ | $dx = a\\cos(\\theta)\\,d\\theta$ | $a^2 - a^2\\sin^2(\\theta) = a^2\\cos^2(\\theta)$ |\n| $\\sqrt{a^2 + x^2}$ | $x = a\\tan(\\theta)$ | $dx = a\\sec^2(\\theta)\\,d\\theta$ | $a^2 + a^2\\tan^2(\\theta) = a^2\\sec^2(\\theta)$ |\n| $\\sqrt{x^2 - a^2}$ | $x = a\\sec(\\theta)$ | $dx = a\\sec(\\theta)\\tan(\\theta)\\,d\\theta$ | $a^2\\sec^2(\\theta) - a^2 = a^2\\tan^2(\\theta)$ |",
+        "\\begin{align*}\n    &= 2\\sqrt{t} + C_1 + 2\\left(\\frac{2}{3}t^{3/2}\\right) + D - \\frac{2}{5}t^{5/2} + E \\\\\n    &= 2\\sqrt{t} + \\frac{4}{3}\\sqrt{t^{3}} - \\frac{2}{5}\\sqrt{t^{5}} + F\n    \\end{align*}\n- Expresando bajo un denominador común o simplificando raíces: (nota: Si se escala por el factor común de denominadores o se extraen factores fuera del radical:)\n\\begin{align*}\n    &= \\frac{30\\sqrt{t} + 20\\sqrt{t^{3}} - 6\\sqrt{t^{5}}}{15} + F \\\\\n    &= \\frac{30\\sqrt{t} + 20t\\sqrt{t} - 6t^{2}\\sqrt{t}}{15} + F\n    \\end{align*}",
+        "{**FUNDACIÓN UNIVERSITARIA KONRAD LORENZ**}\n\n{**Facultad de Matemáticas e Ingenierías**}\n\n**Cálculo II** -- 2026\n\n*Docente: Dr. Óscar Leonardo Pantano-Mogollón*\n\n{**SUSTITUCIÓN TRIGONOMÉTRICA**}\n\n**Propósito:** Determinar integrales indefinidas a través de sustituciones trigonométricas."
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_susticion_trigonometrica.txt",
+          "seccion": "Fundamentos y Razones Trigonométricas",
+          "distancia": 0.105
+        },
+        {
+          "fuente": "c_digo_latex_de_susticion_trigonometrica.txt",
+          "seccion": "Fundamentos y Razones Trigonométricas > Casos estándar de sustitución trigonométrica",
+          "distancia": 0.1066
+        },
+        {
+          "fuente": "c_digo_latex_de_simplificaci_n_algebraica.txt",
+          "seccion": "Ejercicios Resueltos > Desarrollo Paso a Paso > Ejercicio a)",
+          "distancia": 0.1255
+        },
+        {
+          "fuente": "c_digo_latex_de_susticion_trigonometrica.txt",
+          "seccion": "Introduccion",
+          "distancia": 0.1311
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": false,
+      "tokens_entrada": 10872,
+      "tokens_salida": 954,
+      "desde_cache": true,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.923433838051909,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "question": "¿Cuáles son las identidades de reducción de potencia (ángulo medio) para sen² y cos²?",
+      "ground_truth": "sen²(x) = (1 − cos(2x))/2 y cos²(x) = (1 + cos(2x))/2. Se usan cuando las potencias de seno y coseno son pares.",
+      "tipo": "definicion",
+      "fuente_esperada": "c_digo_latex_de_Areas_entre-Curvas.txt",
+      "seccion_esperada": "Identidades Trigonométricas Fundamentales",
+      "respuesta": "Las identidades de reducción de potencia (ángulo medio) son:\n\n$$\\sin^2(x) = \\frac{1 - \\cos(2x)}{2}, \\qquad \\cos^2(x) = \\frac{1 + \\cos(2x)}{2}$$\n\nAparecen en el material como identidades fundamentales [2]. Se usan cuando las potencias de seno y coseno son pares [1]. Ayudan a reemplazar $\\sin^2$ o $\\cos^2$ por expresiones en $\\cos(2x)$, que son más fáciles de integrar.\n\nEl material también recomienda, en ocasiones, las identidades $\\sin(x)\\cos(x) = \\frac{\\sin(2x)}{2}$ y $\\cos(2x) = \\cos^2(x) - \\sin^2(x)$ [1].\n\nSi quieres practicar con $\\int \\cos^4(x)\\,dx$, intenta primero aplicar $\\cos^2(x) = \\frac{1 + \\cos(2x)}{2}$ dos veces. Cuéntame hasta dónde llegas y te ayudo a continuar.",
+      "pregunta_evaluada": "¿Cuáles son las identidades de reducción de potencia (ángulo medio) para sen² y cos²?",
+      "contextos": [
+        "**Observación:** Si la potencia de ambos, seno y coseno, es impar, puede utilizarse tanto el criterio a) como el b).\n\n- **Si las potencias de ambos, seno y coseno, son pares:** Utilizamos las identidades de reducción de potencia (o del ángulo medio):\n\\begin{equation*}\n        \\sin^2(x) = \\frac{1 - \\cos(2x)}{2}, \\qquad \\cos^2(x) = \\frac{1 + \\cos(2x)}{2}\n    \\end{equation*}\nEn ocasiones también resulta conveniente emplear:\n\\begin{equation*}\n        \\sin(x)\\cos(x) = \\frac{\\sin(2x)}{2}, \\qquad \\cos(2x) = \\cos^2(x) - \\sin^2(x)\n    \\end{equation*}",
+        "- **Identidad Pitagórica:**\n\\begin{equation*}\n        \\sin^2(x) + \\cos^2(x) = 1\n    \\end{equation*}\n- **Identidades de reducción de potencia (ángulo medio):**\n\\begin{align*}\n        \\sin^2(x) &= \\frac{1 - \\cos(2x)}{2} \\\\\n        \\cos^2(x) &= \\frac{1 + \\cos(2x)}{2}\n    \\end{align*}\n- **Identidades Pitagóricas para tangente y secante:**\n\\begin{align*}\n        \\tan^2(x) + 1 &= \\sec^2(x) \\\\\n        \\tan^2(x) &= \\sec^2(x) - 1\n    \\end{align*}",
+        "El objetivo principal de las sustituciones trigonométricas es eliminar el radical presente en el integrando mediante el uso de identidades pitagóricas:\n\\begin{align*}\n    \\sin^2(x) + \\cos^2(x) &= 1 \\\\\n    \\sec^2(x) &= \\tan^2(x) + 1 \\\\\n    \\tan^2(x) &= \\sec^2(x) - 1\n\\end{align*}",
+        "Evaluar la integral indefinida:\n\\begin{equation*}\n    \\int \\cos^4(x)\\,dx\n\\end{equation*}\n\n**Solución:**"
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_Areas_entre-Curvas.txt",
+          "seccion": "Estrategia para la Evaluación de $\\int \\sin^m(x)\\cos^n(x)\\,dx$",
+          "distancia": 0.1216
+        },
+        {
+          "fuente": "c_digo_latex_de_Areas_entre-Curvas.txt",
+          "seccion": "Identidades Trigonométricas Fundamentales",
+          "distancia": 0.1227
+        },
+        {
+          "fuente": "c_digo_latex_de_susticion_trigonometrica.txt",
+          "seccion": "Fundamentos y Razones Trigonométricas",
+          "distancia": 0.1594
+        },
+        {
+          "fuente": "c_digo_latex_de_Areas_entre-Curvas.txt",
+          "seccion": "Ejemplos Desarrollados: Potencias de Seno y Coseno > Ejemplo 1: Potencias pares de coseno",
+          "distancia": 0.161
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": false,
+      "tokens_entrada": 10618,
+      "tokens_salida": 540,
+      "desde_cache": true,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 0.6666666666666666,
+        "answer_relevancy": 0.9486684252238667,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "question": "Intenté resolver la integral de 1/(x² · raíz de (9 − x²)) con la sustitución x = 3 sen θ y llegué a la integral de 3 cos θ dθ dividido entre 9 sen²θ por raíz de (9 − 9 sen²θ), pero no sé cómo seguir. ¿Me muestras la solución completa?",
+      "ground_truth": "Con x = 3 sen θ se tiene dx = 3 cos θ dθ y raíz de (9 − x²) = 3 cos θ (porque 9 − 9 sen²θ = 9 cos²θ). La integral queda (1/9) por la integral de 1/sen²θ dθ = (1/9) integral de csc²θ dθ = −(1/9) cot θ + C. Del triángulo de referencia (hipotenusa 3, cateto opuesto x, cateto adyacente raíz de (9 − x²)), cot θ = raíz de (9 − x²)/x. Resultado: −raíz de (9 − x²)/(9x) + C.",
+      "tipo": "procedimiento",
+      "fuente_esperada": "c_digo_latex_de_susticion_trigonometrica.txt",
+      "seccion_esperada": "Ejemplo 1: Caso raíz de (a² − x²)",
+      "respuesta": "Tu planteamiento es correcto. Con $x = 3\\sin\\theta$ obtuviste\n\n$$\\int \\frac{3\\cos\\theta}{9\\sin^2\\theta\\,\\sqrt{9-9\\sin^2\\theta}}\\,d\\theta,$$\n\nque es el resultado de sustituir $dx = 3\\cos\\theta\\,d\\theta$ y $x^2 = 9\\sin^2\\theta$ en la integral original. Lo que te falta es simplificar la raíz del denominador. Aquí tienes la resolución completa a partir de tu intento.\n\n**1. Identificar la forma de la integral**\nEl integrando contiene $\\sqrt{a^2 - x^2}$ con $a = 3$. Para esta forma, la tabla de casos estándar indica $x = a\\sin\\theta$ [1].\n\n**2. Plantear la sustitución**\n$x = 3\\sin\\theta$ y $dx = 3\\cos\\theta\\,d\\theta$ [1]. Con la identidad $a^2 - a^2\\sin^2\\theta = a^2\\cos^2\\theta$ [1]:\n$$\\sqrt{9 - 9\\sin^2\\theta} = \\sqrt{9\\cos^2\\theta} = 3\\cos\\theta \\quad\\text{(con } \\cos\\theta \\geq 0\\text{)}.$$\n\n**3. Simplificar algebraicamente**\nReemplazamos en el integrando. El denominador queda $9\\sin^2\\theta \\cdot 3\\cos\\theta$, y el $3\\cos\\theta$ del numerador cancela con el $3\\cos\\theta$ del denominador:\n$$\\int \\frac{3\\cos\\theta\\,d\\theta}{9\\sin^2\\theta \\cdot 3\\cos\\theta} = \\int \\frac{d\\theta}{9\\sin^2\\theta} = \\frac{1}{9}\\int \\csc^2\\theta\\,d\\theta.$$\n\n**4. Integrar**\nComo $\\frac{d}{d\\theta}[\\cot\\theta] = -\\csc^2\\theta$ (derivada que usa las identidades pitagóricas de [2]):\n$$\\frac{1}{9}\\int \\csc^2\\theta\\,d\\theta = -\\frac{1}{9}\\cot\\theta + C.$$\n\n**5. Devolver la sustitución (triángulo de referencia)**\nDe $\\sin\\theta = \\dfrac{x}{3}$ se tiene: cateto opuesto $= x$, hipotenusa $= 3$. Por el teorema de Pitágoras [3], el cateto adyacente es $\\sqrt{9 - x^2}$. Entonces, con $\\cot\\theta = \\dfrac{ca}{co}$ [3]:\n$$\\cot\\theta = \\frac{\\sqrt{9-x^2}}{x}.$$\nPor lo tanto:\n$$-\\frac{\\sqrt{9-x^2}}{9x} + C$$\n\n**6. Verificar derivando**\nSea $f(x) = \\dfrac{\\sqrt{9-x^2}}{x}$. Por la regla del cociente:\n$$f'(x) = \\frac{\\dfrac{-x}{\\sqrt{9-x^2}}\\cdot x - \\sqrt{9-x^2}}{x^2} = \\frac{-x^2 - (9 - x^2)}{x^2\\sqrt{9-x^2}} = \\frac{-9}{x^2\\sqrt{9-x^2}}.$$\nEntonces:\n$$\\frac{d}{dx}\\left[-\\frac{f(x)}{9}\\right] = -\\frac{1}{9}\\cdot\\frac{-9}{x^2\\sqrt{9-x^2}} = \\frac{1}{x^2\\sqrt{9-x^2}},$$\nque es el integrando original.\n\n**Resultado:** $\\displaystyle\\int \\frac{dx}{x^2\\sqrt{9-x^2}} = -\\frac{\\sqrt{9-x^2}}{9x} + C$\n\nObserva que, a diferencia de $\\int\\frac{\\sqrt{9-x^2}}{x^2}\\,dx$, este caso no produce un término $\\arcsin$, porque el integrando se reduce a $\\csc^2\\theta$ y no a $\\csc^2\\theta - 1$.",
+      "pregunta_evaluada": "Intenté resolver la integral de 1/(x² · raíz de (9 − x²)) con la sustitución x = 3 sen θ y llegué a la integral de 3 cos θ dθ dividido entre 9 sen²θ por raíz de (9 − 9 sen²θ), pero no sé cómo seguir. ¿Me muestras la solución completa?",
+      "contextos": [
+        "- $\\displaystyle \\int 3x^2\\sqrt{x^3+1}\\,dx \\implies u = x^3+1 \\implies du = 3x^2\\,dx$ \\quad **(Cumple)**\n- $\\displaystyle \\int (2x+3)(x^2+x)\\,dx \\implies u = x^2+x \\implies du = (2x+1)\\,dx \\neq (2x+3)\\,dx$ \\quad **(No cumple)**\n- $\\displaystyle \\int \\sin^2(3x)\\cos(3x)\\,dx \\implies u = \\sin(3x) \\implies du = 3\\cos(3x)\\,dx \\iff \\frac{du}{3} = \\cos(3x)\\,dx$ \\quad **(Cumple)**\n- $\\displaystyle \\int x\\sqrt{x-1}\\,dx \\implies u = x-1 \\implies du = dx, \\; x = u+1$ \\quad **(Requiere despeje algebraico)**\n- $\\displaystyle \\int \\frac{\\sqrt{9-x^2}}{x^2}\\,dx \\implies u = 9-x^2 \\implies du = -2x\\,dx$ \\quad **(No cumple, requiere sustitución trigonométrica)**\n- $\\displaystyle \\int x^3(x^2+1)^4\\,dx \\implies u = x^2+1 \\implies \\frac{du}{2} = x\\,dx, \\; x^2 = u-1$ \\quad **(Requiere despeje algebraico)**\n- $\\displaystyle \\int 2x e^x\\,dx \\implies$ Requiere integración por partes \\quad **(No cumple)**\n- $\\displaystyle \\int \\frac{-4x}{(1-2x^2)^2}\\,dx \\implies u = 1-2x^2 \\implies du = -4x\\,dx$ \\quad **(Cumple)**\n- $\\displaystyle \\int x\\sin(x)\\,dx \\implies$ Requiere integración por partes \\quad **(No cumple)**",
+        "| **Ítem** | **Respuesta** |\n| a) | $e^{x} - 2\\ln|x| + C$ |\n| b) | $x^{2} + \\frac{1}{x} + C$ |\n| c) | $2x^{2} - 5x + C$ |\n| d) | $\\ln|1+x^{3}| + C$ |\n| e) | $\\frac{2\\sqrt{(z+2)^{3}}}{3} - 4\\sqrt{z+2} + C$ |\n| f) | $e^{x} + \\sin(x) + C$ |\n| g) | $-\\frac{1}{2}\\cos(2x) - 4\\sin(3x) + C$ |\n| h) | $\\frac{2t^{5/2}}{5} + \\frac{2t^{3/2}}{3} + t^{3} + \\frac{3t^{2}}{2} + C$ |\n| i) | $\\frac{5}{4}\\sec(12x) + C$ |\n| j) | $-\\frac{2}{t^{2}} + \\frac{4}{t^{3}} + C$ |\n| k) | $\\frac{3}{4}\\tan(4x) - \\frac{5}{4}\\sec(4x) + C$ |\n| l) | $\\frac{3x^{2}}{2} + 9x + C$ |\n| m) | $\\sin(x) - x^{2} + C$ |",
+        "\\begin{equation*}\n    \\int x\\sqrt{x-1}\\,dx\n\\end{equation*}\nTomamos:\n\\begin{align*}\n    u &= x - 1 \\implies x = u + 1 \\\\\n    du &= dx\n\\end{align*}\nSustituyendo:\n\\begin{align*}\n    \\int (u+1)\\sqrt{u}\\,du &= \\int (u^{3/2} + u^{1/2})\\,du \\\\\n    &= \\frac{2}{5}u^{5/2} + \\frac{2}{3}u^{3/2} + C \\\\\n    &= \\frac{2\\sqrt{u^5}}{5} + \\frac{2\\sqrt{u^3}}{3} + C \\\\\n    &= \\frac{2\\sqrt{(x-1)^5}}{5} + \\frac{2\\sqrt{(x-1)^3}}{3} + C\n\\end{align*}",
+        "- $\\displaystyle \\ln|\\csc(x) - \\cot(x)| + C$\n- $\\displaystyle \\frac{1}{3}\\ln\\left|\\frac{\\sqrt{4x^2 + 9}}{2x} - \\frac{3}{2x}\\right| + C$\n- $\\displaystyle \\sqrt{3}\\left(\\frac{\\sqrt{x^2 - 3}}{\\sqrt{3}} - \\sec^{-1}\\left(\\frac{x}{\\sqrt{3}}\\right)\\right) + C$\n- $\\displaystyle -\\sqrt{x^2 - 1} + C$\n- $\\displaystyle \\sqrt{(x - 1)^2 - 4} - 2\\sec^{-1}\\left(\\frac{x - 1}{2}\\right) + C$\n- $\\displaystyle \\frac{9}{2}\\sin^{-1}\\left(\\frac{x}{3}\\right) + \\frac{x\\sqrt{9 - x^2}}{2} + C$\n- $\\displaystyle -\\frac{\\sqrt{(9 - x^2)^3}}{3} + C$\n- $\\displaystyle \\sqrt{x^2 - 4} + C$\n- $\\displaystyle \\frac{3}{8}\\sin^{-1}(x) - \\frac{3x\\sqrt{1 - x^2}}{8} - \\frac{x^3\\sqrt{1 - x^2}}{4} + C$"
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Selección y Análisis de Integrales por Sustitución Directa > Análisis de selección",
+          "distancia": 0.1048
+        },
+        {
+          "fuente": "c_digo_latex_de_simplificaci_n_algebraica.txt",
+          "seccion": "Respuestas a los Ejercicios Propuestos",
+          "distancia": 0.1086
+        },
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Solución Detallada de las Integrales > Caso d (Sustitución con despeje algebraico):",
+          "distancia": 0.1098
+        },
+        {
+          "fuente": "c_digo_latex_de_susticion_trigonometrica.txt",
+          "seccion": "Soluciones de los Ejercicios Propuestos",
+          "distancia": 0.1106
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": false,
+      "tokens_entrada": 11852,
+      "tokens_salida": 2668,
+      "desde_cache": true,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.913143622344705,
+        "context_precision": 0.0,
+        "context_recall": 0.0
+      }
+    },
+    {
+      "question": "Escribí la integral de cos⁴(x) como (cos²(x))² pero me trabé al desarrollar. ¿Puedes mostrarme la solución completa?",
+      "ground_truth": "Como la potencia del coseno es par se usa cos²(x) = (1 + cos 2x)/2. Entonces la integral de cos⁴x es (1/4) por la integral de [1 + 2 cos 2x + cos² 2x] dx, y con cos² 2x = (1 + cos 4x)/2 se obtiene (1/4)[x + sen 2x + x/2 + sen 4x/8] + C = 3x/8 + sen(2x)/4 + sen(4x)/32 + C.",
+      "tipo": "procedimiento",
+      "fuente_esperada": "c_digo_latex_de_Areas_entre-Curvas.txt",
+      "seccion_esperada": "Ejemplo 1: Potencias pares de coseno",
+      "respuesta": "Tu primer paso es correcto: escribir $\\cos^4(x) = \\left[\\cos^2(x)\\right]^2$ permite usar la identidad de reducción de potencia que aparece en el material [3]. La dificultad está en el segundo paso, al aparecer $\\cos^2(2x)$, que se reduce con la misma identidad. Te muestro la resolución completa.\n\n**1. Identificar la forma de la integral**\nEs una potencia par de coseno, $\\int\\cos^4(x)\\,dx$. El material resuelve este tipo reduciendo la potencia con $\\cos^2(x) = \\frac{1+\\cos(2x)}{2}$ y repitiendo el proceso cuando sea necesario [3].\n\n**2. Plantear la reducción de potencia**\n$$\\cos^4(x) = \\left[\\cos^2(x)\\right]^2 = \\left(\\frac{1+\\cos(2x)}{2}\\right)^2 = \\frac{\\left[1+\\cos(2x)\\right]^2}{4}$$\nTomado de [3].\n\n**3. Simplificar algebraicamente**\nDesarrollando el cuadrado:\n$$\\frac{1}{4}\\left[1 + 2\\cos(2x) + \\cos^2(2x)\\right]$$\nAparece $\\cos^2(2x)$, que se reduce con la misma identidad, pero con argumento $2x$:\n$$\\cos^2(2x) = \\frac{1+\\cos(4x)}{2}$$\nSustituyendo:\n$$\\frac{1}{4}\\left[1 + 2\\cos(2x) + \\frac{1+\\cos(4x)}{2}\\right] = \\frac{1}{4}\\left[\\frac{3}{2} + 2\\cos(2x) + \\frac{\\cos(4x)}{2}\\right] = \\frac{3}{8} + \\frac{\\cos(2x)}{2} + \\frac{\\cos(4x)}{8}$$\nAhora el integrando es una suma de términos elementales.\n\n**4. Integrar**\n$$\\int\\cos^4(x)\\,dx = \\int\\left[\\frac{3}{8} + \\frac{\\cos(2x)}{2} + \\frac{\\cos(4x)}{8}\\right]dx = \\frac{3x}{8} + \\frac{\\sin(2x)}{4} + \\frac{\\sin(4x)}{32} + C$$\nEsto coincide con el resultado del ejemplo del material [3].\n\n**5. Devolver la sustitución**\nNo hubo sustitución de variable ni sustitución trigonométrica, así que no hay triángulo de referencia ni cambio que deshacer. El resultado ya está en $x$.\n\n**6. Verificar derivando**\n$$\\frac{d}{dx}\\left[\\frac{3x}{8}\\right] = \\frac{3}{8},\\qquad \\frac{d}{dx}\\left[\\frac{\\sin(2x)}{4}\\right] = \\frac{\\cos(2x)}{2},\\qquad \\frac{d}{dx}\\left[\\frac{\\sin(4x)}{32}\\right] = \\frac{\\cos(4x)}{8}$$\nLa suma es $\\frac{3}{8} + \\frac{\\cos(2x)}{2} + \\frac{\\cos(4x)}{8}$, que es exactamente la expresión del paso 3, es decir, $\\cos^4(x)$.",
+      "pregunta_evaluada": "Escribí la integral de cos⁴(x) como (cos²(x))² pero me trabé al desarrollar. ¿Puedes mostrarme la solución completa?",
+      "contextos": [
+        "| **Ítem** | **Respuesta** |\n| a) | $\\displaystyle \\frac{1}{2}(1+x^{2})\\left(\\ln(1+x^{2}) - 1\\right) + C$ |\n| b) | $\\displaystyle \\frac{x}{a}\\sin(ax) + \\frac{1}{a^{2}}\\cos(ax) + C$ |\n| c) | $\\displaystyle -\\frac{1}{x}(\\ln(x) + 1) + C$ |\n| d) | $\\displaystyle \\frac{1}{2}\\left[(x^{2}-1)\\ln(x^{2}-1) - (x^{2}-1)\\right] + C$ |\n| e) | $\\displaystyle -\\sqrt{36-x^{2}} + C$ |\n| f) | $\\displaystyle x^{2}\\sin(x) + 2x\\cos(x) - 2\\sin(x) + C$ |\n| g) | $\\displaystyle \\frac{1}{2}\\sin(x^{2}) + C$ |\n| h) | $\\displaystyle (2x+9)e^{x} - 2e^{x} + C = (2x+7)e^{x} + C$ |\n| i) | $\\displaystyle -\\frac{1}{4x^{4}}\\ln(x) - \\frac{1}{8x^{4}} + C$ |\n| j) | $\\displaystyle x\\left([\\ln(x)]^{2} - 2\\ln(x) + 2\\right) + C$ |",
+        "| **Ítem** | **Respuesta** |\n| a) | $e^{x} - 2\\ln|x| + C$ |\n| b) | $x^{2} + \\frac{1}{x} + C$ |\n| c) | $2x^{2} - 5x + C$ |\n| d) | $\\ln|1+x^{3}| + C$ |\n| e) | $\\frac{2\\sqrt{(z+2)^{3}}}{3} - 4\\sqrt{z+2} + C$ |\n| f) | $e^{x} + \\sin(x) + C$ |\n| g) | $-\\frac{1}{2}\\cos(2x) - 4\\sin(3x) + C$ |\n| h) | $\\frac{2t^{5/2}}{5} + \\frac{2t^{3/2}}{3} + t^{3} + \\frac{3t^{2}}{2} + C$ |\n| i) | $\\frac{5}{4}\\sec(12x) + C$ |\n| j) | $-\\frac{2}{t^{2}} + \\frac{4}{t^{3}} + C$ |\n| k) | $\\frac{3}{4}\\tan(4x) - \\frac{5}{4}\\sec(4x) + C$ |\n| l) | $\\frac{3x^{2}}{2} + 9x + C$ |\n| m) | $\\sin(x) - x^{2} + C$ |",
+        "Evaluar la integral indefinida:\n\\begin{equation*}\n    \\int \\cos^4(x)\\,dx\n\\end{equation*}\n\n**Solución:**\n\\begin{align*}\n    \\int \\cos^4(x)\\,dx &= \\int \\left[\\cos^2(x)\\right]^2\\,dx \\\\\n    &= \\int \\left(\\frac{1 + \\cos(2x)}{2}\\right)^2\\,dx \\\\\n    &= \\int \\frac{\\left[1 + \\cos(2x)\\right]^2}{2^2}\\,dx \\\\\n    &= \\frac{1}{4} \\int \\left[1 + 2\\cos(2x) + \\cos^2(2x)\\right]\\,dx \\\\\n    &= \\frac{1}{4}\\left[ \\int dx + 2\\int \\cos(2x)\\,dx + \\int \\cos^2(2x)\\,dx \\right] \\\\\n    &= \\frac{1}{4}\\left[ \\int dx + 2\\int \\cos(2x)\\,dx + \\int \\left(\\frac{1 + \\cos(4x)}{2}\\right)\\,dx \\right] \\\\\n    &= \\frac{1}{4}\\left[ x + 2\\int \\cos(2x)\\,dx + \\int \\left(\\frac{1 + \\cos(4x)}{2}\\right)\\,dx \\right] \\\\\n    &= \\frac{1}{4}\\left[ x + \\frac{2\\sin(2x)}{2} + \\int \\left(\\frac{1 + \\cos(4x)}{2}\\right)\\,dx \\right] \\\\\n    &= \\frac{1}{4}\\left[ x + \\sin(2x) + \\frac{1}{2}\\int (1 + \\cos(4x))\\,dx \\right] \\\\\n    &= \\frac{1}{4}\\left[ x + \\sin(2x) + \\frac{1}{2}\\left(\\int dx + \\int \\cos(4x)\\,dx\\right) \\right] \\\\\n    &= \\frac{1}{4}\\left[ x + \\sin(2x) + \\frac{1}{2}\\left(x + \\frac{\\sin(4x)}{4}\\right) \\right] + C \\\\\n    &= \\frac{1}{4}\\left[ x + \\sin(2x) + \\frac{x}{2} + \\frac{\\sin(4x)}{8} \\right] + C \\\\\n    &= \\frac{x}{4} + \\frac{\\sin(2x)}{4} + \\frac{x}{8} + \\frac{\\sin(4x)}{32} + C \\\\\n    &= \\frac{3x}{8} + \\frac{\\sin(2x)}{4} + \\frac{\\sin(4x)}{32} + C\n\\end{align*}",
+        "\\begin{equation*}\n    \\int x^3(x^2+1)^4\\,dx = \\int x^2(x^2+1)^4(x\\,dx)\n\\end{equation*}\nTomamos:\n\\begin{align*}\n    u &= x^2 + 1 \\implies x^2 = u - 1 \\\\\n    du &= 2x\\,dx \\implies x\\,dx = \\frac{du}{2}\n\\end{align*}\nSustituyendo:\n\\begin{align*}\n    \\int (u-1)u^4 \\left(\\frac{du}{2}\\right) &= \\frac{1}{2}\\int (u^5 - u^4)\\,du \\\\\n    &= \\frac{1}{2}\\left(\\frac{u^6}{6} - \\frac{u^5}{5}\\right) + C \\\\\n    &= \\frac{u^6}{12} - \\frac{u^5}{10} + C \\\\\n    &= \\frac{(x^2+1)^6}{12} - \\frac{(x^2+1)^5}{10} + C\n\\end{align*}"
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "Respuestas de los Ejercicios Propuestos",
+          "distancia": 0.1054
+        },
+        {
+          "fuente": "c_digo_latex_de_simplificaci_n_algebraica.txt",
+          "seccion": "Respuestas a los Ejercicios Propuestos",
+          "distancia": 0.1064
+        },
+        {
+          "fuente": "c_digo_latex_de_Areas_entre-Curvas.txt",
+          "seccion": "Ejemplos Desarrollados: Potencias de Seno y Coseno > Ejemplo 1: Potencias pares de coseno",
+          "distancia": 0.1096
+        },
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Solución Detallada de las Integrales > Caso f (Sustitución con partición y despeje):",
+          "distancia": 0.1098
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": false,
+      "tokens_entrada": 12051,
+      "tokens_salida": 2226,
+      "desde_cache": true,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 0.7837837837837838,
+        "answer_relevancy": 0.8864812816264694,
+        "context_precision": 0.3333333333,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "question": "Intenté la integral de e^x · sen(x) por partes con u = e^x y dv = sen(x) dx, pero al aplicar partes otra vez vuelvo a la misma integral y no sé qué hacer. ¿Cómo se resuelve completa?",
+      "ground_truth": "Es una integral cíclica. Con u = e^x y dv = sen x dx (v = −cos x): la integral es −e^x cos x + integral de e^x cos x dx. Aplicando partes de nuevo (u = e^x, dv = cos x dx, v = sen x): integral de e^x cos x dx = e^x sen x − integral de e^x sen x dx. Sustituyendo y sumando la integral original a ambos miembros: 2 (integral de e^x sen x dx) = −e^x cos x + e^x sen x, por lo que la integral de e^x sen x dx = (1/2) e^x (sen x − cos x) + C.",
+      "tipo": "procedimiento",
+      "fuente_esperada": "c_digo_latex_de_integraci_n_por_partes.txt",
+      "seccion_esperada": "Ejemplo 2: Integral cíclica",
+      "respuesta": "Tu primer paso es correcto y tu igualdad $\\int e^x\\sin x\\,dx = -e^x\\cos x + \\int e^x\\cos x\\,dx$ también lo es. El problema está en la segunda aplicación: si vuelves a elegir $u = e^x$, la integral regresa a la original. Eso no es un fallo del método. Lo que hay que hacer es **sustituir la expresión en la ecuación original y despejar la integral como incógnita**, como indica el ejemplo cíclico del material [1].\n\nTe muestro la resolución completa.\n\n**1. Identificar la forma de la integral**\nEs el producto de una exponencial ($e^x$) por una trigonométrica ($\\sin x$). Ambas funciones se reproducen al derivar o integrar, así que la integral es **cíclica**. El material la resuelve con integración por partes aplicada dos veces [1].\n\n**2. Plantear la elección de $u$ y $dv$**\n- Primera vez: $u = e^x$, $du = e^x\\,dx$; $dv = \\sin x\\,dx$, $v = -\\cos x$ [1].\n- Segunda vez, sobre $\\int e^x\\cos x\\,dx$: $u = e^x$, $du = e^x\\,dx$; $dv = \\cos x\\,dx$, $v = \\sin x$ [1].\n\n**3. Simplificar algebraicamente**\nCon $\\int u\\,dv = uv - \\int v\\,du$ [4]:\n\n$$I = \\int e^x\\sin x\\,dx = -e^x\\cos x - \\int(-\\cos x)\\,e^x\\,dx = -e^x\\cos x + \\int e^x\\cos x\\,dx$$\n\nAplicando partes a $\\int e^x\\cos x\\,dx$:\n\n$$\\int e^x\\cos x\\,dx = e^x\\sin x - \\int e^x\\sin x\\,dx = e^x\\sin x - I$$\n\nSustituyendo en la primera ecuación:\n\n$$I = -e^x\\cos x + e^x\\sin x - I$$\n\n**4. Integrar (despejar $I$)**\nPasamos $-I$ al lado izquierdo:\n\n$$2I = e^x\\sin x - e^x\\cos x = e^x(\\sin x - \\cos x)$$\n\nDividiendo entre 2:\n\n$$I = \\frac{1}{2}e^x(\\sin x - \\cos x) + C$$\n\n**5. Devolver la sustitución**\nNo hubo cambio de variable, así que el resultado ya está en términos de $x$.\n\n$$\\int e^x\\sin x\\,dx = \\frac{1}{2}e^x(\\sin x - \\cos x) + C$$\n\n**6. Verificar derivando**\nUsando la regla del producto:\n\n$$\\frac{d}{dx}\\left[\\frac{1}{2}e^x(\\sin x - \\cos x)\\right] = \\frac{1}{2}\\left[e^x(\\sin x - \\cos x) + e^x(\\cos x + \\sin x)\\right] = \\frac{1}{2}\\cdot 2e^x\\sin x = e^x\\sin x$$\n\nCoincide con el integrando original.\n\n**Nota práctica:** si al aplicar partes por segunda vez te devuelves a $I$, no está mal planteado: escribe la ecuación con $I$ a ambos lados y resuelve el álgebra. Si en la segunda aplicación eliges $u = \\cos x$ en lugar de $u = e^x$, obtienes una identidad $I = I$ que no te da información; por eso conviene mantener la misma elección de $u$ en las dos aplicaciones.",
+      "pregunta_evaluada": "Intenté la integral de e^x · sen(x) por partes con u = e^x y dv = sen(x) dx, pero al aplicar partes otra vez vuelvo a la misma integral y no sé qué hacer. ¿Cómo se resuelve completa?",
+      "contextos": [
+        "Evaluar:\n\\[\n\\int e^{x}\\sin(x)\\,dx\n\\]\n**Solución:**\n\n- Primera elección: $u = e^{x} \\implies du = e^{x}\\,dx$\n- $dv = \\sin(x)\\,dx \\implies v = -\\cos(x)$\n\n\\begin{align*}\n\\int e^{x}\\sin(x)\\,dx &= -e^{x}\\cos(x) - \\int (-e^{x}\\cos(x))\\,dx \\\\\n&= -e^{x}\\cos(x) + \\int e^{x}\\cos(x)\\,dx \\quad \\text{(Ecuación 1)}\n\\end{align*}\nPara resolver $\\displaystyle \\int e^{x}\\cos(x)\\,dx$, aplicamos partes nuevamente:\n\n- $u = e^{x} \\implies du = e^{x}\\,dx$\n- $dv = \\cos(x)\\,dx \\implies v = \\sin(x)$\n\n\\[\n\\int e^{x}\\cos(x)\\,dx = e^{x}\\sin(x) - \\int e^{x}\\sin(x)\\,dx\n\\]\nSustituyendo en la Ecuación 1:\n\\[\n\\int e^{x}\\sin(x)\\,dx = -e^{x}\\cos(x) + e^{x}\\sin(x) - \\int e^{x}\\sin(x)\\,dx\n\\]\nSumando $\\displaystyle \\int e^{x}\\sin(x)\\,dx$ a ambos miembros:\n\\begin{align*}\n2\\int e^{x}\\sin(x)\\,dx &= -e^{x}\\cos(x) + e^{x}\\sin(x) \\\\\n\\int e^{x}\\sin(x)\\,dx &= \\frac{1}{2}\\left(-e^{x}\\cos(x) + e^{x}\\sin(x)\\right) + C \\\\\n&= \\frac{1}{2}e^{x}\\left(\\sin(x) - \\cos(x)\\right) + C\n\\end{align*}",
+        "Identifique $u$ y $dv$ para plantear la integral por partes (sin resolver):\n\n| **Integral** | $u$ | $dv$ |\n| $\\displaystyle \\int (\\ln(x))^{2}\\,dx$ | $(\\ln(x))^{2}$ | $dx$ |\n| $\\displaystyle \\int x^{2}e^{2x}\\,dx$ | $x^{2}$ | $e^{2x}\\,dx$ |\n| $\\displaystyle \\int \\theta\\cos(4\\theta)\\,d\\theta$ | $\\theta$ | $\\cos(4\\theta)\\,d\\theta$ |\n| $\\displaystyle \\int \\sec^{3}(\\theta)\\,d\\theta$ | $\\sec(\\theta)$ | $\\sec^{2}(\\theta)\\,d\\theta$ |\n| $\\displaystyle \\int \\arcsin(\\theta)\\,d\\theta$ | $\\arcsin(\\theta)$ | $d\\theta$ |\n| $\\displaystyle \\int (x+2)^{2}\\sin(x)\\,dx$ | $(x+2)^{2}$ | $\\sin(x)\\,dx$ |",
+        "Evaluar:\n\\[\n\\int \\ln(x)\\,dx\n\\]\n**Solución:**\n\n- $u = \\ln(x) \\implies du = \\frac{1}{x}\\,dx$\n- $dv = dx \\implies v = x$\n\nAplicando la fórmula de integración por partes:\n\\begin{align*}\n\\int \\ln(x)\\,dx &= x\\ln(x) - \\int x\\left(\\frac{1}{x}\\right)dx \\\\\n&= x\\ln(x) - \\int dx \\\\\n&= x\\ln(x) - x + C\n\\end{align*}",
+        "La integración por partes se fundamenta en la regla de derivación de un producto:\n\\[\n\\frac{d}{dx}[u(x)v(x)] = u(x)v'(x) + v(x)u'(x)\n\\]\nIntegrando a ambos lados respecto a $x$:\n\\begin{align*}\n\\int \\frac{d}{dx}[u(x)v(x)]\\,dx &= \\int [u(x)v'(x) + v(x)u'(x)]\\,dx \\\\\nu(x)v(x) &= \\int u(x)v'(x)\\,dx + \\int v(x)u'(x)\\,dx\n\\end{align*}\nHaciendo $u = u(x)$, $du = u'(x)\\,dx$, $v = v(x)$, y $dv = v'(x)\\,dx$:\n\\[\nuv = \\int u\\,dv + \\int v\\,du\n\\]\nReorganizando los términos, se obtiene el teorema fundamental del método:\n\n**TEOREMA:** Si $u$ y $v$ son funciones de $x$ con derivadas continuas en un intervalo, entonces:\n\\[\n\\int u\\,dv = uv - \\int v\\,du\n\\]"
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "Ejemplos Resueltos > Ejemplo 2: Integral cíclica",
+          "distancia": 0.1049
+        },
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "Ejercicios de Identificación",
+          "distancia": 0.1063
+        },
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "Ejemplos Resueltos > Ejemplo 1: Integral del logaritmo natural",
+          "distancia": 0.1085
+        },
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "Introducción a la Integración por Partes > Deducción de la Fórmula",
+          "distancia": 0.1089
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": false,
+      "tokens_entrada": 11525,
+      "tokens_salida": 2280,
+      "desde_cache": true,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 0.5652173913043478,
+        "answer_relevancy": 0.9461486656864407,
+        "context_precision": 0.7499999999625,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "question": "En la integral de arctan(4t) dt tomé u = arctan(4t) y dv = dt, y llegué a t·arctan(4t) menos la integral de 4t/(1 + 16t²) dt, pero no sé resolver esa integral que me queda. ¿Me muestras todo el procedimiento?",
+      "ground_truth": "La integral restante se resuelve con sustitución simple: w = 1 + 16t², dw = 32t dt, de modo que 4t dt = dw/8. Entonces la integral de 4t/(1 + 16t²) dt = (1/8) integral de dw/w = (1/8) ln|w| = (1/8) ln(1 + 16t²). Resultado: la integral de arctan(4t) dt = t·arctan(4t) − (1/8) ln(1 + 16t²) + C.",
+      "tipo": "procedimiento",
+      "fuente_esperada": "c_digo_latex_de_integraci_n_por_partes.txt",
+      "seccion_esperada": "Ejemplo 3: Función trigonométrica inversa combinada con sustitución",
+      "respuesta": "Tu planteamiento es correcto: $u = \\arctan(4t)$, $du = \\frac{4}{1+16t^2}\\,dt$, $dv = dt$ y $v = t$ dan $t\\arctan(4t) - \\int \\frac{4t}{1+16t^2}\\,dt$, y el signo menos de la fórmula de partes está bien aplicado [1]. Lo que falta es resolver la integral restante, así que te muestro ese paso a paso.\n\n**1. Identificar la forma de la integral**\n$\\int \\frac{4t}{1+16t^2}\\,dt$ es una fracción cuyo numerador ($4t$) es proporcional a la derivada del denominador. Eso sugiere una sustitución simple con $w = 1+16t^2$ [1].\n\n**2. Plantear la sustitución**\n$w = 1+16t^2$, entonces $dw = 32t\\,dt$. Como el numerador es $4t$, despejamos:\n$$4t\\,dt = \\frac{32t\\,dt}{8} = \\frac{dw}{8}$$\n\n**3. Simplificar algebraicamente**\n$\\int \\frac{4t}{1+16t^2}\\,dt = \\int \\frac{1}{w}\\cdot\\frac{dw}{8} = \\frac{1}{8}\\int \\frac{dw}{w}$\n\n**4. Integrar**\n$\\frac{1}{8}\\int \\frac{dw}{w} = \\frac{1}{8}\\ln|w| + C$\n\n**5. Devolver la sustitución**\nComo $1+16t^2 > 0$ para todo $t$, el valor absoluto es innecesario:\n$$\\int \\frac{4t}{1+16t^2}\\,dt = \\frac{1}{8}\\ln(1+16t^2) + C$$\nSustituyendo en la expresión de partes, la antiderivada completa es:\n$$\\int \\arctan(4t)\\,dt = t\\arctan(4t) - \\frac{1}{8}\\ln(1+16t^2) + C$$\nEste resultado coincide con el ejemplo resuelto del material [1].\n\n**6. Verificar derivando**\nDerivamos término a término:\n- $\\dfrac{d}{dt}\\left[t\\arctan(4t)\\right] = \\arctan(4t) + t\\cdot\\dfrac{4}{1+16t^2} = \\arctan(4t) + \\dfrac{4t}{1+16t^2}$\n- $\\dfrac{d}{dt}\\left[-\\dfrac{1}{8}\\ln(1+16t^2)\\right] = -\\dfrac{1}{8}\\cdot\\dfrac{32t}{1+16t^2} = -\\dfrac{4t}{1+16t^2}$\n\nSumando: $\\arctan(4t) + \\dfrac{4t}{1+16t^2} - \\dfrac{4t}{1+16t^2} = \\arctan(4t)$, que es el integrando original.",
+      "pregunta_evaluada": "En la integral de arctan(4t) dt tomé u = arctan(4t) y dv = dt, y llegué a t·arctan(4t) menos la integral de 4t/(1 + 16t²) dt, pero no sé resolver esa integral que me queda. ¿Me muestras todo el procedimiento?",
+      "contextos": [
+        "Evaluar:\n\\[\n\\int \\arctan(4t)\\,dt\n\\]\n**Solución:**\n\n- $u = \\arctan(4t) \\implies du = \\frac{4}{1+(4t)^2}\\,dt = \\frac{4}{1+16t^{2}}\\,dt$\n- $dv = dt \\implies v = t$\n\nSustituyendo:\n\\[\n\\int \\arctan(4t)\\,dt = t\\arctan(4t) - \\int \\frac{4t}{1+16t^{2}}\\,dt\n\\]\nPara calcular $\\displaystyle \\int \\frac{4t}{1+16t^{2}}\\,dt$, usamos el método de sustitución simple:\n\\begin{align*}\nw &= 1 + 16t^{2} \\implies dw = 32t\\,dt \\implies 4t\\,dt = \\frac{dw}{8} \\\\\n\\int \\frac{4t}{1+16t^{2}}\\,dt &= \\frac{1}{8}\\int \\frac{dw}{w} = \\frac{1}{8}\\ln|w| + C = \\frac{1}{8}\\ln(1+16t^{2}) + C\n\\end{align*}\nPor lo tanto:\n\\[\n\\int \\arctan(4t)\\,dt = t\\arctan(4t) - \\frac{1}{8}\\ln(1+16t^{2}) + C\n\\]",
+        "Identifique $u$ y $dv$ para plantear la integral por partes (sin resolver):\n\n| **Integral** | $u$ | $dv$ |\n| $\\displaystyle \\int (\\ln(x))^{2}\\,dx$ | $(\\ln(x))^{2}$ | $dx$ |\n| $\\displaystyle \\int x^{2}e^{2x}\\,dx$ | $x^{2}$ | $e^{2x}\\,dx$ |\n| $\\displaystyle \\int \\theta\\cos(4\\theta)\\,d\\theta$ | $\\theta$ | $\\cos(4\\theta)\\,d\\theta$ |\n| $\\displaystyle \\int \\sec^{3}(\\theta)\\,d\\theta$ | $\\sec(\\theta)$ | $\\sec^{2}(\\theta)\\,d\\theta$ |\n| $\\displaystyle \\int \\arcsin(\\theta)\\,d\\theta$ | $\\arcsin(\\theta)$ | $d\\theta$ |\n| $\\displaystyle \\int (x+2)^{2}\\sin(x)\\,dx$ | $(x+2)^{2}$ | $\\sin(x)\\,dx$ |",
+        "| **Ítem** | **Respuesta** |\n| a) | $e^{x} - 2\\ln|x| + C$ |\n| b) | $x^{2} + \\frac{1}{x} + C$ |\n| c) | $2x^{2} - 5x + C$ |\n| d) | $\\ln|1+x^{3}| + C$ |\n| e) | $\\frac{2\\sqrt{(z+2)^{3}}}{3} - 4\\sqrt{z+2} + C$ |\n| f) | $e^{x} + \\sin(x) + C$ |\n| g) | $-\\frac{1}{2}\\cos(2x) - 4\\sin(3x) + C$ |\n| h) | $\\frac{2t^{5/2}}{5} + \\frac{2t^{3/2}}{3} + t^{3} + \\frac{3t^{2}}{2} + C$ |\n| i) | $\\frac{5}{4}\\sec(12x) + C$ |\n| j) | $-\\frac{2}{t^{2}} + \\frac{4}{t^{3}} + C$ |\n| k) | $\\frac{3}{4}\\tan(4x) - \\frac{5}{4}\\sec(4x) + C$ |\n| l) | $\\frac{3x^{2}}{2} + 9x + C$ |\n| m) | $\\sin(x) - x^{2} + C$ |",
+        "\\begin{equation*}\n    \\int x^3(x^2+1)^4\\,dx = \\int x^2(x^2+1)^4(x\\,dx)\n\\end{equation*}\nTomamos:\n\\begin{align*}\n    u &= x^2 + 1 \\implies x^2 = u - 1 \\\\\n    du &= 2x\\,dx \\implies x\\,dx = \\frac{du}{2}\n\\end{align*}\nSustituyendo:\n\\begin{align*}\n    \\int (u-1)u^4 \\left(\\frac{du}{2}\\right) &= \\frac{1}{2}\\int (u^5 - u^4)\\,du \\\\\n    &= \\frac{1}{2}\\left(\\frac{u^6}{6} - \\frac{u^5}{5}\\right) + C \\\\\n    &= \\frac{u^6}{12} - \\frac{u^5}{10} + C \\\\\n    &= \\frac{(x^2+1)^6}{12} - \\frac{(x^2+1)^5}{10} + C\n\\end{align*}"
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "Ejemplos Resueltos > Ejemplo 3: Función trigonométrica inversa combinada con sustitución",
+          "distancia": 0.1022
+        },
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "Ejercicios de Identificación",
+          "distancia": 0.1112
+        },
+        {
+          "fuente": "c_digo_latex_de_simplificaci_n_algebraica.txt",
+          "seccion": "Respuestas a los Ejercicios Propuestos",
+          "distancia": 0.1122
+        },
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Solución Detallada de las Integrales > Caso f (Sustitución con partición y despeje):",
+          "distancia": 0.1151
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": false,
+      "tokens_entrada": 11558,
+      "tokens_salida": 1737,
+      "desde_cache": true,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 0.5454545454545454,
+        "answer_relevancy": 0.8842337331062762,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "question": "Intenté la integral de dx/(1 + sen x) multiplicando por el conjugado (1 − sen x), pero no sé cómo seguir después de eso. ¿Me muestras la solución completa?",
+      "ground_truth": "Multiplicando numerador y denominador por 1 − sen x se obtiene la integral de (1 − sen x)/(1 − sen²x) dx, y como 1 − sen²x = cos²x queda la integral de (1 − sen x)/cos²x dx. Separando: integral de sec²x dx − integral de tan x sec x dx. Como la derivada de tan x es sec²x y la de sec x es sec x tan x, el resultado es tan(x) − sec(x) + C.",
+      "tipo": "procedimiento",
+      "fuente_esperada": "c_digo_latex_de_simplificaci_n_algebraica.txt",
+      "seccion_esperada": "Ejercicio f)",
+      "respuesta": "No encontré esto en el material del curso. Los fragmentos recuperados cubren la sustitución directa (identificación de $u$ y $du$ en una tabla de ejercicios y ejemplos resueltos), la integración por partes con la regla ILATE, la sustitución trigonométrica para $\\sqrt{a^2-x^2}$, $\\sqrt{a^2+x^2}$ y $\\sqrt{x^2-a^2}$, y un ejemplo de cinemática. Ninguno explica la integral $\\int \\frac{dx}{1+\\sin x}$ ni la técnica de multiplicar por el conjugado en integrales trigonométricas, así que no voy a resolverla de memoria.\n\nSí puedo ayudarte con los temas que sí están en el material:\n\n- **Sustitución directa:** identificar $u=g(x)$ y $du=g'(x)\\,dx$, con los ejemplos de la tabla de ejercicios.\n- **Sustitución con despeje algebraico:** como en $\\int x\\sqrt{x-1}\\,dx$.\n- **Integración por partes:** elección de $u$ y $dv$ con ILATE.\n- **Sustitución trigonométrica:** para radicales de la forma $\\sqrt{a^2-x^2}$, $\\sqrt{a^2+x^2}$ o $\\sqrt{x^2-a^2}$.\n\nPara la integral de $\\frac{1}{1+\\sin x}$, revisa tus apuntes de integrales trigonométricas o consulta a tu docente. Si me compartes la expresión que obtuviste al multiplicar por $1-\\sin x$, puedo revisar si el álgebra de ese paso está bien, siempre que el tema esté cubierto por el material que tengo.",
+      "pregunta_evaluada": "Intenté la integral de dx/(1 + sen x) multiplicando por el conjugado (1 − sen x), pero no sé cómo seguir después de eso. ¿Me muestras la solución completa?",
+      "contextos": [
+        "\\begin{equation*}\n    \\int x\\sqrt{x-1}\\,dx\n\\end{equation*}\nTomamos:\n\\begin{align*}\n    u &= x - 1 \\implies x = u + 1 \\\\\n    du &= dx\n\\end{align*}\nSustituyendo:\n\\begin{align*}\n    \\int (u+1)\\sqrt{u}\\,du &= \\int (u^{3/2} + u^{1/2})\\,du \\\\\n    &= \\frac{2}{5}u^{5/2} + \\frac{2}{3}u^{3/2} + C \\\\\n    &= \\frac{2\\sqrt{u^5}}{5} + \\frac{2\\sqrt{u^3}}{3} + C \\\\\n    &= \\frac{2\\sqrt{(x-1)^5}}{5} + \\frac{2\\sqrt{(x-1)^3}}{3} + C\n\\end{align*}",
+        "\\begin{equation*}\n    \\int x^3(x^2+1)^4\\,dx = \\int x^2(x^2+1)^4(x\\,dx)\n\\end{equation*}\nTomamos:\n\\begin{align*}\n    u &= x^2 + 1 \\implies x^2 = u - 1 \\\\\n    du &= 2x\\,dx \\implies x\\,dx = \\frac{du}{2}\n\\end{align*}\nSustituyendo:\n\\begin{align*}\n    \\int (u-1)u^4 \\left(\\frac{du}{2}\\right) &= \\frac{1}{2}\\int (u^5 - u^4)\\,du \\\\\n    &= \\frac{1}{2}\\left(\\frac{u^6}{6} - \\frac{u^5}{5}\\right) + C \\\\\n    &= \\frac{u^6}{12} - \\frac{u^5}{10} + C \\\\\n    &= \\frac{(x^2+1)^6}{12} - \\frac{(x^2+1)^5}{10} + C\n\\end{align*}",
+        "**Completar la tabla identificando $u$ y $du$ para cada integral sin resolver:**\n\n| **Integral $\\int f(g(x))g'(x)\\,dx$** | $\\mathbf{u = g(x)}$ | $\\mathbf{du = g'(x)\\,dx}$ |\n| $\\displaystyle \\int \\frac{t^2}{(1+t^3)^2}\\,dt$ |  |  |\n| $\\displaystyle \\int \\sqrt[3]{\\tan(x)}\\sec^2(x)\\,dx$ |  |  |\n| $\\displaystyle \\int \\cos(6x)\\,dx$ |  |  |\n| $\\displaystyle \\int x^2\\sqrt{1-x}\\,dx$ |  |  |\n| $\\displaystyle \\int \\sin(x)e^{\\cos(x)}\\,dx$ |  |  |\n| $\\displaystyle \\int \\frac{1}{x\\ln(x)}\\,dx$ |  |  |\n| $\\displaystyle \\int \\frac{1}{t^2}\\left(1+\\frac{1}{t}\\right)^3\\,dt$ |  |  |\n| $\\displaystyle \\int \\frac{(\\ln(z))^2}{z}\\,dz$ |  |  |",
+        "- $\\displaystyle \\int 3x^2\\sqrt{x^3+1}\\,dx \\implies u = x^3+1 \\implies du = 3x^2\\,dx$ \\quad **(Cumple)**\n- $\\displaystyle \\int (2x+3)(x^2+x)\\,dx \\implies u = x^2+x \\implies du = (2x+1)\\,dx \\neq (2x+3)\\,dx$ \\quad **(No cumple)**\n- $\\displaystyle \\int \\sin^2(3x)\\cos(3x)\\,dx \\implies u = \\sin(3x) \\implies du = 3\\cos(3x)\\,dx \\iff \\frac{du}{3} = \\cos(3x)\\,dx$ \\quad **(Cumple)**\n- $\\displaystyle \\int x\\sqrt{x-1}\\,dx \\implies u = x-1 \\implies du = dx, \\; x = u+1$ \\quad **(Requiere despeje algebraico)**\n- $\\displaystyle \\int \\frac{\\sqrt{9-x^2}}{x^2}\\,dx \\implies u = 9-x^2 \\implies du = -2x\\,dx$ \\quad **(No cumple, requiere sustitución trigonométrica)**\n- $\\displaystyle \\int x^3(x^2+1)^4\\,dx \\implies u = x^2+1 \\implies \\frac{du}{2} = x\\,dx, \\; x^2 = u-1$ \\quad **(Requiere despeje algebraico)**\n- $\\displaystyle \\int 2x e^x\\,dx \\implies$ Requiere integración por partes \\quad **(No cumple)**\n- $\\displaystyle \\int \\frac{-4x}{(1-2x^2)^2}\\,dx \\implies u = 1-2x^2 \\implies du = -4x\\,dx$ \\quad **(Cumple)**\n- $\\displaystyle \\int x\\sin(x)\\,dx \\implies$ Requiere integración por partes \\quad **(No cumple)**"
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Solución Detallada de las Integrales > Caso d (Sustitución con despeje algebraico):",
+          "distancia": 0.1018
+        },
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Solución Detallada de las Integrales > Caso f (Sustitución con partición y despeje):",
+          "distancia": 0.1036
+        },
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Ejercicios de Identificación de $u$ y $du$",
+          "distancia": 0.1092
+        },
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Selección y Análisis de Integrales por Sustitución Directa > Análisis de selección",
+          "distancia": 0.1107
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": true,
+      "tokens_entrada": 11649,
+      "tokens_salida": 1540,
+      "desde_cache": true,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 0.3684210526315789,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.0,
+        "context_recall": 0.0
+      }
+    },
+    {
+      "question": "Intenté hallar la antiderivada general de f(x) = 3 sen x + (2x⁵ − 2√x)/x + 11x⁻³, pero no sé cómo tratar el cociente. ¿Cuál es el resultado completo?",
+      "ground_truth": "Primero se simplifica el cociente: (2x⁵ − 2√x)/x = 2x⁴ − 2x^(−1/2). Luego se integra término a término con la regla de la potencia: F(x) = −3 cos x + 2x⁵/5 − 4√x − 11/(2x²) + C.",
+      "tipo": "ejercicio",
+      "fuente_esperada": "c_digo_latex_de_antiderivaci_n.txt",
+      "seccion_esperada": "Reglas Básicas de Integración",
+      "respuesta": "Todavía no veo tu trabajo escrito, así que te doy pistas para que avances tú. Empieza por el cociente.\n\n1. **Simplifica antes de integrar.** Todo el paréntesis $(2x^5 - 2\\sqrt{x})$ está dividido entre $x$. ¿Qué obtienes si divides cada término del numerador entre $x$? Recuerda la propiedad de las potencias: $\\frac{x^a}{x} = x^{a-1}$.\n\n2. **Escribe todo como potencia de $x$.** Usa $\\sqrt{x} = x^{1/2}$ y los exponentes negativos como en la propiedad de potenciación del material [3]. Cuando termines, el integrando debe ser una suma de términos de la forma $k\\,x^n$, más $3\\sin x$.\n\n3. **Elige la regla para cada término.** Revisa el exponente de cada uno:\n   - Si $n \\neq -1$, la antiderivada de $x^n$ es $\\frac{x^{n+1}}{n+1} + C$ [1-h].\n   - Si $n = -1$, la regla cambia y la antiderivada es $\\ln|x| + C$ [1-b]. Comprueba si algún término tiene ese exponente.\n   - Los coeficientes constantes salen de la integral: $\\int k f(x)\\,dx = kF(x) + C$ [1-i].\n   - Para el seno, $\\int \\sin x\\,dx = -\\cos x + C$ [1-d].\n\n4. **Integra término por término.** Hazlo para cada término y suma los resultados. Al final, incluye una sola constante $C$.\n\nEscribe el integrando simplificado y la antiderivada de cada término. Si te atascas en algún paso, dime cuál y revisamos juntos tu trabajo, incluida la verificación derivando.",
+      "pregunta_evaluada": "Intenté hallar la antiderivada general de f(x) = 3 sen x + (2x⁵ − 2√x)/x + 11x⁻³, pero no sé cómo tratar el cociente. ¿Cuál es el resultado completo?",
+      "contextos": [
+        "| **Ítem** | **Función $f(x)$** | **Antiderivada General $F(x)$** |\n| a) | $f(x) = e^{x}$ | $F(x) = e^{x} + C$ |\n| b) | $f(x) = \\frac{1}{x}$ | $F(x) = \\ln|x| + C$ |\n| c) | $f(x) = \\frac{1}{2\\sqrt{x}}$ | $F(x) = \\sqrt{x} + C$ |\n| d) | $f(x) = \\sin(x)$ | $F(x) = -\\cos(x) + C$ |\n| e) | $f(x) = \\cos(x)$ | $F(x) = \\sin(x) + C$ |\n| f) | $f(x) = \\sec^{2}(x)$ | $F(x) = \\tan(x) + C$ |\n| g) | $f(x) = \\frac{1}{1+x^{2}}$ | $F(x) = \\arctan(x) + C$ |\n| h) | $f(x) = x^{n},\\; n \\neq -1$ | $F(x) = \\frac{x^{n+1}}{n+1} + C$ |\n| i) | $k f(x),\\; k \\in \\mathbb{R},\\; k \\neq 0$ | $k F(x) + C$ |",
+        "**Ejemplo:** Considerar la función $f(x) = 5x^{2}$.\nPara esta función, vemos que la antiderivada general es:\n\\[\nF(x) = \\frac{5x^{3}}{3} + C, \\quad C \\in \\mathbb{R}\n\\]\n*Recurso interactivo:* \\url{https://www.geogebra.org/m/pkfspprx}\n\nAl asignar valores reales específicos a la constante $C$, se obtiene una familia de antiderivadas, es decir, una familia de funciones cuyas gráficas son traslaciones verticales de una a otra. La gráfica de $F(x) + C$ se obtiene desplazando verticalmente la gráfica de $F(x)$ en $C$ unidades.",
+        "**Propósito**\nDeterminar la antiderivada general de algunas funciones.\n\n**Ejercicio:** Determinar una función $F(x)$ cuya derivada sea $f(x)$:\n\n| **Ítem** | **Función $f(x)$** | **Antiderivada $F(x)$** |\n| a) | $f(x) = 5x^{4}$ | $F(x) = x^{5}$ |\n| b) | $f(x) = -\\frac{3}{8}$ | $F(x) = -\\frac{3}{8}x$ |\n| c) | $f(x) = 2x^{3}$ | $F(x) = \\frac{x^{4}}{2}$ |\n| d) | $f(x) = \\frac{1}{x}$ | $F(x) = \\ln|x|$ |\n| e) | $f(x) = \\frac{1}{x^{2}}$ (nota: Propiedad de la potenciación: potencias de exponente negativo $a^{-n} = \\frac{1}{a^{n}}$) | $F(x) = -\\frac{1}{x}$ |\n| f) | $f(x) = \\cos(x)$ | $F(x) = \\sin(x)$ |\n\n*Pregunta de reflexión:* Describir la estrategia o el método utilizado para determinar $F(x)$.\n\n**DEFINICIÓN:** Una función $F(x)$ es una antiderivada o primitiva de $f(x)$ sobre un intervalo $I$ si $F'(x) = f(x)$ para todo $x \\in I$:\n\\[\n\\frac{d}{dx}[F(x)] = f(x)\n\\]",
+        "**Problema de Valor Inicial (Segunda Derivada)**\n**Ejercicio:** Calcular $f(x)$ si $f''(x) = 12x^{2} + 6x - 2$, con $f(0) = 4$ y $f(1) = 3$.\n\n1. Integramos $f''(x)$ para hallar $f'(x)$:\n\\begin{align*}\nf'(x) &= \\frac{12x^{2+1}}{2+1} + \\frac{6x^{1+1}}{1+1} - 2x + C \\\\\nf'(x) &= 4x^{3} + 3x^{2} - 2x + C\n\\end{align*}\n\n2. Integramos $f'(x)$ para hallar $f(x)$:\n\\begin{align*}\nf(x) &= \\frac{4x^{3+1}}{3+1} + \\frac{3x^{2+1}}{2+1} - \\frac{2x^{1+1}}{1+1} + Cx + D \\\\\nf(x) &= x^{4} + x^{3} - x^{2} + Cx + D\n\\end{align*}\n\n3. Aplicamos la primera condición $f(0) = 4$:\n\\begin{align*}\nf(0) &= 0^{4} + 0^{3} - 0^{2} + C(0) + D = 4 \\\\\n\\implies D &= 4\n\\end{align*}\nLa función toma la forma $f(x) = x^{4} + x^{3} - x^{2} + Cx + 4$.\n\n4. Aplicamos la segunda condición $f(1) = 3$:\n\\begin{align*}\nf(1) &= 1^{4} + 1^{3} - 1^{2} + C(1) + 4 = 3 \\\\\n1 + 1 - 1 + C + 4 &= 3 \\\\\n5 + C &= 3 \\\\\nC &= -2\n\\end{align*}\n\n5. Por lo tanto, la función requerida es:\n\\[\nf(x) = x^{4} + x^{3} - x^{2} - 2x + 4\n\\]"
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_antiderivaci_n.txt",
+          "seccion": "Tabla de Antiderivadas Generales",
+          "distancia": 0.0966
+        },
+        {
+          "fuente": "c_digo_latex_de_antiderivaci_n.txt",
+          "seccion": "Actividad Inicial",
+          "distancia": 0.1002
+        },
+        {
+          "fuente": "c_digo_latex_de_antiderivaci_n.txt",
+          "seccion": "Actividad Inicial",
+          "distancia": 0.1052
+        },
+        {
+          "fuente": "c_digo_latex_de_antiderivaci_n.txt",
+          "seccion": "Problema de Valor Inicial (Segunda Derivada) > Solución paso a paso:",
+          "distancia": 0.1081
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": false,
+      "tokens_entrada": 11716,
+      "tokens_salida": 1518,
+      "desde_cache": true,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 0.23076923076923078,
+        "answer_relevancy": 0.0,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 0.0
+      }
+    },
+    {
+      "question": "Quiero la integral de (x³ + 5)(x³ − 5) dx. Intenté integrar cada factor por separado y el resultado no me cuadra. ¿Me muestras cómo se resuelve completa?",
+      "ground_truth": "No se integra factor por factor. Primero se desarrolla el producto notable (diferencia de cuadrados): (x³ + 5)(x³ − 5) = x⁶ − 25. Luego se integra término a término: integral de x⁶ dx − 25 integral de dx = x⁷/7 − 25x + C.",
+      "tipo": "ejercicio",
+      "fuente_esperada": "c_digo_latex_de_simplificaci_n_algebraica.txt",
+      "seccion_esperada": "Ejercicio b)",
+      "respuesta": "Tu intento tiene un error conceptual: $\\int f(x)\\,g(x)\\,dx$ **no** es igual a $\\int f(x)\\,dx \\cdot \\int g(x)\\,dx$. Integrar cada factor por separado no es válido, por eso el resultado no te cuadra. El camino correcto es desarrollar el producto antes de integrar, como indica el material [1].\n\nTe muestro la resolución completa:\n\n**1. Identificar la forma de la integral**\nEl integrando $(x^3+5)(x^3-5)$ es el producto de dos binomios conjugados, es decir, una diferencia de cuadrados $(a+b)(a-b)=a^2-b^2$. Así que conviene desarrollarlo antes de integrar [1].\n\n**2. Plantear el desarrollo (no hay sustitución)**\nCon $a = x^3$ y $b = 5$:\n$(x^3+5)(x^3-5) = (x^3)^2 - 5^2 = x^6 - 25$\n\n**3. Simplificar algebraicamente**\nComo $(x^3)^2 = x^{3\\cdot 2} = x^6$ y $5^2 = 25$, la integral queda:\n$\\int (x^3+5)(x^3-5)\\,dx = \\int (x^6 - 25)\\,dx$\n\nAhora sí puedes separar en integrales inmediatas, porque es una suma o resta de términos (no un producto):\n$\\int x^6\\,dx - 25\\int dx$ [1]\n\n**4. Integrar**\n- $\\int x^6\\,dx = \\dfrac{x^7}{7}$ (regla de la potencia, con $6 \\neq -1$)\n- $\\int dx = x$\n\nEntonces:\n$\\dfrac{x^7}{7} - 25x + C$\n\n**5. Devolver la sustitución**\nNo se usó sustitución, así que el resultado ya está en términos de $x$:\n$$\\frac{x^7}{7} - 25x + C$$\n\n**6. Verificar derivando**\n$\\dfrac{d}{dx}\\left[\\dfrac{x^7}{7} - 25x\\right] = \\dfrac{7x^6}{7} - 25 = x^6 - 25$, que coincide con $(x^3+5)(x^3-5)$ desarrollado. La verificación es correcta.",
+      "pregunta_evaluada": "Quiero la integral de (x³ + 5)(x³ − 5) dx. Intenté integrar cada factor por separado y el resultado no me cuadra. ¿Me muestras cómo se resuelve completa?",
+      "contextos": [
+        "\\[\n\\int (x^{3}+5)(x^{3}-5)\\,dx\n\\]\n\n- Desarrollar el producto notable (diferencia de cuadrados):\n\\[\n    = \\int (x^{6} - 25)\\,dx\n    \\]\n- Expresar como la resta de dos integrales inmediatas:\n\\[\n    = \\int x^{6}\\,dx - 25\\int dx\n    \\]\n- Integrar término a término:\n\\[\n    = \\frac{x^{7}}{7} - 25x + C\n    \\]",
+        "\\begin{equation*}\n    \\int x^3(x^2+1)^4\\,dx = \\int x^2(x^2+1)^4(x\\,dx)\n\\end{equation*}\nTomamos:\n\\begin{align*}\n    u &= x^2 + 1 \\implies x^2 = u - 1 \\\\\n    du &= 2x\\,dx \\implies x\\,dx = \\frac{du}{2}\n\\end{align*}\nSustituyendo:\n\\begin{align*}\n    \\int (u-1)u^4 \\left(\\frac{du}{2}\\right) &= \\frac{1}{2}\\int (u^5 - u^4)\\,du \\\\\n    &= \\frac{1}{2}\\left(\\frac{u^6}{6} - \\frac{u^5}{5}\\right) + C \\\\\n    &= \\frac{u^6}{12} - \\frac{u^5}{10} + C \\\\\n    &= \\frac{(x^2+1)^6}{12} - \\frac{(x^2+1)^5}{10} + C\n\\end{align*}",
+        "\\begin{equation*}\n    \\int x\\sqrt{x-1}\\,dx\n\\end{equation*}\nTomamos:\n\\begin{align*}\n    u &= x - 1 \\implies x = u + 1 \\\\\n    du &= dx\n\\end{align*}\nSustituyendo:\n\\begin{align*}\n    \\int (u+1)\\sqrt{u}\\,du &= \\int (u^{3/2} + u^{1/2})\\,du \\\\\n    &= \\frac{2}{5}u^{5/2} + \\frac{2}{3}u^{3/2} + C \\\\\n    &= \\frac{2\\sqrt{u^5}}{5} + \\frac{2\\sqrt{u^3}}{3} + C \\\\\n    &= \\frac{2\\sqrt{(x-1)^5}}{5} + \\frac{2\\sqrt{(x-1)^3}}{3} + C\n\\end{align*}",
+        "- $\\displaystyle \\int x\\sin(x)\\,dx \\implies$ Requiere integración por partes \\quad **(No cumple)**\n- $\\displaystyle \\int \\frac{x+5}{x^2+x-2}\\,dx \\implies u = x^2+x-2 \\implies du = (2x+1)\\,dx$ \\quad **(No cumple directamente, fracciones parciales)**\n\n**Observación:** En los casos directos analizados, la expresión seleccionada como $u$ corresponde a la parte interna que contiene el mayor grado o exponente respecto a su diferencial."
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_simplificaci_n_algebraica.txt",
+          "seccion": "Ejercicios Resueltos > Desarrollo Paso a Paso > Ejercicio b)",
+          "distancia": 0.1016
+        },
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Solución Detallada de las Integrales > Caso f (Sustitución con partición y despeje):",
+          "distancia": 0.1017
+        },
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Solución Detallada de las Integrales > Caso d (Sustitución con despeje algebraico):",
+          "distancia": 0.1054
+        },
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Selección y Análisis de Integrales por Sustitución Directa > Análisis de selección",
+          "distancia": 0.1085
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": false,
+      "tokens_entrada": 10960,
+      "tokens_salida": 1263,
+      "desde_cache": true,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 0.3225806451612903,
+        "answer_relevancy": 0.9178825094803761,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "question": "Debo hallar f(x) si f''(x) = 12x² + 6x − 2, con f(0) = 4 y f(1) = 3. Integré una vez pero no sé cómo usar las dos condiciones. ¿Me das la solución completa?",
+      "ground_truth": "Integrando f'' se obtiene f'(x) = 4x³ + 3x² − 2x + C, y volviendo a integrar f(x) = x⁴ + x³ − x² + Cx + D. Con f(0) = 4 se tiene D = 4. Con f(1) = 3: 1 + 1 − 1 + C + 4 = 3, de donde C = −2. Por lo tanto f(x) = x⁴ + x³ − x² − 2x + 4.",
+      "tipo": "ejercicio",
+      "fuente_esperada": "c_digo_latex_de_antiderivaci_n.txt",
+      "seccion_esperada": "Problema de Valor Inicial (Segunda Derivada)",
+      "respuesta": "Tu primera integración es el paso correcto: integrar $f''$ da $f'$ con una constante, y hay que integrar otra vez para llegar a $f$. Como el problema tiene dos constantes, las condiciones iniciales sirven para fijarlas. Te muestro la resolución completa siguiendo el método de integración que describe el material [1].\n\n**1. Identificar la forma del problema**\nEs un problema de valor inicial: conocemos $f''(x)$ y debemos recuperar $f(x)$ integrando dos veces. Cada integración introduce una constante, por lo que la solución general tendrá dos constantes, $C$ y $D$, que se determinan con $f(0)=4$ y $f(1)=3$ [1].\n\n**2. Plantear la integración**\n$$f'(x) = \\int (12x^2 + 6x - 2)\\,dx, \\qquad f(x) = \\int f'(x)\\,dx$$\n\n**3. Integrar para hallar $f'(x)$**\nAplicando la regla de la potencia $\\int x^n\\,dx = \\frac{x^{n+1}}{n+1} + C$ término a término [1]:\n$$f'(x) = \\frac{12x^3}{3} + \\frac{6x^2}{2} - 2x + C = 4x^3 + 3x^2 - 2x + C$$\n\n**4. Integrar para hallar $f(x)$**\n$$f(x) = \\frac{4x^4}{4} + \\frac{3x^3}{3} - \\frac{2x^2}{2} + Cx + D = x^4 + x^3 - x^2 + Cx + D$$\nAquí la constante $C$ multiplica a $x$ porque proviene de integrar la constante de $f'$.\n\n**5. Aplicar las condiciones iniciales**\n- Con $f(0) = 4$: al evaluar en $x=0$ todos los términos con $x$ se anulan, así que $D = 4$.\n- Con $f(1) = 3$: sustituyendo $x=1$ y $D=4$,\n$$1 + 1 - 1 + C + 4 = 3 \\implies 5 + C = 3 \\implies C = -2$$\n\nPor tanto:\n$$f(x) = x^4 + x^3 - x^2 - 2x + 4$$\n\n**6. Verificar derivando**\n- $f'(x) = 4x^3 + 3x^2 - 2x - 2$\n- $f''(x) = 12x^2 + 6x - 2$, que coincide con el dato del problema.\n- $f(0) = 4$ ✓\n- $f(1) = 1 + 1 - 1 - 2 + 4 = 3$ ✓\n\nLa solución es correcta.",
+      "pregunta_evaluada": "Debo hallar f(x) si f''(x) = 12x² + 6x − 2, con f(0) = 4 y f(1) = 3. Integré una vez pero no sé cómo usar las dos condiciones. ¿Me das la solución completa?",
+      "contextos": [
+        "**Problema de Valor Inicial (Segunda Derivada)**\n**Ejercicio:** Calcular $f(x)$ si $f''(x) = 12x^{2} + 6x - 2$, con $f(0) = 4$ y $f(1) = 3$.\n\n1. Integramos $f''(x)$ para hallar $f'(x)$:\n\\begin{align*}\nf'(x) &= \\frac{12x^{2+1}}{2+1} + \\frac{6x^{1+1}}{1+1} - 2x + C \\\\\nf'(x) &= 4x^{3} + 3x^{2} - 2x + C\n\\end{align*}\n\n2. Integramos $f'(x)$ para hallar $f(x)$:\n\\begin{align*}\nf(x) &= \\frac{4x^{3+1}}{3+1} + \\frac{3x^{2+1}}{2+1} - \\frac{2x^{1+1}}{1+1} + Cx + D \\\\\nf(x) &= x^{4} + x^{3} - x^{2} + Cx + D\n\\end{align*}\n\n3. Aplicamos la primera condición $f(0) = 4$:\n\\begin{align*}\nf(0) &= 0^{4} + 0^{3} - 0^{2} + C(0) + D = 4 \\\\\n\\implies D &= 4\n\\end{align*}\nLa función toma la forma $f(x) = x^{4} + x^{3} - x^{2} + Cx + 4$.\n\n4. Aplicamos la segunda condición $f(1) = 3$:\n\\begin{align*}\nf(1) &= 1^{4} + 1^{3} - 1^{2} + C(1) + 4 = 3 \\\\\n1 + 1 - 1 + C + 4 &= 3 \\\\\n5 + C &= 3 \\\\\nC &= -2\n\\end{align*}\n\n5. Por lo tanto, la función requerida es:\n\\[\nf(x) = x^{4} + x^{3} - x^{2} - 2x + 4\n\\]",
+        "\\begin{equation*}\n    \\int x^3(x^2+1)^4\\,dx = \\int x^2(x^2+1)^4(x\\,dx)\n\\end{equation*}\nTomamos:\n\\begin{align*}\n    u &= x^2 + 1 \\implies x^2 = u - 1 \\\\\n    du &= 2x\\,dx \\implies x\\,dx = \\frac{du}{2}\n\\end{align*}\nSustituyendo:\n\\begin{align*}\n    \\int (u-1)u^4 \\left(\\frac{du}{2}\\right) &= \\frac{1}{2}\\int (u^5 - u^4)\\,du \\\\\n    &= \\frac{1}{2}\\left(\\frac{u^6}{6} - \\frac{u^5}{5}\\right) + C \\\\\n    &= \\frac{u^6}{12} - \\frac{u^5}{10} + C \\\\\n    &= \\frac{(x^2+1)^6}{12} - \\frac{(x^2+1)^5}{10} + C\n\\end{align*}",
+        "| **Ítem** | **Respuesta** |\n| a) | $e^{x} - 2\\ln|x| + C$ |\n| b) | $x^{2} + \\frac{1}{x} + C$ |\n| c) | $2x^{2} - 5x + C$ |\n| d) | $\\ln|1+x^{3}| + C$ |\n| e) | $\\frac{2\\sqrt{(z+2)^{3}}}{3} - 4\\sqrt{z+2} + C$ |\n| f) | $e^{x} + \\sin(x) + C$ |\n| g) | $-\\frac{1}{2}\\cos(2x) - 4\\sin(3x) + C$ |\n| h) | $\\frac{2t^{5/2}}{5} + \\frac{2t^{3/2}}{3} + t^{3} + \\frac{3t^{2}}{2} + C$ |\n| i) | $\\frac{5}{4}\\sec(12x) + C$ |\n| j) | $-\\frac{2}{t^{2}} + \\frac{4}{t^{3}} + C$ |\n| k) | $\\frac{3}{4}\\tan(4x) - \\frac{5}{4}\\sec(4x) + C$ |\n| l) | $\\frac{3x^{2}}{2} + 9x + C$ |\n| m) | $\\sin(x) - x^{2} + C$ |",
+        "\\begin{equation*}\n    \\int \\frac{-4x}{(1-2x^2)^2}\\,dx\n\\end{equation*}\nTomamos:\n\\begin{align*}\n    u &= 1 - 2x^2 \\\\\n    du &= -4x\\,dx\n\\end{align*}\nSustituyendo:\n\\begin{align*}\n    \\int \\frac{du}{u^2} &= \\int u^{-2}\\,du \\\\\n    &= -u^{-1} + C \\\\\n    &= -\\frac{1}{u} + C \\\\\n    &= -\\frac{1}{1-2x^2} + C\n\\end{align*}"
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_antiderivaci_n.txt",
+          "seccion": "Problema de Valor Inicial (Segunda Derivada) > Solución paso a paso:",
+          "distancia": 0.0907
+        },
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Solución Detallada de las Integrales > Caso f (Sustitución con partición y despeje):",
+          "distancia": 0.1024
+        },
+        {
+          "fuente": "c_digo_latex_de_simplificaci_n_algebraica.txt",
+          "seccion": "Respuestas a los Ejercicios Propuestos",
+          "distancia": 0.1119
+        },
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Solución Detallada de las Integrales > Caso h:",
+          "distancia": 0.1155
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": false,
+      "tokens_entrada": 11574,
+      "tokens_salida": 1818,
+      "desde_cache": true,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 0.8461538461538461,
+        "answer_relevancy": 0.9331196307557367,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "question": "Intenté la integral de x² cos(x) por partes con u = x², pero queda una integral que también necesita partes y me enredo. ¿Cuál es el resultado completo?",
+      "ground_truth": "Con u = x² y dv = cos x dx: la integral es x² sen x − 2 integral de x sen x dx. Aplicando partes otra vez (u = x, dv = sen x dx): integral de x sen x dx = −x cos x + sen x. Resultado: x² sen x + 2x cos x − 2 sen x + C.",
+      "tipo": "ejercicio",
+      "fuente_esperada": "c_digo_latex_de_integraci_n_por_partes.txt",
+      "seccion_esperada": "Ejercicios Propuestos",
+      "respuesta": "Tu elección $u = x^2$, $dv = \\cos(x)\\,dx$ es correcta: la parte algebraica es $u$ y la trigonométrica es $dv$, igual que en los ejemplos de identificación del material, como $(x+2)^2\\sin(x)$ con $u=(x+2)^2$ [3]. Lo que te falta es completar el segundo paso por partes. Aquí tienes la resolución completa.\n\n**1. Identificar la forma de la integral**\nEs un producto de una potencia de $x$ por una función trigonométrica, así que se usa integración por partes. Como la potencia $x^2$ no desaparece al derivar, la integral resultante necesitará otra integración por partes.\n\n**2. Plantear la elección de $u$ y $dv$**\n$u = x^2$, $dv = \\cos(x)\\,dx$, de donde $du = 2x\\,dx$ y $v = \\sin(x)$.\n\n**3. Simplificar algebraicamente**\nLa fórmula $\\int u\\,dv = uv - \\int v\\,du$ (no aparece en los fragmentos de esta consulta, pero es el paso que ya usaste en tu intento) da:\n$$\\int x^2\\cos(x)\\,dx = x^2\\sin(x) - \\int 2x\\sin(x)\\,dx$$\n\nPara la integral restante, $\\int 2x\\sin(x)\\,dx$, elegimos de nuevo por prioridad algebraica: $u = 2x$, $dv = \\sin(x)\\,dx$, de donde $du = 2\\,dx$ y $v = -\\cos(x)$.\n$$\\int 2x\\sin(x)\\,dx = -2x\\cos(x) - \\int(-\\cos(x))\\,2\\,dx = -2x\\cos(x) + 2\\int\\cos(x)\\,dx$$\n\n**4. Integrar**\n$$-2x\\cos(x) + 2\\int\\cos(x)\\,dx = -2x\\cos(x) + 2\\sin(x)$$\nSustituyendo en el paso 3, el signo menos que precede a esa integral se aplica a todo el resultado:\n$$\\int x^2\\cos(x)\\,dx = x^2\\sin(x) - \\left(-2x\\cos(x) + 2\\sin(x)\\right) + C = x^2\\sin(x) + 2x\\cos(x) - 2\\sin(x) + C$$\n\n**5. Devolver la sustitución**\nNo hubo cambio de variable ni sustitución trigonométrica, así que no hay triángulo de referencia. El resultado ya está en $x$:\n$$x^2\\sin(x) + 2x\\cos(x) - 2\\sin(x) + C$$\n\n**6. Verificar derivando**\n- $\\dfrac{d}{dx}\\left[x^2\\sin(x)\\right] = 2x\\sin(x) + x^2\\cos(x)$\n- $\\dfrac{d}{dx}\\left[2x\\cos(x)\\right] = 2\\cos(x) - 2x\\sin(x)$\n- $\\dfrac{d}{dx}\\left[-2\\sin(x)\\right] = -2\\cos(x)$\n\nSumando: $2x\\sin(x) + x^2\\cos(x) + 2\\cos(x) - 2x\\sin(x) - 2\\cos(x) = x^2\\cos(x)$, que es el integrando original.",
+      "pregunta_evaluada": "Intenté la integral de x² cos(x) por partes con u = x², pero queda una integral que también necesita partes y me enredo. ¿Cuál es el resultado completo?",
+      "contextos": [
+        "- $\\displaystyle \\int x\\sin(x)\\,dx \\implies$ Requiere integración por partes \\quad **(No cumple)**\n- $\\displaystyle \\int \\frac{x+5}{x^2+x-2}\\,dx \\implies u = x^2+x-2 \\implies du = (2x+1)\\,dx$ \\quad **(No cumple directamente, fracciones parciales)**\n\n**Observación:** En los casos directos analizados, la expresión seleccionada como $u$ corresponde a la parte interna que contiene el mayor grado o exponente respecto a su diferencial.",
+        "\\begin{equation*}\n    \\int x^3(x^2+1)^4\\,dx = \\int x^2(x^2+1)^4(x\\,dx)\n\\end{equation*}\nTomamos:\n\\begin{align*}\n    u &= x^2 + 1 \\implies x^2 = u - 1 \\\\\n    du &= 2x\\,dx \\implies x\\,dx = \\frac{du}{2}\n\\end{align*}\nSustituyendo:\n\\begin{align*}\n    \\int (u-1)u^4 \\left(\\frac{du}{2}\\right) &= \\frac{1}{2}\\int (u^5 - u^4)\\,du \\\\\n    &= \\frac{1}{2}\\left(\\frac{u^6}{6} - \\frac{u^5}{5}\\right) + C \\\\\n    &= \\frac{u^6}{12} - \\frac{u^5}{10} + C \\\\\n    &= \\frac{(x^2+1)^6}{12} - \\frac{(x^2+1)^5}{10} + C\n\\end{align*}",
+        "Identifique $u$ y $dv$ para plantear la integral por partes (sin resolver):\n\n| **Integral** | $u$ | $dv$ |\n| $\\displaystyle \\int (\\ln(x))^{2}\\,dx$ | $(\\ln(x))^{2}$ | $dx$ |\n| $\\displaystyle \\int x^{2}e^{2x}\\,dx$ | $x^{2}$ | $e^{2x}\\,dx$ |\n| $\\displaystyle \\int \\theta\\cos(4\\theta)\\,d\\theta$ | $\\theta$ | $\\cos(4\\theta)\\,d\\theta$ |\n| $\\displaystyle \\int \\sec^{3}(\\theta)\\,d\\theta$ | $\\sec(\\theta)$ | $\\sec^{2}(\\theta)\\,d\\theta$ |\n| $\\displaystyle \\int \\arcsin(\\theta)\\,d\\theta$ | $\\arcsin(\\theta)$ | $d\\theta$ |\n| $\\displaystyle \\int (x+2)^{2}\\sin(x)\\,dx$ | $(x+2)^{2}$ | $\\sin(x)\\,dx$ |",
+        "**Ejercicio 1:** Evaluar $\\displaystyle \\int x^{2}e^{x^{3}}\\,dx$.\n\n- Sea $u = x^{3} \\implies du = 3x^{2}\\,dx \\implies x^{2}\\,dx = \\frac{du}{3}$.\n\n\\[\n\\int x^{2}e^{x^{3}}\\,dx = \\frac{1}{3}\\int e^{u}\\,du = \\frac{1}{3}e^{u} + C = \\frac{1}{3}e^{x^{3}} + C\n\\]\n\n**Ejercicio 2:** Evaluar $\\displaystyle \\int \\frac{1}{x[\\ln(x)]^{3}}\\,dx$.\n\n- Sea $u = \\ln(x) \\implies du = \\frac{1}{x}\\,dx$.\n\n\\[\n\\int \\frac{1}{x[\\ln(x)]^{3}}\\,dx = \\int u^{-3}\\,du = \\frac{u^{-2}}{-2} + C = -\\frac{1}{2[\\ln(x)]^{2}} + C\n\\]"
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Selección y Análisis de Integrales por Sustitución Directa > Análisis de selección",
+          "distancia": 0.1052
+        },
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Solución Detallada de las Integrales > Caso f (Sustitución con partición y despeje):",
+          "distancia": 0.1065
+        },
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "Ejercicios de Identificación",
+          "distancia": 0.109
+        },
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "Ejemplos Resueltos > Ejemplos Adicionales: Sustitución Simple (Contraste con Partes)",
+          "distancia": 0.1123
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": false,
+      "tokens_entrada": 11197,
+      "tokens_salida": 2482,
+      "desde_cache": true,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 0.06521739130434782,
+        "answer_relevancy": 0.9249035686483577,
+        "context_precision": 0.0,
+        "context_recall": 0.0
+      }
+    },
+    {
+      "question": "¿Y qué identidad se usa para simplificar el radical en ese caso?",
+      "ground_truth": "Para la forma raíz de (a² + x²) con x = a tan θ se usa la identidad a² + a² tan²θ = a² sec²θ (que viene de tan²θ + 1 = sec²θ), de modo que la raíz de (a² + x²) se convierte en a sec θ.",
+      "tipo": "seguimiento",
+      "fuente_esperada": "c_digo_latex_de_susticion_trigonometrica.txt",
+      "seccion_esperada": "Casos estándar de sustitución trigonométrica",
+      "historial": [
+        {
+          "role": "user",
+          "content": "¿Qué sustitución trigonométrica uso cuando aparece raíz de (a² + x²)?"
+        },
+        {
+          "role": "assistant",
+          "content": "Para la forma raíz de (a² + x²) se usa x = a tan θ, con dx = a sec²θ dθ [1]."
+        }
+      ],
+      "respuesta": "Para simplificar el radical $\\sqrt{a^2 + x^2}$ con $x = a\\tan\\theta$ se usa la identidad pitagórica\n\n$$\\tan^2\\theta + 1 = \\sec^2\\theta$$\n\n[1][4]. Al sustituir, el radicando se factoriza:\n\n$$a^2 + x^2 = a^2 + a^2\\tan^2\\theta = a^2(1 + \\tan^2\\theta) = a^2\\sec^2\\theta$$\n\nEsta es la identidad que aparece en la tabla de casos estándar para esta forma [2]. Como resultado, $\\sqrt{a^2 + x^2} = a\\sec\\theta$ cuando $\\sec\\theta > 0$, que es el caso habitual con $\\theta \\in (-\\pi/2, \\pi/2)$.\n\nEl ejemplo desarrollado del material aplica exactamente este paso: $\\sqrt{\\tan^2\\theta + 1} = \\sqrt{\\sec^2\\theta}$, y de ahí se obtiene $\\sec\\theta$ en el denominador [3].",
+      "pregunta_evaluada": "¿Qué identidad trigonométrica se usa para simplificar el radical √(a² + x²) cuando se sustituye x = a tan θ?",
+      "contextos": [
+        "El objetivo principal de las sustituciones trigonométricas es eliminar el radical presente en el integrando mediante el uso de identidades pitagóricas:\n\\begin{align*}\n    \\sin^2(x) + \\cos^2(x) &= 1 \\\\\n    \\sec^2(x) &= \\tan^2(x) + 1 \\\\\n    \\tan^2(x) &= \\sec^2(x) - 1\n\\end{align*}",
+        "| **Expresión en el integrando** | **Sustitución** | **Diferencial ($dx$)** | **Identidad utilizada** |\n| $\\sqrt{a^2 - x^2}$ | $x = a\\sin(\\theta)$ | $dx = a\\cos(\\theta)\\,d\\theta$ | $a^2 - a^2\\sin^2(\\theta) = a^2\\cos^2(\\theta)$ |\n| $\\sqrt{a^2 + x^2}$ | $x = a\\tan(\\theta)$ | $dx = a\\sec^2(\\theta)\\,d\\theta$ | $a^2 + a^2\\tan^2(\\theta) = a^2\\sec^2(\\theta)$ |\n| $\\sqrt{x^2 - a^2}$ | $x = a\\sec(\\theta)$ | $dx = a\\sec(\\theta)\\tan(\\theta)\\,d\\theta$ | $a^2\\sec^2(\\theta) - a^2 = a^2\\tan^2(\\theta)$ |",
+        "**Sustitución y simplificación en términos de $\\theta$:**\n\\begin{align*}\n    \\int \\frac{dx}{\\sqrt{4x^2 + 1}} &= \\int \\frac{\\frac{\\sec^2(\\theta)}{2}}{\\sqrt{4\\left(\\frac{\\tan(\\theta)}{2}\\right)^2 + 1}}\\,d\\theta \\\\\n    &= \\int \\frac{\\frac{\\sec^2(\\theta)}{2}}{\\sqrt{4\\left(\\frac{\\tan^2(\\theta)}{4}\\right) + 1}}\\,d\\theta \\\\\n    &= \\int \\frac{\\frac{\\sec^2(\\theta)}{2}}{\\sqrt{\\tan^2(\\theta) + 1}}\\,d\\theta \\\\\n    &= \\int \\frac{\\frac{\\sec^2(\\theta)}{2}}{\\sqrt{\\sec^2(\\theta)}}\\,d\\theta \\\\\n    &= \\int \\frac{\\frac{\\sec^2(\\theta)}{2}}{\\sec(\\theta)}\\,d\\theta \\\\\n    &= \\frac{1}{2}\\int \\sec(\\theta)\\,d\\theta \\\\\n    &= \\frac{1}{2}\\ln|\\sec(\\theta) + \\tan(\\theta)| + C\n\\end{align*}",
+        "- **Identidad Pitagórica:**\n\\begin{equation*}\n        \\sin^2(x) + \\cos^2(x) = 1\n    \\end{equation*}\n- **Identidades de reducción de potencia (ángulo medio):**\n\\begin{align*}\n        \\sin^2(x) &= \\frac{1 - \\cos(2x)}{2} \\\\\n        \\cos^2(x) &= \\frac{1 + \\cos(2x)}{2}\n    \\end{align*}\n- **Identidades Pitagóricas para tangente y secante:**\n\\begin{align*}\n        \\tan^2(x) + 1 &= \\sec^2(x) \\\\\n        \\tan^2(x) &= \\sec^2(x) - 1\n    \\end{align*}"
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_susticion_trigonometrica.txt",
+          "seccion": "Fundamentos y Razones Trigonométricas",
+          "distancia": 0.1017
+        },
+        {
+          "fuente": "c_digo_latex_de_susticion_trigonometrica.txt",
+          "seccion": "Fundamentos y Razones Trigonométricas > Casos estándar de sustitución trigonométrica",
+          "distancia": 0.1082
+        },
+        {
+          "fuente": "c_digo_latex_de_susticion_trigonometrica.txt",
+          "seccion": "Ejemplos Desarrollados > Ejemplo 2: Caso $\\sqrt{a^2 + x^2}$",
+          "distancia": 0.1216
+        },
+        {
+          "fuente": "c_digo_latex_de_Areas_entre-Curvas.txt",
+          "seccion": "Identidades Trigonométricas Fundamentales",
+          "distancia": 0.1236
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": false,
+      "tokens_entrada": 11139,
+      "tokens_salida": 749,
+      "desde_cache": true,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 0.5833333333333334,
+        "answer_relevancy": 0.9583053139045683,
+        "context_precision": 0.999999999975,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "question": "¿Y cómo decido cuál de las dos funciones va a ser u?",
+      "ground_truth": "Se usa la regla nemotécnica ILATE, que da una prioridad descendente para elegir u: primero las funciones Inversas trigonométricas, luego Logarítmicas, Algebraicas, Trigonométricas y por último Exponenciales.",
+      "tipo": "seguimiento",
+      "fuente_esperada": "c_digo_latex_de_integraci_n_por_partes.txt",
+      "seccion_esperada": "La Regla Nemotécnica ILATE",
+      "historial": [
+        {
+          "role": "user",
+          "content": "¿Cuál es la fórmula de integración por partes?"
+        },
+        {
+          "role": "assistant",
+          "content": "La fórmula es: la integral de u dv es igual a uv menos la integral de v du [1]. Hay que elegir qué parte del integrando es u y cuál es dv."
+        }
+      ],
+      "respuesta": "La respuesta está en la regla ILATE: se da prioridad descendente para elegir $u$ entre las funciones del integrando, en este orden: Inversas trigonométricas, Logarítmicas, Algebraicas, Trigonométricas y Exponenciales [2][4]. La función que aparezca primero en esa lista será $u$, y el resto del integrando (incluido $dx$) será $dv$.\n\nPor ejemplo, en $\\int x\\ln(x)\\,dx$ aparecen una logarítmica y una algebraica. Como la L está antes que la A, $u = \\ln(x)$ y $dv = x\\,dx$ [2][4]. Y en $\\int x^{2}e^{x}\\,dx$, la A está antes que la E, así que $u = x^{2}$ y $dv = e^{x}\\,dx$ [4].\n\nHay un criterio práctico que conviene tener presente: elige $u$ de modo que su derivada sea más simple, y $dv$ de modo que puedas integrarlo fácilmente.\n\nPara practicar, intenta identificar $u$ y $dv$ en estas dos integrales (sin resolverlas):\n\n1. $\\int \\arctan(x)\\,dx$\n2. $\\int x\\cos(3x)\\,dx$\n\nCuéntame qué eliges en cada una y por qué, y lo revisamos juntos.",
+      "pregunta_evaluada": "¿Cómo decido cuál de las dos funciones de la integral por partes debo elegir como u?",
+      "contextos": [
+        "- $\\displaystyle \\int x\\sin(x)\\,dx \\implies$ Requiere integración por partes \\quad **(No cumple)**\n- $\\displaystyle \\int \\frac{x+5}{x^2+x-2}\\,dx \\implies u = x^2+x-2 \\implies du = (2x+1)\\,dx$ \\quad **(No cumple directamente, fracciones parciales)**\n\n**Observación:** En los casos directos analizados, la expresión seleccionada como $u$ corresponde a la parte interna que contiene el mayor grado o exponente respecto a su diferencial.",
+        "Identifique $u$ y $dv$ para plantear la integral por partes (sin resolver):\n\n| **Integral** | $u$ | $dv$ |\n| $\\displaystyle \\int (\\ln(x))^{2}\\,dx$ | $(\\ln(x))^{2}$ | $dx$ |\n| $\\displaystyle \\int x^{2}e^{2x}\\,dx$ | $x^{2}$ | $e^{2x}\\,dx$ |\n| $\\displaystyle \\int \\theta\\cos(4\\theta)\\,d\\theta$ | $\\theta$ | $\\cos(4\\theta)\\,d\\theta$ |\n| $\\displaystyle \\int \\sec^{3}(\\theta)\\,d\\theta$ | $\\sec(\\theta)$ | $\\sec^{2}(\\theta)\\,d\\theta$ |\n| $\\displaystyle \\int \\arcsin(\\theta)\\,d\\theta$ | $\\arcsin(\\theta)$ | $d\\theta$ |\n| $\\displaystyle \\int (x+2)^{2}\\sin(x)\\,dx$ | $(x+2)^{2}$ | $\\sin(x)\\,dx$ |",
+        "**Propósito**\nUtilizar el método de integración por partes para determinar integrales indefinidas.\n\nEsta técnica de integración puede aplicarse a una amplia variedad de funciones y es particularmente útil para integrandos que contengan productos (explícitos e implícitos) de funciones algebraicas (nota: Las funciones polinomiales y las racionales son ejemplos de funciones algebraicas. Se llama función algebraica de $x$ a aquella que puede expresarse mediante un número finito de sumas, diferencias, productos, cocientes y raíces que contengan $x^n$.) y trascendentes (nota: Las funciones no algebraicas se denominan trascendentes. Por ejemplo, las funciones logarítmicas, exponenciales, trigonométricas y trigonométricas inversas son trascendentes.).\n\nEjemplos típicos:\n\\[\n\\int x\\ln(x)\\,dx \\qquad \\int x^{2}e^{x}\\,dx \\qquad \\int e^{x}\\sin(x)\\,dx \\qquad \\int \\frac{\\cos(\\pi/x)}{x^{2}}\\,dx\n\\]",
+        "- Identificar $u$ y $dv$ en el integrando empleando la prioridad ILATE.\n- Diferenciar $u$ para hallar $du$ e integrar $dv$ para obtener $v$.\n- Sustituir en la relación $\\displaystyle \\int u\\,dv = uv - \\int v\\,du$.\n- Resolver la integral resultante $\\displaystyle \\int v\\,du$."
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Selección y Análisis de Integrales por Sustitución Directa > Análisis de selección",
+          "distancia": 0.106
+        },
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "Ejercicios de Identificación",
+          "distancia": 0.1205
+        },
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "Introducción a la Integración por Partes",
+          "distancia": 0.1211
+        },
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "La Regla Nemotécnica ILATE > Algoritmo General",
+          "distancia": 0.1241
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": false,
+      "tokens_entrada": 11019,
+      "tokens_salida": 456,
+      "desde_cache": true,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 0.25,
+        "answer_relevancy": 0.8763891623855106,
+        "context_precision": 0.249999999975,
+        "context_recall": 0.0
+      }
+    },
+    {
+      "question": "¿Y si en vez de cos⁴(x) fuera sen⁵(x)·cos²(x), el mismo método me sirve?",
+      "ground_truth": "No: aquí la potencia del seno es impar. Se extrae un factor sen x, se usa sen²x = 1 − cos²x para expresar el resto en términos del coseno y se sustituye u = cos x, du = −sen x dx. Para la integral de sen⁵x cos²x dx el resultado es −cos³x/3 + 2cos⁵x/5 − cos⁷x/7 + C.",
+      "tipo": "seguimiento",
+      "fuente_esperada": "c_digo_latex_de_Areas_entre-Curvas.txt",
+      "seccion_esperada": "Ejemplo 2: Potencia impar de seno y par de coseno",
+      "historial": [
+        {
+          "role": "user",
+          "content": "¿Cómo integro cos⁴(x)?"
+        },
+        {
+          "role": "assistant",
+          "content": "La potencia del coseno es par, así que se usan las identidades de ángulo medio: cos²(x) = (1 + cos 2x)/2 [1]."
+        }
+      ],
+      "respuesta": "No, el mismo método no sirve directamente. El material indica que, cuando **ambas** potencias son pares, se usan las identidades de reducción de potencia [1]. En $\\sin^5(x)\\cos^2(x)$ la potencia del seno es impar (5), así que esa regla no aplica tal cual.\n\nAntes de darte una resolución, te propongo que lo intentes con estas pistas:\n\n1. **Identifica la potencia impar.** Aquí es la del seno. Separa un factor $\\sin(x)$ de $\\sin^5(x)$ para que quede una potencia par: $\\sin^5(x) = \\sin^4(x)\\cdot\\sin(x)$.\n2. **Convierte el resto a coseno.** Usa la identidad pitagórica $\\sin^2(x) + \\cos^2(x) = 1$ [2], de modo que $\\sin^4(x) = (1-\\cos^2(x))^2$.\n3. **Busca la sustitución.** Con $u = \\cos(x)$, ¿cuánto vale $du$ y qué queda en el integrando después de sustituir?\n\nLos fragmentos que tengo no detallan el criterio para potencias impares, así que no puedo citarlo; el paso 2 y la sustitución son razonamiento a partir de la identidad pitagórica [2]. Intenta escribir la integral transformada y cuéntame hasta dónde llegas para revisarlo contigo.",
+      "pregunta_evaluada": "¿Sirve el método de las identidades de ángulo medio para integrar sen⁵(x)·cos²(x)?",
+      "contextos": [
+        "**Observación:** Si la potencia de ambos, seno y coseno, es impar, puede utilizarse tanto el criterio a) como el b).\n\n- **Si las potencias de ambos, seno y coseno, son pares:** Utilizamos las identidades de reducción de potencia (o del ángulo medio):\n\\begin{equation*}\n        \\sin^2(x) = \\frac{1 - \\cos(2x)}{2}, \\qquad \\cos^2(x) = \\frac{1 + \\cos(2x)}{2}\n    \\end{equation*}\nEn ocasiones también resulta conveniente emplear:\n\\begin{equation*}\n        \\sin(x)\\cos(x) = \\frac{\\sin(2x)}{2}, \\qquad \\cos(2x) = \\cos^2(x) - \\sin^2(x)\n    \\end{equation*}",
+        "- **Identidad Pitagórica:**\n\\begin{equation*}\n        \\sin^2(x) + \\cos^2(x) = 1\n    \\end{equation*}\n- **Identidades de reducción de potencia (ángulo medio):**\n\\begin{align*}\n        \\sin^2(x) &= \\frac{1 - \\cos(2x)}{2} \\\\\n        \\cos^2(x) &= \\frac{1 + \\cos(2x)}{2}\n    \\end{align*}\n- **Identidades Pitagóricas para tangente y secante:**\n\\begin{align*}\n        \\tan^2(x) + 1 &= \\sec^2(x) \\\\\n        \\tan^2(x) &= \\sec^2(x) - 1\n    \\end{align*}",
+        "\\[\n\\int \\frac{\\cos(x)}{\\sin^{2}(x)}\\,dx\n\\]\n\n- Descomponer el integrando en factores convenientes:\n\\[\n    = \\int \\frac{\\cos(x)}{\\sin(x)}\\cdot\\frac{1}{\\sin(x)}\\,dx\n    \\]\n- Utilizar identidades trigonométricas básicas:\n\\[\n    \\frac{\\cos(x)}{\\sin(x)} = \\cot(x), \\quad \\frac{1}{\\sin(x)} = \\csc(x)\n    \\]\n- Reescribir la integral:\n\\[\n    = \\int \\cot(x)\\csc(x)\\,dx\n    \\]\n- Como $\\frac{d}{dx}[\\csc(x)] = -\\csc(x)\\cot(x)$, se tiene:\n\\[\n    = -\\csc(x) + C\n    \\]",
+        "La regla ILATE permite establecer un criterio de prioridad descendente (de arriba hacia abajo) para seleccionar la función que asumirá el rol de $u$:\n\n| **Prioridad** | **Letra** | **Tipo de Función** | **Ejemplos** |\n| $1^\\circ$ | **I** | Inversas trigonométricas | $\\arcsin(x)$, $\\arctan(x)$ |\n| $2^\\circ$ | **L** | Logarítmicas | $\\ln(x)$, $\\log_a(x)$ |\n| $3^\\circ$ | **A** | Algebraicas | $x^n$, $\\frac{1}{3x^2}$, $\\sqrt{x^2+2}$ |\n| $4^\\circ$ | **T** | Trigonométricas | $\\sin(x)$, $\\cos(x)$, $\\sec^2(x)$ |\n| $5^\\circ$ | **E** | Exponenciales | $e^x$, $2^x$ |"
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_Areas_entre-Curvas.txt",
+          "seccion": "Estrategia para la Evaluación de $\\int \\sin^m(x)\\cos^n(x)\\,dx$",
+          "distancia": 0.1295
+        },
+        {
+          "fuente": "c_digo_latex_de_Areas_entre-Curvas.txt",
+          "seccion": "Identidades Trigonométricas Fundamentales",
+          "distancia": 0.1371
+        },
+        {
+          "fuente": "c_digo_latex_de_simplificaci_n_algebraica.txt",
+          "seccion": "Ejercicios Resueltos > Desarrollo Paso a Paso > Ejercicio e)",
+          "distancia": 0.1472
+        },
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "La Regla Nemotécnica ILATE",
+          "distancia": 0.1494
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": false,
+      "tokens_entrada": 11100,
+      "tokens_salida": 1181,
+      "desde_cache": true,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 0.5,
+        "answer_relevancy": 0.8904834665999285,
+        "context_precision": 0.99999999995,
+        "context_recall": 0.3333333333333333
+      }
+    },
+    {
+      "question": "¿Cómo calculo el volumen de un sólido de revolución con el método de discos?",
+      "ground_truth": "No encontré esto en el material del curso. El tutor debe abstenerse y no responder de memoria; puede ofrecer ayuda con los temas que sí cubre el material.",
+      "tipo": "fuera_de_corpus",
+      "fuente_esperada": "",
+      "seccion_esperada": "",
+      "respuesta": "No encontré esto en el material del curso. Los fragmentos recuperados tratan sobre sustitución, integración por partes, sustitución trigonométrica y un ejemplo de antiderivación en cinemática (caída de una piedra desde la Torre CN). Ninguno explica volúmenes de sólidos de revolución ni el método de discos, así que no voy a responder de memoria.\n\nSí puedo ayudarte con los temas que sí están en el material:\n\n- **Sustitución (cambio de variable):** el algoritmo de cinco pasos para elegir $u$, calcular $du$ y reescribir la integral.\n- **Integración por partes:** la fórmula $\\int u\\,dv = uv - \\int v\\,du$ y la regla ILATE para elegir $u$.\n- **Sustitución trigonométrica:** los casos para $\\sqrt{a^2-x^2}$, $\\sqrt{a^2+x^2}$ y $\\sqrt{x^2-a^2}$.\n- **Antiderivación en cinemática:** cómo obtener velocidad y posición a partir de la aceleración.\n\nSi tu pregunta sobre discos forma parte de otra unidad de tu curso, revisa tus notas de esa semana o consulta a tu docente. Si quieres practicar con lo que sí tienes, puedo guiarte en los ejercicios de identificación de $u$ y $du$ del material.",
+      "pregunta_evaluada": "¿Cómo calculo el volumen de un sólido de revolución con el método de discos?",
+      "contextos": [
+        "**Completar la tabla identificando $u$ y $du$ para cada integral sin resolver:**\n\n| **Integral $\\int f(g(x))g'(x)\\,dx$** | $\\mathbf{u = g(x)}$ | $\\mathbf{du = g'(x)\\,dx}$ |\n| $\\displaystyle \\int \\frac{t^2}{(1+t^3)^2}\\,dt$ |  |  |\n| $\\displaystyle \\int \\sqrt[3]{\\tan(x)}\\sec^2(x)\\,dx$ |  |  |\n| $\\displaystyle \\int \\cos(6x)\\,dx$ |  |  |\n| $\\displaystyle \\int x^2\\sqrt{1-x}\\,dx$ |  |  |\n| $\\displaystyle \\int \\sin(x)e^{\\cos(x)}\\,dx$ |  |  |\n| $\\displaystyle \\int \\frac{1}{x\\ln(x)}\\,dx$ |  |  |\n| $\\displaystyle \\int \\frac{1}{t^2}\\left(1+\\frac{1}{t}\\right)^3\\,dt$ |  |  |\n| $\\displaystyle \\int \\frac{(\\ln(z))^2}{z}\\,dz$ |  |  |",
+        "**Parte a):** Tomando $a(t) = -9.8\\text{ m/s}^2$ y $v(0) = 0$:\n\\[\nv(t) = \\int -9.8\\,dt = -9.8t + C \\implies v(t) = -9.8t\n\\]\n\\[\ns(t) = \\int -9.8t\\,dt = -4.9t^{2} + D, \\quad s(0) = 450 \\implies s(t) = -4.9t^{2} + 450\n\\]\n\n**Parte b):** Llega al suelo cuando $s(t) = 0$:\n\\[\n-4.9t^{2} + 450 = 0 \\implies t = \\sqrt{\\frac{450}{4.9}} \\approx 9.583\\text{ s}\n\\]\n\n**Parte c):** Velocidad al impacto:\n\\[\nv(9.583) = -9.8(9.583) \\approx -93.9\\text{ m/s}\n\\]\n\n**Parte d):** Con $v(0) = 5\\text{ m/s}$:\n\\[\nv(t) = -9.8t + 5 \\implies s(t) = -4.9t^{2} + 5t + 450\n\\]\nHaciendo $s(t) = 0$:\n\\[\nt = \\frac{-5 \\pm \\sqrt{5^{2} - 4(-4.9)(450)}}{2(-4.9)} = \\frac{-5 \\pm \\sqrt{8845}}{-9.8}\n\\]\nTomando la raíz físicamente admisible:\n\\[\nt_1 = \\frac{-5 - \\sqrt{8845}}{-9.8} \\approx 10.106\\text{ s}\n\\]\n\n**Forma general de la posición con aceleración constante:**\n\\[\ns(t) = \\frac{1}{2}gt^{2} + v_{0}t + s_{0}\n\\]",
+        "Identifique $u$ y $dv$ para plantear la integral por partes (sin resolver):\n\n| **Integral** | $u$ | $dv$ |\n| $\\displaystyle \\int (\\ln(x))^{2}\\,dx$ | $(\\ln(x))^{2}$ | $dx$ |\n| $\\displaystyle \\int x^{2}e^{2x}\\,dx$ | $x^{2}$ | $e^{2x}\\,dx$ |\n| $\\displaystyle \\int \\theta\\cos(4\\theta)\\,d\\theta$ | $\\theta$ | $\\cos(4\\theta)\\,d\\theta$ |\n| $\\displaystyle \\int \\sec^{3}(\\theta)\\,d\\theta$ | $\\sec(\\theta)$ | $\\sec^{2}(\\theta)\\,d\\theta$ |\n| $\\displaystyle \\int \\arcsin(\\theta)\\,d\\theta$ | $\\arcsin(\\theta)$ | $d\\theta$ |\n| $\\displaystyle \\int (x+2)^{2}\\sin(x)\\,dx$ | $(x+2)^{2}$ | $\\sin(x)\\,dx$ |",
+        "- $\\displaystyle \\frac{1}{3\\cos^3(x)} + C$\n- $\\displaystyle \\ln|\\sec(x)| + C$\n- $\\displaystyle \\frac{1}{2}\\left[(x^2-1) + \\ln|x^2-1|\\right] + C$\n- $\\displaystyle e^{\\sin(x)} + C$\n- $\\displaystyle \\frac{\\sqrt{(1+x^2)^7}}{7} - \\frac{2\\sqrt{(1+x^2)^5}}{5} + \\frac{\\sqrt{(1+x^2)^3}}{3} + C$\n- $\\displaystyle \\frac{1}{2}e^{(t^2+1)} + C$\n- $\\displaystyle -e^{\\cos(\\theta)} + C$\n- $\\displaystyle 2e^{\\sqrt{y}} + C$\n- $\\displaystyle \\frac{1}{2}\\int u e^u\\,du = \\frac{1}{2}e^{x^2}(x^2-1) + C$\n- $\\displaystyle -\\ln(3+\\cos(\\theta)) + C$"
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Ejercicios de Identificación de $u$ y $du$",
+          "distancia": 0.1669
+        },
+        {
+          "fuente": "c_digo_latex_de_antiderivaci_n.txt",
+          "seccion": "Aplicaciones de la Antiderivación: Cinemática > Ejemplo 2: Objeto soltado desde la Torre CN > Solución:",
+          "distancia": 0.1679
+        },
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "Ejercicios de Identificación",
+          "distancia": 0.1701
+        },
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Respuestas de los Ejercicios Propuestos",
+          "distancia": 0.1715
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": true,
+      "tokens_entrada": 11632,
+      "tokens_salida": 799,
+      "desde_cache": true,
+      "avisos": []
+    },
+    {
+      "question": "¿Cómo se calcula el área entre dos curvas usando integrales?",
+      "ground_truth": "No encontré esto en el material del curso. El tutor debe abstenerse y no responder de memoria; puede ofrecer ayuda con los temas que sí cubre el material.",
+      "tipo": "fuera_de_corpus",
+      "fuente_esperada": "",
+      "seccion_esperada": "",
+      "respuesta": "No encontré esto en el material del curso. Los fragmentos recuperados tratan sobre selección de sustituciones directas, reglas básicas de antiderivación, aplicaciones cinemáticas con antiderivadas y la fórmula de integración por partes, pero ninguno explica el cálculo de áreas entre curvas. Prefiero no responder de memoria para no darte un procedimiento que no coincida con tus apuntes.\n\nSí puedo ayudarte con estos temas del material:\n\n- **Antiderivación:** notación de la integral indefinida y reglas básicas (potencias, suma, múltiplo constante, funciones trigonométricas).\n- **Sustitución:** cómo elegir $u$ y calcular $du$, y cómo identificar integrales de sustitución directa.\n- **Integración por partes:** la fórmula $\\int u\\,dv = uv - \\int v\\,du$ y la regla ILATE para escoger $u$.\n- **Sustitución trigonométrica:** los casos $\\sqrt{a^2-x^2}$, $\\sqrt{a^2+x^2}$ y $\\sqrt{x^2-a^2}$.\n- **Aplicaciones cinemáticas:** cómo obtener velocidad y posición a partir de la aceleración con antiderivadas.\n\nPara el área entre curvas, revisa tus notas de clase o consulta a tu docente. Si me compartes el fragmento de tus apuntes que trate ese tema, con gusto te ayudo a resolver un ejercicio paso a paso.",
+      "pregunta_evaluada": "¿Cómo se calcula el área entre dos curvas usando integrales?",
+      "contextos": [
+        "**Ejercicio 2:** Seleccionar únicamente las integrales que cumplan las siguientes dos condiciones:\n\n- Están compuestas por dos expresiones.\n- Una expresión es la derivada de la otra (pudiendo diferir únicamente por un valor constante).\n\n- $\\displaystyle \\int 3x^2\\sqrt{x^3+1}\\,dx$\n- $\\displaystyle \\int (2x+3)(x^2+x)\\,dx$\n- $\\displaystyle \\int \\sin^2(3x)\\cos(3x)\\,dx$\n- $\\displaystyle \\int x\\sqrt{x-1}\\,dx$\n- $\\displaystyle \\int \\frac{\\sqrt{9-x^2}}{x^2}\\,dx$\n- $\\displaystyle \\int x^3(x^2+1)^4\\,dx$\n- $\\displaystyle \\int 2x e^x\\,dx$\n- $\\displaystyle \\int \\frac{-4x}{(1-2x^2)^2}\\,dx$\n- $\\displaystyle \\int x\\sin(x)\\,dx$\n- $\\displaystyle \\int \\frac{x+5}{x^2+x-2}\\,dx$",
+        "**Notación para la Integral Indefinida**\n\\[\n\\int f(x)\\,dx = F(x) + C \\iff F'(x) = f(x)\n\\]\n\n- $f(x)$: integrando.\n- $dx$: diferencial (indica la variable de integración).\n\n\\begin{align*}\n\\int k\\,dx &= kx + C, \\quad k \\in \\mathbb{R} \\setminus \\{0\\} \\\\\n\\int k f(x)\\,dx &= k \\int f(x)\\,dx \\quad \\text{(Multiplication by constant)} \\\\\n\\int [f(x) \\pm g(x)]\\,dx &= \\int f(x)\\,dx \\pm \\int g(x)\\,dx \\quad \\text{(Sum and difference rule)} \\\\\n\\int x^{n}\\,dx &= \\frac{x^{n+1}}{n+1} + C, \\quad n \\neq -1 \\quad \\text{(Power rule)} \\\\\n\\int \\sin(x)\\,dx &= -\\cos(x) + C \\\\\n\\int \\cos(x)\\,dx &= \\sin(x) + C \\\\\n\\int \\sec^{2}(x)\\,dx &= \\tan(x) + C \\\\\n\\int \\csc^{2}(x)\\,dx &= -\\cot(x) + C \\\\\n\\int \\sec(x)\\tan(x)\\,dx &= \\sec(x) + C \\\\\n\\int \\csc(x)\\cot(x)\\,dx &= -\\csc(x) + C\n\\end{align*}\n\n**Tarea:** Determinar la antiderivada general de:\n\\[\nf(x) = 3\\sin(x) + \\frac{2x^{5} - 2\\sqrt{x}}{x} + 11x^{-3}\n\\]\n*Solución:*\n\\[\nF(x) = -3\\cos(x) + \\frac{2x^{5}}{5} - 4\\sqrt{x} - \\frac{11}{2x^{2}} + C\n\\]",
+        "Tomando $a(t) = -32\\text{ ft/s}^2$:\n\\begin{align*}\nv(t) &= \\int -32\\,dt = -32t + C\n\\end{align*}\nComo $v(0) = 48$:\n\\[\n-32(0) + C = 48 \\implies C = 48 \\implies v(t) = -32t + 48\n\\]\nPara la posición:\n\\begin{align*}\ns(t) &= \\int (-32t + 48)\\,dt = -16t^{2} + 48t + D\n\\end{align*}\nDado que $s(0) = 432$:\n\\[\nD = 432 \\implies s(t) = -16t^{2} + 48t + 432\n\\]\n\n**Altura máxima:** Ocurre cuando $v(t) = s'(t) = 0$:\n\\[\n-32t + 48 = 0 \\implies t = \\frac{48}{32} = \\frac{3}{2} = 1.5\\text{ s}\n\\]\n\n**Impacto contra el suelo:** Se resuelve $s(t) = 0$:\n\\begin{align*}\n-16t^{2} + 48t + 432 &= 0 \\\\\nt^{2} - 3t - 27 &= 0 \\\\\nt &= \\frac{3 \\pm \\sqrt{(-3)^{2} - 4(1)(-27)}}{2} = \\frac{3 \\pm \\sqrt{117}}{2} = \\frac{3 + 3\\sqrt{13}}{2} \\approx 6.9083\\text{ s}\n\\end{align*}\n*Recurso interactivo:* \\url{https://www.geogebra.org/m/e6hqccag}",
+        "- $\\displaystyle \\int x\\sin(x)\\,dx \\implies$ Requiere integración por partes \\quad **(No cumple)**\n- $\\displaystyle \\int \\frac{x+5}{x^2+x-2}\\,dx \\implies u = x^2+x-2 \\implies du = (2x+1)\\,dx$ \\quad **(No cumple directamente, fracciones parciales)**\n\n**Observación:** En los casos directos analizados, la expresión seleccionada como $u$ corresponde a la parte interna que contiene el mayor grado o exponente respecto a su diferencial."
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Selección y Análisis de Integrales por Sustitución Directa",
+          "distancia": 0.1405
+        },
+        {
+          "fuente": "c_digo_latex_de_antiderivaci_n.txt",
+          "seccion": "Notación para la Integral Indefinida > Reglas Básicas de Integración",
+          "distancia": 0.145
+        },
+        {
+          "fuente": "c_digo_latex_de_antiderivaci_n.txt",
+          "seccion": "Aplicaciones de la Antiderivación: Cinemática > Ejemplo 1: Pelota lanzada desde un acantilado > Solución:",
+          "distancia": 0.1473
+        },
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Selección y Análisis de Integrales por Sustitución Directa > Análisis de selección",
+          "distancia": 0.1485
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": true,
+      "tokens_entrada": 11638,
+      "tokens_salida": 624,
+      "desde_cache": true,
+      "avisos": []
+    },
+    {
+      "question": "¿Qué son las sumas de Riemann y cómo se usa la notación sigma?",
+      "ground_truth": "No encontré esto en el material del curso. El tutor debe abstenerse y no responder de memoria; puede ofrecer ayuda con los temas que sí cubre el material.",
+      "tipo": "fuera_de_corpus",
+      "fuente_esperada": "",
+      "seccion_esperada": "",
+      "respuesta": "No encontré esto en el material del curso. Los fragmentos recuperados tratan sobre simplificación algebraica de integrales, sustitución trigonométrica y ejemplos de retorno a la variable original, pero ninguno define las sumas de Riemann ni explica la notación sigma, así que no puedo responderte con base en tus apuntes.\n\nSí puedo ayudarte a revisar los temas que sí cubre el material:\n\n- **Simplificación algebraica:** reescribir integrandos como sumas de potencias, usar propiedades de la potenciación y factorizar antes de integrar.\n- **Sustitución trigonométrica:** casos $\\sqrt{a^2-x^2}$, $\\sqrt{a^2+x^2}$ y $\\sqrt{x^2-a^2}$, con su triángulo de referencia.\n- **Sustitución simple, integración por partes (regla ILATE) e integrales trigonométricas.**\n\nSi tu duda sobre sumas de Riemann es parte de la unidad de integral definida, revisa el material de esa sección o consulta a tu docente, quien podrá indicarte la fuente adecuada.",
+      "pregunta_evaluada": "¿Qué son las sumas de Riemann y cómo se usa la notación sigma?",
+      "contextos": [
+        "\\[\n\\int \\frac{1+2t-t^{2}}{\\sqrt{t}}\\,dt\n\\]\n\n- Expresar la función racional como una suma/resta de funciones racionales (término a término entre $\\sqrt{t}$):\n\\[\n    = \\int \\left( \\frac{1}{\\sqrt{t}} + \\frac{2t}{\\sqrt{t}} - \\frac{t^{2}}{\\sqrt{t}} \\right) dt\n    \\]\n- Separar la integral en una combinación lineal de integrales:\n\\[\n    = \\int \\frac{1}{\\sqrt{t}}\\,dt + 2\\int \\frac{t}{\\sqrt{t}}\\,dt - \\int \\frac{t^{2}}{\\sqrt{t}}\\,dt\n    \\]\n- Aplicar propiedades de la potenciación para reescribir los integrandos con exponentes racionales:\n\\[\n    = \\int t^{-1/2}\\,dt + 2\\int t\\cdot t^{-1/2}\\,dt - \\int t^{2}\\cdot t^{-1/2}\\,dt\n    \\]\n- Simplificar los productos de potencias de igual base e integrar el primer término:\n\\[\n    = 2t^{1/2} + C_1 + 2\\int t^{1/2}\\,dt - \\int t^{3/2}\\,dt\n    \\]\n- Integrar los términos restantes aplicando la regla de la potencia:\n\\begin{align*}\n    &= 2\\sqrt{t} + C_1 + 2\\left(\\frac{2}{3}t^{3/2}\\right) + D - \\frac{2}{5}t^{5/2} + E \\\\\n    &= 2\\sqrt{t} + \\frac{4}{3}\\sqrt{t^{3}} - \\frac{2}{5}\\sqrt{t^{5}} + F\n    \\end{align*}",
+        "Diagrama:\n- Integral asignada\n- Reescribir el integrando\n- Integrar\n- Verificar la antiderivada\n**Estrategias para reescribir:**\n\n- Reescribir una función racional como suma y/o resta de funciones racionales.\n- Reescribir una función racional como un producto de funciones racionales.\n- Reescribir un cociente de potencias de igual base como producto de potencias de igual base.\n- Desarrollar los factores (productos notables, distributiva).\n- Usar propiedades de la potenciación y de la radicación.\n- Multiplicar por el conjugado.\n- Factorizar numerador y denominador de una fracción.\n- Aplicar identidades trigonométricas.",
+        "**Retorno a la variable original $x$:**\nDel triángulo de referencia, $\\sec(\\theta) = \\frac{h}{ca} = \\frac{\\sqrt{4x^2+1}}{1} = \\sqrt{4x^2+1}$ y $\\tan(\\theta) = 2x$:\n\\begin{equation*}\n    \\int \\frac{dx}{\\sqrt{4x^2 + 1}} = \\frac{1}{2}\\ln\\left|\\sqrt{4x^2 + 1} + 2x\\right| + C\n\\end{equation*}",
+        "Aplicando sustitución simple:\n\\begin{align*}\n    u &= \\sin(\\theta) \\implies du = \\cos(\\theta)\\,d\\theta \\\\\n    \\int \\frac{\\cos(\\theta)}{\\sin^2(\\theta)}\\,d\\theta &= \\int \\frac{du}{u^2} = \\int u^{-2}\\,du = -u^{-1} + C = -\\frac{1}{\\sin(\\theta)} + C\n\\end{align*}\n\n**Retorno a la variable original $x$:**\nDado que $\\sin(\\theta) = \\frac{co}{h} = \\frac{\\sqrt{x^2 - 1}}{x}$:\n\\begin{equation*}\n    \\int \\frac{dx}{(x^2 - 1)^{3/2}} = -\\frac{1}{\\frac{\\sqrt{x^2 - 1}}{x}} + C = -\\frac{x}{\\sqrt{x^2 - 1}} + C\n\\end{equation*}"
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_simplificaci_n_algebraica.txt",
+          "seccion": "Ejercicios Resueltos > Desarrollo Paso a Paso > Ejercicio a)",
+          "distancia": 0.182
+        },
+        {
+          "fuente": "c_digo_latex_de_simplificaci_n_algebraica.txt",
+          "seccion": "Algoritmo para Resolver Integrales por Simplificación Algebraica",
+          "distancia": 0.1868
+        },
+        {
+          "fuente": "c_digo_latex_de_susticion_trigonometrica.txt",
+          "seccion": "Ejemplos Desarrollados > Ejemplo 2: Caso $\\sqrt{a^2 + x^2}$",
+          "distancia": 0.1871
+        },
+        {
+          "fuente": "c_digo_latex_de_susticion_trigonometrica.txt",
+          "seccion": "Ejemplos Desarrollados > Ejemplo 3: Caso $\\sqrt{x^2 - a^2}$",
+          "distancia": 0.1899
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": true,
+      "tokens_entrada": 11281,
+      "tokens_salida": 387,
+      "desde_cache": true,
+      "avisos": []
+    },
+    {
+      "question": "¿Cómo resuelvo una ecuación diferencial separable?",
+      "ground_truth": "No encontré esto en el material del curso. El tutor debe abstenerse y no responder de memoria; puede ofrecer ayuda con los temas que sí cubre el material.",
+      "tipo": "fuera_de_corpus",
+      "fuente_esperada": "",
+      "seccion_esperada": "",
+      "respuesta": "No encontré esto en el material del curso. Los fragmentos recuperados tratan sobre simplificación algebraica, antiderivación con condiciones iniciales y técnicas de integración, pero ninguno explica ecuaciones diferenciales separables ni el método de separación de variables. No voy a responder de memoria para no darte un procedimiento que no coincida con tus apuntes.\n\nSí puedo ayudarte con estos temas del material:\n\n- **Antiderivación con condiciones iniciales**: integrar una segunda derivada dos veces y usar valores dados para hallar las constantes, como en el problema de valor inicial de $f''(x)$ [3].\n- **Simplificación algebraica antes de integrar**: desarrollar productos notables y expresar raíces o potencias para integrar término a término [1][4].\n- **Sustitución, integración por partes y sustitución trigonométrica**, con la regla ILATE para elegir $u$ [2].\n\nSi tu curso ya vio ecuaciones diferenciales separables, revisa esas notas o consulta a tu docente, y con gusto te ayudo a verificar tu procedimiento una vez que tengas el material a la mano.",
+      "pregunta_evaluada": "¿Cómo resuelvo una ecuación diferencial separable?",
+      "contextos": [
+        "| **Ítem** | **Respuesta** |\n| a) | $e^{x} - 2\\ln|x| + C$ |\n| b) | $x^{2} + \\frac{1}{x} + C$ |\n| c) | $2x^{2} - 5x + C$ |\n| d) | $\\ln|1+x^{3}| + C$ |\n| e) | $\\frac{2\\sqrt{(z+2)^{3}}}{3} - 4\\sqrt{z+2} + C$ |\n| f) | $e^{x} + \\sin(x) + C$ |\n| g) | $-\\frac{1}{2}\\cos(2x) - 4\\sin(3x) + C$ |\n| h) | $\\frac{2t^{5/2}}{5} + \\frac{2t^{3/2}}{3} + t^{3} + \\frac{3t^{2}}{2} + C$ |\n| i) | $\\frac{5}{4}\\sec(12x) + C$ |\n| j) | $-\\frac{2}{t^{2}} + \\frac{4}{t^{3}} + C$ |\n| k) | $\\frac{3}{4}\\tan(4x) - \\frac{5}{4}\\sec(4x) + C$ |\n| l) | $\\frac{3x^{2}}{2} + 9x + C$ |\n| m) | $\\sin(x) - x^{2} + C$ |",
+        "\\begin{align*}\n    &= 2\\sqrt{t} + C_1 + 2\\left(\\frac{2}{3}t^{3/2}\\right) + D - \\frac{2}{5}t^{5/2} + E \\\\\n    &= 2\\sqrt{t} + \\frac{4}{3}\\sqrt{t^{3}} - \\frac{2}{5}\\sqrt{t^{5}} + F\n    \\end{align*}\n- Expresando bajo un denominador común o simplificando raíces: (nota: Si se escala por el factor común de denominadores o se extraen factores fuera del radical:)\n\\begin{align*}\n    &= \\frac{30\\sqrt{t} + 20\\sqrt{t^{3}} - 6\\sqrt{t^{5}}}{15} + F \\\\\n    &= \\frac{30\\sqrt{t} + 20t\\sqrt{t} - 6t^{2}\\sqrt{t}}{15} + F\n    \\end{align*}",
+        "**Problema de Valor Inicial (Segunda Derivada)**\n**Ejercicio:** Calcular $f(x)$ si $f''(x) = 12x^{2} + 6x - 2$, con $f(0) = 4$ y $f(1) = 3$.\n\n1. Integramos $f''(x)$ para hallar $f'(x)$:\n\\begin{align*}\nf'(x) &= \\frac{12x^{2+1}}{2+1} + \\frac{6x^{1+1}}{1+1} - 2x + C \\\\\nf'(x) &= 4x^{3} + 3x^{2} - 2x + C\n\\end{align*}\n\n2. Integramos $f'(x)$ para hallar $f(x)$:\n\\begin{align*}\nf(x) &= \\frac{4x^{3+1}}{3+1} + \\frac{3x^{2+1}}{2+1} - \\frac{2x^{1+1}}{1+1} + Cx + D \\\\\nf(x) &= x^{4} + x^{3} - x^{2} + Cx + D\n\\end{align*}\n\n3. Aplicamos la primera condición $f(0) = 4$:\n\\begin{align*}\nf(0) &= 0^{4} + 0^{3} - 0^{2} + C(0) + D = 4 \\\\\n\\implies D &= 4\n\\end{align*}\nLa función toma la forma $f(x) = x^{4} + x^{3} - x^{2} + Cx + 4$.\n\n4. Aplicamos la segunda condición $f(1) = 3$:\n\\begin{align*}\nf(1) &= 1^{4} + 1^{3} - 1^{2} + C(1) + 4 = 3 \\\\\n1 + 1 - 1 + C + 4 &= 3 \\\\\n5 + C &= 3 \\\\\nC &= -2\n\\end{align*}\n\n5. Por lo tanto, la función requerida es:\n\\[\nf(x) = x^{4} + x^{3} - x^{2} - 2x + 4\n\\]",
+        "\\[\n\\int (x^{3}+5)(x^{3}-5)\\,dx\n\\]\n\n- Desarrollar el producto notable (diferencia de cuadrados):\n\\[\n    = \\int (x^{6} - 25)\\,dx\n    \\]\n- Expresar como la resta de dos integrales inmediatas:\n\\[\n    = \\int x^{6}\\,dx - 25\\int dx\n    \\]\n- Integrar término a término:\n\\[\n    = \\frac{x^{7}}{7} - 25x + C\n    \\]"
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_simplificaci_n_algebraica.txt",
+          "seccion": "Respuestas a los Ejercicios Propuestos",
+          "distancia": 0.1511
+        },
+        {
+          "fuente": "c_digo_latex_de_simplificaci_n_algebraica.txt",
+          "seccion": "Ejercicios Resueltos > Desarrollo Paso a Paso > Ejercicio a)",
+          "distancia": 0.1571
+        },
+        {
+          "fuente": "c_digo_latex_de_antiderivaci_n.txt",
+          "seccion": "Problema de Valor Inicial (Segunda Derivada) > Solución paso a paso:",
+          "distancia": 0.1576
+        },
+        {
+          "fuente": "c_digo_latex_de_simplificaci_n_algebraica.txt",
+          "seccion": "Ejercicios Resueltos > Desarrollo Paso a Paso > Ejercicio b)",
+          "distancia": 0.1591
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": true,
+      "tokens_entrada": 11478,
+      "tokens_salida": 632,
+      "desde_cache": true,
+      "avisos": []
+    },
+    {
+      "question": "¿Cuál es el teorema fundamental del cálculo y cómo evalúo una integral definida con él?",
+      "ground_truth": "No encontré esto en el material del curso. El tutor debe abstenerse y no responder de memoria; puede ofrecer ayuda con los temas que sí cubre el material.",
+      "tipo": "fuera_de_corpus",
+      "fuente_esperada": "",
+      "seccion_esperada": "",
+      "respuesta": "No encontre esto en el material del curso. Los fragmentos recuperados tratan sobre antiderivadas y la constante de integración [2], la integración por partes [1], las integrales trigonométricas y la simplificación algebraica. Ninguno enuncia el teorema fundamental del cálculo ni explica cómo evaluar una integral definida, así que no voy a responderlo de memoria.\n\nSí puedo ayudarte con lo que sí está en el material:\n\n- **Antiderivadas** y la constante de integración [2].\n- **Integración por partes**, con la fórmula $\\int u\\,dv = uv - \\int v\\,du$ y la regla ILATE [1].\n- **Sustitución** (cambio de variable) y su algoritmo.\n- **Integrales trigonométricas** y **sustitución trigonométrica**.\n\nSi tu duda sobre el teorema fundamental y las integrales definidas viene de otra parte de tus apuntes, compárteme ese fragmento y lo revisamos juntos.",
+      "pregunta_evaluada": "¿Cuál es el teorema fundamental del cálculo y cómo evalúo una integral definida con él?",
+      "contextos": [
+        "La integración por partes se fundamenta en la regla de derivación de un producto:\n\\[\n\\frac{d}{dx}[u(x)v(x)] = u(x)v'(x) + v(x)u'(x)\n\\]\nIntegrando a ambos lados respecto a $x$:\n\\begin{align*}\n\\int \\frac{d}{dx}[u(x)v(x)]\\,dx &= \\int [u(x)v'(x) + v(x)u'(x)]\\,dx \\\\\nu(x)v(x) &= \\int u(x)v'(x)\\,dx + \\int v(x)u'(x)\\,dx\n\\end{align*}\nHaciendo $u = u(x)$, $du = u'(x)\\,dx$, $v = v(x)$, y $dv = v'(x)\\,dx$:\n\\[\nuv = \\int u\\,dv + \\int v\\,du\n\\]\nReorganizando los términos, se obtiene el teorema fundamental del método:\n\n**TEOREMA:** Si $u$ y $v$ son funciones de $x$ con derivadas continuas en un intervalo, entonces:\n\\[\n\\int u\\,dv = uv - \\int v\\,du\n\\]",
+        "**DEFINICIÓN:** Una función $F(x)$ es una antiderivada o primitiva de $f(x)$ sobre un intervalo $I$ si $F'(x) = f(x)$ para todo $x \\in I$:\n\\[\n\\frac{d}{dx}[F(x)] = f(x)\n\\]\n\n**Ejemplo:**\n$F(x) = -\\cos(x)$ es una antiderivada de $f(x) = \\sin(x)$ porque:\n\\[\nF'(x) = \\frac{d}{dx}[-\\cos(x)] = -1(-\\sin(x)) = \\sin(x) = f(x)\n\\]\n\n**Ejemplo:** Para la siguiente derivada, determinar al menos cuatro antiderivadas:\n\\[\nf(x) = 8x^{3}\n\\]\nPosibles respuestas:\n\n| $F(x) = 2x^{4} - 3$ | $F(x) = 2x^{4} + 8$ |\n| $F(x) = 2x^{4} - \\frac{1}{4}$ | $F(x) = 2x^{4} + \\pi$ |\n\n**TEOREMA:** Si $F(x)$ es una antiderivada de $f(x)$ sobre un intervalo $I$, entonces la **antiderivada más general** de $f$ sobre $I$ es:\n\\[\nF(x) + C\n\\]\ndonde $C$ es una constante arbitraria, llamada **constante de integración**.",
+        "{**FUNDACIÓN UNIVERSITARIA KONRAD LORENZ**}\n\n{**Facultad de Matemáticas e Ingenierías**}\n\n**Cálculo II** -- 2026\n\n*Docente: Dr. Óscar Leonardo Pantano-Mogollón*\n\n{**INTEGRALES TRIGONOMÉTRICAS**}\n\n**Propósito:** Determinar integrales trigonométricas indefinidas.",
+        "\\[\n\\int \\frac{\\cos(x)}{\\sin^{2}(x)}\\,dx\n\\]\n\n- Descomponer el integrando en factores convenientes:\n\\[\n    = \\int \\frac{\\cos(x)}{\\sin(x)}\\cdot\\frac{1}{\\sin(x)}\\,dx\n    \\]\n- Utilizar identidades trigonométricas básicas:\n\\[\n    \\frac{\\cos(x)}{\\sin(x)} = \\cot(x), \\quad \\frac{1}{\\sin(x)} = \\csc(x)\n    \\]\n- Reescribir la integral:\n\\[\n    = \\int \\cot(x)\\csc(x)\\,dx\n    \\]\n- Como $\\frac{d}{dx}[\\csc(x)] = -\\csc(x)\\cot(x)$, se tiene:\n\\[\n    = -\\csc(x) + C\n    \\]"
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "Introducción a la Integración por Partes > Deducción de la Fórmula",
+          "distancia": 0.1313
+        },
+        {
+          "fuente": "c_digo_latex_de_antiderivaci_n.txt",
+          "seccion": "Actividad Inicial",
+          "distancia": 0.1336
+        },
+        {
+          "fuente": "c_digo_latex_de_Areas_entre-Curvas.txt",
+          "seccion": "Introduccion",
+          "distancia": 0.1364
+        },
+        {
+          "fuente": "c_digo_latex_de_simplificaci_n_algebraica.txt",
+          "seccion": "Ejercicios Resueltos > Desarrollo Paso a Paso > Ejercicio e)",
+          "distancia": 0.1393
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": true,
+      "tokens_entrada": 11147,
+      "tokens_salida": 711,
+      "desde_cache": true,
+      "avisos": []
+    }
+  ]
+}

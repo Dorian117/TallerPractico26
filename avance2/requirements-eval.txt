@@ -1,0 +1,38 @@
+# Dependencias para EVALUAR (Fase 2). NO se instalan en el Space.
+# Entorno de referencia: Python 3.12 (ver docs/DECISIONES.md, seccion entorno).
+-r requirements.txt
+
+ragas==0.4.3
+
+# --- Versiones fijadas a mano de dependencias de ragas ---
+# Se fijan porque ragas las declara sin tope y pip, al resolver, hace
+# backtracking hacia versiones antiguas o incompatibles.
+#
+# instructor: capa con la que ragas habla con Gemini (instructor.from_genai).
+# Sin fijarla, pip retrocedio hasta la 1.3.2.
+instructor==1.17.0
+# langchain-community: ragas 0.4.3 importa
+# langchain_community.chat_models.vertexai, que la 0.4.2 elimino
+# (comprobado en los wheels: existe en 0.4.0 y 0.4.1, no en 0.4.2).
+langchain-community==0.4.1
+
+datasets==5.1.0
+tiktoken==0.14.0
+nest-asyncio==1.6.0
+appdirs==1.4.4
+diskcache==5.6.3
+typer==0.27.3
+rich==14.3.4
+openai==3.3.0
+tqdm==4.70.1
+pillow==12.3.0
+networkx==3.7
+langchain==1.4.4
+langchain-core==1.6.11
+langsmith==0.14.11
+langchain-openai==1.7.0
+# Juez Anthropic de Ragas (LangchainLLMWrapper). Exige langchain-core>=1.6.11.
+langchain-anthropic==1.7.6
+
+# Graficos de la Fase 2
+matplotlib==3.11.2

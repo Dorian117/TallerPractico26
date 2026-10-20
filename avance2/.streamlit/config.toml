@@ -1,0 +1,13 @@
+# Privacidad: sin telemetria de uso de Streamlit.
+[browser]
+gatherUsageStats = false
+
+[server]
+headless = true
+# El vigilante de archivos recorre los modulos de `transformers` (importados por
+# sentence-transformers) e inunda el log de errores de torchvision. En produccion
+# no hace falta; en desarrollo, recarga la pagina a mano tras editar app.py.
+fileWatcherType = "none"
+
+[client]
+toolbarMode = "minimal"

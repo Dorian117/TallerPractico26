@@ -1,0 +1,266 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- Paquetes requeridos ---
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{array}
+
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+
+\title{\textbf{Cálculo II: Método de Integración por Partes}\\ \large Fundación Universitaria Konrad Lorenz\\ Facultad de Matemáticas e Ingenierías}
+\author{Dr. Óscar Leonardo Pantano-Mogollón}
+\date{2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{Propósito}
+Utilizar el método de integración por partes para determinar integrales indefinidas.
+
+\section*{Introducción a la Integración por Partes}
+Esta técnica de integración puede aplicarse a una amplia variedad de funciones y es particularmente útil para integrandos que contengan productos (explícitos e implícitos) de funciones algebraicas\footnote{Las funciones polinomiales y las racionales son ejemplos de funciones algebraicas. Se llama función algebraica de $x$ a aquella que puede expresarse mediante un número finito de sumas, diferencias, productos, cocientes y raíces que contengan $x^n$.} y trascendentes\footnote{Las funciones no algebraicas se denominan trascendentes. Por ejemplo, las funciones logarítmicas, exponenciales, trigonométricas y trigonométricas inversas son trascendentes.}.
+
+Ejemplos típicos:
+\[
+\int x\ln(x)\,dx \qquad \int x^{2}e^{x}\,dx \qquad \int e^{x}\sin(x)\,dx \qquad \int \frac{\cos(\pi/x)}{x^{2}}\,dx
+\]
+
+\subsection*{Deducción de la Fórmula}
+La integración por partes se fundamenta en la regla de derivación de un producto:
+\[
+\frac{d}{dx}[u(x)v(x)] = u(x)v'(x) + v(x)u'(x)
+\]
+Integrando a ambos lados respecto a $x$:
+\begin{align*}
+\int \frac{d}{dx}[u(x)v(x)]\,dx &= \int [u(x)v'(x) + v(x)u'(x)]\,dx \\
+u(x)v(x) &= \int u(x)v'(x)\,dx + \int v(x)u'(x)\,dx
+\end{align*}
+Haciendo $u = u(x)$, $du = u'(x)\,dx$, $v = v(x)$, y $dv = v'(x)\,dx$:
+\[
+uv = \int u\,dv + \int v\,du
+\]
+Reorganizando los términos, se obtiene el teorema fundamental del método:
+
+\noindent\textbf{TEOREMA:} Si $u$ y $v$ son funciones de $x$ con derivadas continuas en un intervalo, entonces:
+\[
+\int u\,dv = uv - \int v\,du
+\]
+
+\section*{La Regla Nemotécnica ILATE}
+La regla ILATE permite establecer un criterio de prioridad descendente (de arriba hacia abajo) para seleccionar la función que asumirá el rol de $u$:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{clll}
+\toprule
+\textbf{Prioridad} & \textbf{Letra} & \textbf{Tipo de Función} & \textbf{Ejemplos} \\
+\midrule
+$1^\circ$ & \textbf{I} & Inversas trigonométricas & $\arcsin(x)$, $\arctan(x)$ \\
+$2^\circ$ & \textbf{L} & Logarítmicas & $\ln(x)$, $\log_a(x)$ \\
+$3^\circ$ & \textbf{A} & Algebraicas & $x^n$, $\frac{1}{3x^2}$, $\sqrt{x^2+2}$ \\
+$4^\circ$ & \textbf{T} & Trigonométricas & $\sin(x)$, $\cos(x)$, $\sec^2(x)$ \\
+$5^\circ$ & \textbf{E} & Exponenciales & $e^x$, $2^x$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{Algoritmo General}
+\begin{enumerate}
+    \item Identificar $u$ y $dv$ en el integrando empleando la prioridad ILATE.
+    \item Diferenciar $u$ para hallar $du$ e integrar $dv$ para obtener $v$.
+    \item Sustituir en la relación $\displaystyle \int u\,dv = uv - \int v\,du$.
+    \item Resolver la integral resultante $\displaystyle \int v\,du$.
+\end{enumerate}
+
+\newpage
+
+\section*{Ejemplos Resueltos}
+
+\subsection*{Ejemplo 1: Integral del logaritmo natural}
+Evaluar:
+\[
+\int \ln(x)\,dx
+\]
+\textbf{Solución:}
+\begin{itemize}[noitemsep]
+    \item $u = \ln(x) \implies du = \frac{1}{x}\,dx$
+    \item $dv = dx \implies v = x$
+\end{itemize}
+Aplicando la fórmula de integración por partes:
+\begin{align*}
+\int \ln(x)\,dx &= x\ln(x) - \int x\left(\frac{1}{x}\right)dx \\
+&= x\ln(x) - \int dx \\
+&= x\ln(x) - x + C
+\end{align*}
+
+\subsection*{Ejemplo 2: Integral cíclica}
+Evaluar:
+\[
+\int e^{x}\sin(x)\,dx
+\]
+\textbf{Solución:}
+\begin{itemize}[noitemsep]
+    \item Primera elección: $u = e^{x} \implies du = e^{x}\,dx$
+    \item $dv = \sin(x)\,dx \implies v = -\cos(x)$
+\end{itemize}
+\begin{align*}
+\int e^{x}\sin(x)\,dx &= -e^{x}\cos(x) - \int (-e^{x}\cos(x))\,dx \\
+&= -e^{x}\cos(x) + \int e^{x}\cos(x)\,dx \quad \text{(Ecuación 1)}
+\end{align*}
+Para resolver $\displaystyle \int e^{x}\cos(x)\,dx$, aplicamos partes nuevamente:
+\begin{itemize}[noitemsep]
+    \item $u = e^{x} \implies du = e^{x}\,dx$
+    \item $dv = \cos(x)\,dx \implies v = \sin(x)$
+\end{itemize}
+\[
+\int e^{x}\cos(x)\,dx = e^{x}\sin(x) - \int e^{x}\sin(x)\,dx
+\]
+Sustituyendo en la Ecuación 1:
+\[
+\int e^{x}\sin(x)\,dx = -e^{x}\cos(x) + e^{x}\sin(x) - \int e^{x}\sin(x)\,dx
+\]
+Sumando $\displaystyle \int e^{x}\sin(x)\,dx$ a ambos miembros:
+\begin{align*}
+2\int e^{x}\sin(x)\,dx &= -e^{x}\cos(x) + e^{x}\sin(x) \\
+\int e^{x}\sin(x)\,dx &= \frac{1}{2}\left(-e^{x}\cos(x) + e^{x}\sin(x)\right) + C \\
+&= \frac{1}{2}e^{x}\left(\sin(x) - \cos(x)\right) + C
+\end{align*}
+
+\newpage
+
+\subsection*{Ejemplo 3: Función trigonométrica inversa combinada con sustitución}
+Evaluar:
+\[
+\int \arctan(4t)\,dt
+\]
+\textbf{Solución:}
+\begin{itemize}[noitemsep]
+    \item $u = \arctan(4t) \implies du = \frac{4}{1+(4t)^2}\,dt = \frac{4}{1+16t^{2}}\,dt$
+    \item $dv = dt \implies v = t$
+\end{itemize}
+Sustituyendo:
+\[
+\int \arctan(4t)\,dt = t\arctan(4t) - \int \frac{4t}{1+16t^{2}}\,dt
+\]
+Para calcular $\displaystyle \int \frac{4t}{1+16t^{2}}\,dt$, usamos el método de sustitución simple:
+\begin{align*}
+w &= 1 + 16t^{2} \implies dw = 32t\,dt \implies 4t\,dt = \frac{dw}{8} \\
+\int \frac{4t}{1+16t^{2}}\,dt &= \frac{1}{8}\int \frac{dw}{w} = \frac{1}{8}\ln|w| + C = \frac{1}{8}\ln(1+16t^{2}) + C
+\end{align*}
+Por lo tanto:
+\[
+\int \arctan(4t)\,dt = t\arctan(4t) - \frac{1}{8}\ln(1+16t^{2}) + C
+\]
+
+\subsection*{Ejemplos Adicionales: Sustitución Simple (Contraste con Partes)}
+\noindent\textbf{Ejercicio 1:} Evaluar $\displaystyle \int x^{2}e^{x^{3}}\,dx$.
+\begin{itemize}[noitemsep]
+    \item Sea $u = x^{3} \implies du = 3x^{2}\,dx \implies x^{2}\,dx = \frac{du}{3}$.
+\end{itemize}
+\[
+\int x^{2}e^{x^{3}}\,dx = \frac{1}{3}\int e^{u}\,du = \frac{1}{3}e^{u} + C = \frac{1}{3}e^{x^{3}} + C
+\]
+
+\vspace{0.3cm}
+
+\noindent\textbf{Ejercicio 2:} Evaluar $\displaystyle \int \frac{1}{x[\ln(x)]^{3}}\,dx$.
+\begin{itemize}[noitemsep]
+    \item Sea $u = \ln(x) \implies du = \frac{1}{x}\,dx$.
+\end{itemize}
+\[
+\int \frac{1}{x[\ln(x)]^{3}}\,dx = \int u^{-3}\,du = \frac{u^{-2}}{-2} + C = -\frac{1}{2[\ln(x)]^{2}} + C
+\]
+
+\newpage
+
+\section*{Método Tabular}
+El método tabular agiliza la integración por partes iterada cuando el integrando contiene el producto de un polinomio $P(x) = x^n$ con funciones exponenciales o trigonométricas del tipo:
+\[
+\int x^{n}\sin(ax)\,dx, \qquad \int x^{n}\cos(ax)\,dx, \qquad \int x^{n}e^{ax}\,dx
+\]
+
+\subsection*{Ejemplo: Evaluar $\displaystyle \int x^{3}\sin(x)\,dx$}
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{c >{$}c<{$} >{$}c<{$}}
+\toprule
+\textbf{Signo} & \textbf{Derivadas sucesivas de $u$} & \textbf{Antiderivadas sucesivas de $dv$} \\
+\midrule
+$+$ & x^{3} & \sin(x) \\
+$-$ & 3x^{2} & -\cos(x) \\
+$+$ & 6x    & -\sin(x) \\
+$-$ & 6     & \cos(x) \\
+$+$ & 0     & \sin(x) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Multiplicando en diagonal según el signo asignado:
+\begin{align*}
+\int x^{3}\sin(x)\,dx &= (x^{3})(-\cos(x)) - (3x^{2})(-\sin(x)) + (6x)(\cos(x)) - (6)(\sin(x)) + C \\
+&= -x^{3}\cos(x) + 3x^{2}\sin(x) + 6x\cos(x) - 6\sin(x) + C
+\end{align*}
+
+\section*{Ejercicios de Identificación}
+Identifique $u$ y $dv$ para plantear la integral por partes (sin resolver):
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Integral} & $u$ & $dv$ \\
+\midrule
+$\displaystyle \int (\ln(x))^{2}\,dx$ & $(\ln(x))^{2}$ & $dx$ \\
+$\displaystyle \int x^{2}e^{2x}\,dx$ & $x^{2}$ & $e^{2x}\,dx$ \\
+$\displaystyle \int \theta\cos(4\theta)\,d\theta$ & $\theta$ & $\cos(4\theta)\,d\theta$ \\
+$\displaystyle \int \sec^{3}(\theta)\,d\theta$ & $\sec(\theta)$ & $\sec^{2}(\theta)\,d\theta$ \\
+$\displaystyle \int \arcsin(\theta)\,d\theta$ & $\arcsin(\theta)$ & $d\theta$ \\
+$\displaystyle \int (x+2)^{2}\sin(x)\,dx$ & $(x+2)^{2}$ & $\sin(x)\,dx$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\newpage
+
+\section*{Ejercicios Propuestos}
+Evaluar las siguientes integrales y verificar la solución derivando \textit{(Sobot, 2021, p. 413)}:
+\begin{enumerate}[label=\alph*)]
+    \item $\displaystyle \int x\ln(1+x^{2})\,dx$
+    \item $\displaystyle \int x\cos(ax)\,dx$
+    \item $\displaystyle \int \frac{\ln(x)}{x^{2}}\,dx$
+    \item $\displaystyle \int x\ln(x^{2}-1)\,dx$
+    \item $\displaystyle \int \frac{x^{2}}{\sqrt{36-x^{2}}}\,dx$
+    \item $\displaystyle \int x^{2}\cos(x)\,dx$
+    \item $\displaystyle \int x\cos(x^{2})\,dx$
+    \item $\displaystyle \int (2x+9)e^{x}\,dx$
+    \item $\displaystyle \int x^{-5}\ln(x)\,dx$
+    \item $\displaystyle \int [\ln(x)]^{2}\,dx$
+\end{enumerate}
+
+\section*{Respuestas de los Ejercicios Propuestos}
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{cl}
+\toprule
+\textbf{Ítem} & \textbf{Respuesta} \\
+\midrule
+a) & $\displaystyle \frac{1}{2}(1+x^{2})\left(\ln(1+x^{2}) - 1\right) + C$ \\
+b) & $\displaystyle \frac{x}{a}\sin(ax) + \frac{1}{a^{2}}\cos(ax) + C$ \\
+c) & $\displaystyle -\frac{1}{x}(\ln(x) + 1) + C$ \\
+d) & $\displaystyle \frac{1}{2}\left[(x^{2}-1)\ln(x^{2}-1) - (x^{2}-1)\right] + C$ \\
+e) & $\displaystyle -\sqrt{36-x^{2}} + C$ \\
+f) & $\displaystyle x^{2}\sin(x) + 2x\cos(x) - 2\sin(x) + C$ \\
+g) & $\displaystyle \frac{1}{2}\sin(x^{2}) + C$ \\
+h) & $\displaystyle (2x+9)e^{x} - 2e^{x} + C = (2x+7)e^{x} + C$ \\
+i) & $\displaystyle -\frac{1}{4x^{4}}\ln(x) - \frac{1}{8x^{4}} + C$ \\
+j) & $\displaystyle x\left([\ln(x)]^{2} - 2\ln(x) + 2\right) + C$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\end{document}

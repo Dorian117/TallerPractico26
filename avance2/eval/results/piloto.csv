@@ -1,0 +1,4 @@
+﻿tipo,pregunta,se_abstuvo,citas_invalidas,tokens_entrada,tokens_salida,faithfulness,answer_relevancy,context_precision,context_recall
+definicion,¿Qué es una antiderivada (o primitiva) de una función y por qué aparece la constante C?,False,0,10950,995,0.8421052631578947,0.9590410530757169,0.9999999999666667,1.0
+definicion,¿Cuál es la regla de la potencia para integrar x^n y qué condición debe cumplir n?,False,0,11120,1269,0.8235294117647058,0.9907733149234997,0.9166666666361111,0.6666666666666666
+definicion,¿En qué consiste el método de sustitución y cuándo se puede aplicar?,False,0,10772,626,0.8333333333333334,0.9352129450258259,0.5833333333041666,1.0

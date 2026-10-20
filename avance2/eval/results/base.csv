@@ -1,0 +1,24 @@
+﻿tipo,pregunta,se_abstuvo,citas_invalidas,tokens_entrada,tokens_salida,faithfulness,answer_relevancy,context_precision,context_recall
+definicion,¿Qué es una antiderivada (o primitiva) de una función y por qué aparece la constante C?,False,0,10950,995,0.8181818181818182,0.9636471870542035,0.99999999995,1.0
+definicion,¿Cuál es la regla de la potencia para integrar x^n y qué condición debe cumplir n?,False,0,11120,1269,0.8888888888888888,0.9895381506530923,0.99999999995,0.6666666666666666
+definicion,¿En qué consiste el método de sustitución y cuándo se puede aplicar?,False,0,10772,626,0.75,0.9425007109786175,0.5833333333041666,1.0
+definicion,¿De dónde sale la fórmula de integración por partes?,False,0,10917,658,0.5384615384615384,0.94702949044798,0.9999999999,1.0
+definicion,"¿Qué sustitución trigonométrica corresponde a cada una de las formas raíz de (a² − x²), raíz de (a² + x²) y raíz de (x² − a²)?",False,0,10872,954,1.0,0.923433838051909,0.99999999995,1.0
+definicion,¿Cuáles son las identidades de reducción de potencia (ángulo medio) para sen² y cos²?,False,0,10618,540,0.6666666666666666,0.9486684252238667,0.99999999995,1.0
+procedimiento,"Intenté resolver la integral de 1/(x² · raíz de (9 − x²)) con la sustitución x = 3 sen θ y llegué a la integral de 3 cos θ dθ dividido entre 9 sen²θ por raíz de (9 − 9 sen²θ), pero no sé cómo seguir. ¿Me muestras la solución completa?",False,0,11852,2668,0.0,0.913143622344705,0.0,0.0
+procedimiento,Escribí la integral de cos⁴(x) como (cos²(x))² pero me trabé al desarrollar. ¿Puedes mostrarme la solución completa?,False,0,12051,2226,0.7837837837837838,0.8864812816264694,0.3333333333,1.0
+procedimiento,"Intenté la integral de e^x · sen(x) por partes con u = e^x y dv = sen(x) dx, pero al aplicar partes otra vez vuelvo a la misma integral y no sé qué hacer. ¿Cómo se resuelve completa?",False,0,11525,2280,0.5652173913043478,0.9461486656864407,0.7499999999625,1.0
+procedimiento,"En la integral de arctan(4t) dt tomé u = arctan(4t) y dv = dt, y llegué a t·arctan(4t) menos la integral de 4t/(1 + 16t²) dt, pero no sé resolver esa integral que me queda. ¿Me muestras todo el procedimiento?",False,0,11558,1737,0.5454545454545454,0.8842337331062762,0.9999999999,1.0
+procedimiento,"Intenté la integral de dx/(1 + sen x) multiplicando por el conjugado (1 − sen x), pero no sé cómo seguir después de eso. ¿Me muestras la solución completa?",True,0,11649,1540,0.3684210526315789,0.0,0.0,0.0
+ejercicio,"Intenté hallar la antiderivada general de f(x) = 3 sen x + (2x⁵ − 2√x)/x + 11x⁻³, pero no sé cómo tratar el cociente. ¿Cuál es el resultado completo?",False,0,11716,1518,0.23076923076923078,0.0,0.9999999999666667,0.0
+ejercicio,Quiero la integral de (x³ + 5)(x³ − 5) dx. Intenté integrar cada factor por separado y el resultado no me cuadra. ¿Me muestras cómo se resuelve completa?,False,0,10960,1263,0.3225806451612903,0.9178825094803761,0.9999999999,1.0
+ejercicio,"Debo hallar f(x) si f''(x) = 12x² + 6x − 2, con f(0) = 4 y f(1) = 3. Integré una vez pero no sé cómo usar las dos condiciones. ¿Me das la solución completa?",False,0,11574,1818,0.8461538461538461,0.9331196307557367,0.9999999999,1.0
+ejercicio,"Intenté la integral de x² cos(x) por partes con u = x², pero queda una integral que también necesita partes y me enredo. ¿Cuál es el resultado completo?",False,0,11197,2482,0.06521739130434782,0.9249035686483577,0.0,0.0
+seguimiento,¿Y qué identidad se usa para simplificar el radical en ese caso?,False,0,11139,749,0.5833333333333334,0.9583053139045683,0.999999999975,1.0
+seguimiento,¿Y cómo decido cuál de las dos funciones va a ser u?,False,0,11019,456,0.25,0.8763891623855106,0.249999999975,0.0
+seguimiento,"¿Y si en vez de cos⁴(x) fuera sen⁵(x)·cos²(x), el mismo método me sirve?",False,0,11100,1181,0.5,0.8904834665999285,0.99999999995,0.3333333333333333
+fuera_de_corpus,¿Cómo calculo el volumen de un sólido de revolución con el método de discos?,True,0,11632,799,,,,
+fuera_de_corpus,¿Cómo se calcula el área entre dos curvas usando integrales?,True,0,11638,624,,,,
+fuera_de_corpus,¿Qué son las sumas de Riemann y cómo se usa la notación sigma?,True,0,11281,387,,,,
+fuera_de_corpus,¿Cómo resuelvo una ecuación diferencial separable?,True,0,11478,632,,,,
+fuera_de_corpus,¿Cuál es el teorema fundamental del cálculo y cómo evalúo una integral definida con él?,True,0,11147,711,,,,

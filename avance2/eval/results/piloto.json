@@ -1,0 +1,200 @@
+{
+  "nombre": "piloto",
+  "fecha": "2026-10-16T15:56:16",
+  "modo": "live",
+  "modelo_tutor": "claude-haiku-5-5",
+  "proveedor": "anthropic",
+  "juez_final": false,
+  "parametros": {
+    "chunk_tamano": 1800,
+    "chunk_solape": 200,
+    "top_k": 4,
+    "umbral": null,
+    "embeddings": "intfloat/multilingual-e5-small",
+    "texto_embedding": "limpio",
+    "max_tokens_respuesta": 8000
+  },
+  "dataset": {
+    "ruta": "C:\\Users\\herre\\Downloads\\TallerPractico26\\avance2\\eval\\dataset.jsonl",
+    "n": 3,
+    "sha256": "050d46d4d22c51d0"
+  },
+  "abstencion": {
+    "n_fuera_de_corpus": 0,
+    "tasa_abstencion_correcta": null,
+    "tasa_alucinacion": null,
+    "n_dentro_de_corpus": 3,
+    "tasa_abstencion_indebida": 0.0,
+    "respuestas_con_citas_invalidas": 0
+  },
+  "modelo_juez": "claude-haiku-5-5",
+  "ragas": {
+    "promedios": {
+      "faithfulness": 0.8329893360853112,
+      "answer_relevancy": 0.9616757710083474,
+      "context_precision": 0.8333333333023147,
+      "context_recall": 0.8888888888888888
+    },
+    "preguntas_sin_puntaje": {
+      "faithfulness": 0,
+      "answer_relevancy": 0,
+      "context_precision": 0,
+      "context_recall": 0
+    },
+    "uso_juez": {
+      "llamadas": 30,
+      "desde_cache": 0,
+      "tokens_entrada": 52715,
+      "tokens_salida": 25254
+    }
+  },
+  "filas": [
+    {
+      "question": "¿Qué es una antiderivada (o primitiva) de una función y por qué aparece la constante C?",
+      "ground_truth": "Una función F(x) es una antiderivada o primitiva de f(x) sobre un intervalo I si F'(x) = f(x) para todo x en I. Si F es una antiderivada de f, la antiderivada más general de f sobre I es F(x) + C, donde C es una constante arbitraria llamada constante de integración. Al darle valores a C se obtiene una familia de antiderivadas cuyas gráficas son traslaciones verticales unas de otras.",
+      "tipo": "definicion",
+      "fuente_esperada": "c_digo_latex_de_antiderivaci_n.txt",
+      "seccion_esperada": "Actividad Inicial",
+      "respuesta": "Una **antiderivada** (o **primitiva**) de $f(x)$ sobre un intervalo $I$ es una función $F(x)$ tal que $F'(x) = f(x)$ para todo $x \\in I$ [1].\n\n**Ejemplo:** $F(x) = -\\cos(x)$ es una antiderivada de $f(x) = \\sin(x)$, porque $F'(x) = -1\\cdot(-\\sin(x)) = \\sin(x) = f(x)$ [1].\n\nUna función puede tener muchas antiderivadas. Para $f(x) = 8x^3$, por ejemplo, tanto $2x^4 - 3$ como $2x^4 + 8$ cumplen la definición, porque ambas derivan a $8x^3$ [1].\n\n**¿Por qué aparece la constante $C$?**\n\nEl material establece que, si $F(x)$ es una antiderivada de $f(x)$ en $I$, la **antiderivada más general** es $F(x) + C$, donde $C$ es la constante de integración [1]. Puedes verlo así:\n\n- La derivada de una constante es cero: $\\frac{d}{dx}[C] = 0$.\n- Por eso, sumar $C$ a una antiderivada no cambia su derivada, y cualquier antiderivada nueva solo puede diferir de $F(x)$ en una constante.\n\nPor ejemplo, para $f(x) = 5x^2$ la antiderivada general es $F(x) = \\frac{5x^3}{3} + C$, con $C \\in \\mathbb{R}$ [2].\n\n**Interpretación gráfica:** al dar valores distintos a $C$ se obtiene una familia de antiderivadas. Sus gráficas son traslaciones verticales unas de otras: la gráfica de $F(x) + C$ se obtiene desplazando la de $F(x)$ verticalmente $C$ unidades [2].",
+      "pregunta_evaluada": "¿Qué es una antiderivada (o primitiva) de una función y por qué aparece la constante C?",
+      "contextos": [
+        "**DEFINICIÓN:** Una función $F(x)$ es una antiderivada o primitiva de $f(x)$ sobre un intervalo $I$ si $F'(x) = f(x)$ para todo $x \\in I$:\n\\[\n\\frac{d}{dx}[F(x)] = f(x)\n\\]\n\n**Ejemplo:**\n$F(x) = -\\cos(x)$ es una antiderivada de $f(x) = \\sin(x)$ porque:\n\\[\nF'(x) = \\frac{d}{dx}[-\\cos(x)] = -1(-\\sin(x)) = \\sin(x) = f(x)\n\\]\n\n**Ejemplo:** Para la siguiente derivada, determinar al menos cuatro antiderivadas:\n\\[\nf(x) = 8x^{3}\n\\]\nPosibles respuestas:\n\n| $F(x) = 2x^{4} - 3$ | $F(x) = 2x^{4} + 8$ |\n| $F(x) = 2x^{4} - \\frac{1}{4}$ | $F(x) = 2x^{4} + \\pi$ |\n\n**TEOREMA:** Si $F(x)$ es una antiderivada de $f(x)$ sobre un intervalo $I$, entonces la **antiderivada más general** de $f$ sobre $I$ es:\n\\[\nF(x) + C\n\\]\ndonde $C$ es una constante arbitraria, llamada **constante de integración**.",
+        "**Ejemplo:** Considerar la función $f(x) = 5x^{2}$.\nPara esta función, vemos que la antiderivada general es:\n\\[\nF(x) = \\frac{5x^{3}}{3} + C, \\quad C \\in \\mathbb{R}\n\\]\n*Recurso interactivo:* \\url{https://www.geogebra.org/m/pkfspprx}\n\nAl asignar valores reales específicos a la constante $C$, se obtiene una familia de antiderivadas, es decir, una familia de funciones cuyas gráficas son traslaciones verticales de una a otra. La gráfica de $F(x) + C$ se obtiene desplazando verticalmente la gráfica de $F(x)$ en $C$ unidades.",
+        "Sea $g$ una función cuyo recorrido o rango es un intervalo $I$, y sea $f$ una función continua en $I$. Si $g$ es derivable en su dominio y $F$ es una antiderivada o primitiva de $f$ en $I$, entonces:\n\nSi $u = g(x)$, entonces $du = g'(x)\\,dx$, por lo que:\n\\begin{equation*}\n    \\int f(g(x))g'(x)\\,dx = F(g(x)) + C\n\\end{equation*}\n\\begin{equation*}\n    \\int f(u)\\,du = F(u) + C\n\\end{equation*}\n\nEl método de sustitución utiliza la **regla de la cadena a la inversa**.\nEsta técnica de integración se aplica cuando el integrando está compuesto por dos expresiones donde una de ellas es la derivada de la otra (pudiendo diferir únicamente por un factor constante).",
+        "La antiderivada permite analizar el movimiento rectilíneo de una partícula:\n\n- Posición: $s(t)$\n- Velocidad: $v(t) = s'(t) \\implies s(t) = \\int v(t)\\,dt$\n- Aceleración: $a(t) = v'(t) \\implies v(t) = \\int a(t)\\,dt$"
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_antiderivaci_n.txt",
+          "seccion": "Actividad Inicial",
+          "distancia": 0.1023
+        },
+        {
+          "fuente": "c_digo_latex_de_antiderivaci_n.txt",
+          "seccion": "Actividad Inicial",
+          "distancia": 0.1111
+        },
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Antiderivación de una Función Compuesta",
+          "distancia": 0.1201
+        },
+        {
+          "fuente": "c_digo_latex_de_antiderivaci_n.txt",
+          "seccion": "Aplicaciones de la Antiderivación: Cinemática",
+          "distancia": 0.1235
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": false,
+      "tokens_entrada": 10950,
+      "tokens_salida": 995,
+      "desde_cache": false,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 0.8421052631578947,
+        "answer_relevancy": 0.9590410530757169,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "question": "¿Cuál es la regla de la potencia para integrar x^n y qué condición debe cumplir n?",
+      "ground_truth": "Para n distinto de -1, la integral de x^n dx es x^(n+1)/(n+1) + C: se suma una unidad al exponente y se divide por el nuevo exponente. La condición n ≠ -1 es necesaria porque con n = -1 el denominador n+1 se anula (la antiderivada de 1/x es ln|x| + C).",
+      "tipo": "definicion",
+      "fuente_esperada": "c_digo_latex_de_antiderivaci_n.txt",
+      "seccion_esperada": "Tabla de Antiderivadas Generales",
+      "respuesta": "La regla de la potencia está en los fragmentos [1] y [2]:\n\n$$\\int x^{n}\\,dx = \\frac{x^{n+1}}{n+1} + C$$\n\nPara integrar una potencia de $x$, se suma una unidad al exponente y se divide por el nuevo exponente [2].\n\n**Condición:** la fórmula exige $n \\neq -1$ [1][2]. Si $n = -1$, el denominador $n+1$ valdría cero y la fórmula no tiene sentido. El material que tengo no desarrolla el caso $n = -1$, así que revisa tus apuntes o pregunta a tu docente cómo se integra $x^{-1}$.\n\n**Ejemplo de verificación** (con $n = 3$):\n$$\\int x^{3}\\,dx = \\frac{x^{4}}{4} + C$$\nAl derivar: $\\frac{d}{dx}\\left[\\frac{x^{4}}{4} + C\\right] = \\frac{4x^{3}}{4} = x^{3}$, que es el integrando original.\n\nEl exponente $n$ puede ser fraccionario o negativo, siempre que no sea $-1$. Por ejemplo, en el ejercicio resuelto del material se reescribe $\\frac{x^{4}}{\\sqrt{x}} = x^{7/2}$ y luego se aplica la regla de la potencia [4].",
+      "pregunta_evaluada": "¿Cuál es la regla de la potencia para integrar x^n y qué condición debe cumplir n?",
+      "contextos": [
+        "**Regla de la potencia para $f(x) = x^{n}$ con $n \\neq -1$: (nota: La Regla de la Potencia para Integrales establece que para integrar una potencia de $x$, se debe sumar una unidad al exponente y dividir por el nuevo exponente.)**\n\\[\n\\frac{d}{dx}\\left[\\frac{x^{n+1}}{n+1} + C\\right] = \\frac{(n+1)x^{n+1-1}}{n+1} = x^{n}\n\\]\nPor lo tanto:\n\\[\nF(x) = \\frac{x^{n+1}}{n+1} + C\n\\]",
+        "**Notación para la Integral Indefinida**\n\\[\n\\int f(x)\\,dx = F(x) + C \\iff F'(x) = f(x)\n\\]\n\n- $f(x)$: integrando.\n- $dx$: diferencial (indica la variable de integración).\n\n\\begin{align*}\n\\int k\\,dx &= kx + C, \\quad k \\in \\mathbb{R} \\setminus \\{0\\} \\\\\n\\int k f(x)\\,dx &= k \\int f(x)\\,dx \\quad \\text{(Multiplication by constant)} \\\\\n\\int [f(x) \\pm g(x)]\\,dx &= \\int f(x)\\,dx \\pm \\int g(x)\\,dx \\quad \\text{(Sum and difference rule)} \\\\\n\\int x^{n}\\,dx &= \\frac{x^{n+1}}{n+1} + C, \\quad n \\neq -1 \\quad \\text{(Power rule)} \\\\\n\\int \\sin(x)\\,dx &= -\\cos(x) + C \\\\\n\\int \\cos(x)\\,dx &= \\sin(x) + C \\\\\n\\int \\sec^{2}(x)\\,dx &= \\tan(x) + C \\\\\n\\int \\csc^{2}(x)\\,dx &= -\\cot(x) + C \\\\\n\\int \\sec(x)\\tan(x)\\,dx &= \\sec(x) + C \\\\\n\\int \\csc(x)\\cot(x)\\,dx &= -\\csc(x) + C\n\\end{align*}\n\n**Tarea:** Determinar la antiderivada general de:\n\\[\nf(x) = 3\\sin(x) + \\frac{2x^{5} - 2\\sqrt{x}}{x} + 11x^{-3}\n\\]\n*Solución:*\n\\[\nF(x) = -3\\cos(x) + \\frac{2x^{5}}{5} - 4\\sqrt{x} - \\frac{11}{2x^{2}} + C\n\\]",
+        "El método tabular agiliza la integración por partes iterada cuando el integrando contiene el producto de un polinomio $P(x) = x^n$ con funciones exponenciales o trigonométricas del tipo:\n\\[\n\\int x^{n}\\sin(ax)\\,dx, \\qquad \\int x^{n}\\cos(ax)\\,dx, \\qquad \\int x^{n}e^{ax}\\,dx\n\\]",
+        "\\[\n\\int \\frac{x^{4}}{\\sqrt{x}}\\,dx\n\\]\n\n- Reescribir el denominador en forma de exponente fraccionario:\n\\[\n    = \\int \\frac{x^{4}}{x^{1/2}}\\,dx\n    \\]\n- Aplicar propiedades de potencias de igual base ($x^{a}/x^{b} = x^{a-b}$):\n\\[\n    = \\int x^{4}\\cdot x^{-1/2}\\,dx = \\int x^{7/2}\\,dx\n    \\]\n- Integrar mediante la regla de la potencia:\n\\[\n    = \\frac{x^{7/2 + 1}}{\\frac{7}{2} + 1} + C = \\frac{2x^{9/2}}{9} + C = \\frac{2\\sqrt{x^{9}}}{9} + C = \\frac{2x^{4}\\sqrt{x}}{9} + C\n    \\]"
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_antiderivaci_n.txt",
+          "seccion": "Tabla de Antiderivadas Generales",
+          "distancia": 0.0887
+        },
+        {
+          "fuente": "c_digo_latex_de_antiderivaci_n.txt",
+          "seccion": "Notación para la Integral Indefinida > Reglas Básicas de Integración",
+          "distancia": 0.1335
+        },
+        {
+          "fuente": "c_digo_latex_de_integraci_n_por_partes.txt",
+          "seccion": "Método Tabular",
+          "distancia": 0.1381
+        },
+        {
+          "fuente": "c_digo_latex_de_simplificaci_n_algebraica.txt",
+          "seccion": "Ejercicios Resueltos > Desarrollo Paso a Paso > Ejercicio c)",
+          "distancia": 0.1383
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": false,
+      "tokens_entrada": 11120,
+      "tokens_salida": 1269,
+      "desde_cache": false,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 0.8235294117647058,
+        "answer_relevancy": 0.9907733149234997,
+        "context_precision": 0.9166666666361111,
+        "context_recall": 0.6666666666666666
+      }
+    },
+    {
+      "question": "¿En qué consiste el método de sustitución y cuándo se puede aplicar?",
+      "ground_truth": "El método de sustitución usa la regla de la cadena a la inversa. Se aplica cuando el integrando está compuesto por dos expresiones donde una es la derivada de la otra (pudiendo diferir solo por un factor constante). Si u = g(x), entonces du = g'(x) dx y la integral de f(g(x))g'(x) dx se convierte en la integral de f(u) du = F(u) + C = F(g(x)) + C.",
+      "tipo": "definicion",
+      "fuente_esperada": "c_digo_latex_de_sustitucion.txt",
+      "seccion_esperada": "Antiderivación de una Función Compuesta",
+      "respuesta": "El método de sustitución consiste en cambiar la variable de integración por una función de $x$ para transformar la integral en una más sencilla. Según el material, se apoya en la regla de la cadena a la inversa [3].\n\n**Idea central**\n\nSi $u = g(x)$, entonces $du = g'(x)\\,dx$, y se cumple:\n$$\\int f(g(x))\\,g'(x)\\,dx = F(g(x)) + C \\qquad \\text{con } \\int f(u)\\,du = F(u) + C$$\n[3]. Es decir, primero se integra en términos de $u$ y luego se regresa a $x$.\n\n**Cuándo aplicarlo**\n\nEl método se usa cuando el integrando está formado por dos expresiones donde una es la derivada de la otra, salvo por un factor constante [3]. En la práctica, conviene elegir como $u$ la parte interna de una función compuesta, por ejemplo [2]:\n- una cantidad elevada a una potencia o exponente;\n- el argumento de una función trigonométrica;\n- el argumento de una función logarítmica o exponencial;\n- la cantidad subradical (radicando).\n\n**Algoritmo de trabajo**\n\nSegún el material [2]:\n1. Elegir $u = g(x)$.\n2. Calcular $du = g'(x)\\,dx$.\n3. Reescribir toda la integral en términos de $u$ y $du$.\n4. Integrar la expresión resultante.\n5. Regresar a $x$ reemplazando $u$ por $g(x)$.\n6. Comprobar derivando el resultado.\n\n**Para practicar**\n\nAntes de elegir una sustitución, pregúntate: ¿qué parte del integrando es la derivada de otra parte? Si me indicas la integral que quieres trabajar, te doy pistas para identificar $u$ y $du$ y tú propones el primer paso.",
+      "pregunta_evaluada": "¿En qué consiste el método de sustitución y cuándo se puede aplicar?",
+      "contextos": [
+        "{**FUNDACIÓN UNIVERSITARIA KONRAD LORENZ**}\n\n{**Facultad de Matemáticas e Ingenierías**}\n\n**Cálculo II** -- 2026\n\n*Docente: Dr. Óscar Leonardo Pantano-Mogollón*\n\n{**MÉTODO DE INTEGRACIÓN: SUSTITUCIÓN**}\n\n**Propósito:** Utilizar el método de integración por sustitución para determinar integrales indefinidas.",
+        "- **Elegir una sustitución $u = g(x)$:** Usualmente es conveniente seleccionar la parte interna de una función compuesta:\n\n- Una cantidad elevada a una potencia o exponente.\n- El argumento de una función trigonométrica.\n- El argumento de una función logarítmica o exponencial.\n- La cantidad subradical (radicando).\n\n- **Calcular el diferencial:** Hallar $du = g'(x)\\,dx$.\n- **Reescribir la integral:** Expresar completamente el integrando en términos de la variable $u$ y su diferencial $du$.\n- **Integrar:** Resolver la integral elemental en términos de $u$.\n- **Retornar a la variable original:** Reemplazar $u$ por $g(x)$ para obtener la antiderivada en términos de $x$.\n- **Comprobar:** Verificar el resultado derivando la antiderivada obtenida.",
+        "Sea $g$ una función cuyo recorrido o rango es un intervalo $I$, y sea $f$ una función continua en $I$. Si $g$ es derivable en su dominio y $F$ es una antiderivada o primitiva de $f$ en $I$, entonces:\n\nSi $u = g(x)$, entonces $du = g'(x)\\,dx$, por lo que:\n\\begin{equation*}\n    \\int f(g(x))g'(x)\\,dx = F(g(x)) + C\n\\end{equation*}\n\\begin{equation*}\n    \\int f(u)\\,du = F(u) + C\n\\end{equation*}\n\nEl método de sustitución utiliza la **regla de la cadena a la inversa**.\nEsta técnica de integración se aplica cuando el integrando está compuesto por dos expresiones donde una de ellas es la derivada de la otra (pudiendo diferir únicamente por un factor constante).",
+        "{**FUNDACIÓN UNIVERSITARIA KONRAD LORENZ**}\n\n{**Facultad de Matemáticas e Ingenierías**}\n\n**Cálculo II** -- 2026\n\n*Docente: Dr. Óscar Leonardo Pantano-Mogollón*\n\n{**SUSTITUCIÓN TRIGONOMÉTRICA**}\n\n**Propósito:** Determinar integrales indefinidas a través de sustituciones trigonométricas."
+      ],
+      "fuentes_recuperadas": [
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Introduccion",
+          "distancia": 0.1422
+        },
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Algoritmo para Realizar un Cambio de Variable",
+          "distancia": 0.1563
+        },
+        {
+          "fuente": "c_digo_latex_de_sustitucion.txt",
+          "seccion": "Antiderivación de una Función Compuesta",
+          "distancia": 0.1564
+        },
+        {
+          "fuente": "c_digo_latex_de_susticion_trigonometrica.txt",
+          "seccion": "Introduccion",
+          "distancia": 0.1599
+        }
+      ],
+      "citas_invalidas": [],
+      "se_abstuvo": false,
+      "tokens_entrada": 10772,
+      "tokens_salida": 626,
+      "desde_cache": false,
+      "avisos": [],
+      "ragas": {
+        "faithfulness": 0.8333333333333334,
+        "answer_relevancy": 0.9352129450258259,
+        "context_precision": 0.5833333333041666,
+        "context_recall": 1.0
+      }
+    }
+  ]
+}

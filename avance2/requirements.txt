@@ -1,0 +1,24 @@
+# Dependencias de EJECUCION (app + ingesta). Es lo que instala el Space.
+# Versiones fijadas (==) para que el proyecto sea reproducible.
+
+# LLM del tutor (unica llamada que sale de la maquina: pregunta + fragmentos).
+# Anthropic es el proveedor por defecto; google-genai queda como alternativa.
+anthropic==1.15.0
+google-genai==2.20.0
+python-dotenv==1.2.3
+
+# Embeddings 100% locales (sin API externa)
+sentence-transformers==6.1.0
+torch==2.14.1
+
+# Base vectorial persistente y propia
+chromadb==1.5.9
+
+# Lectores de documentos (un lector por formato; .txt/.md/.tex se leen sin libreria)
+pypdf==6.20.0
+pymupdf==1.28.2
+python-docx==1.2.0
+beautifulsoup4==4.15.0
+
+# Chat web
+streamlit==1.65.0
