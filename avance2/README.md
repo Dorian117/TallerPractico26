@@ -68,6 +68,8 @@ rag/cli.py         tutor por consola
 eval/              run_eval.py, juez.py (juez Anthropic para Ragas), bench_embeddings.py
 docs/DECISIONES.md decisiones, alternativas, cifras reales, privacidad
 docs/DESPLIEGUE.md guía de despliegue, qué se publica, prueba de 4 turnos, capturas
+docs/GUIA_CODIGO.md qué hace cada parte del código y por qué (para entenderlo a fondo)
+docs/GLOSARIO.md   diccionario de términos (RAG, embedding, chunk, métricas, errores HTTP...)
 ```
 
 ## Avisos sobre el corpus
