@@ -1,0 +1,33 @@
+{
+  "_nota": "Graba cada audio leyendo EXACTAMENTE el texto de 'dijo' (10 a 30 s). Guarda el archivo en esta carpeta con el nombre de 'archivo' (puede ser .m4a, .mp3, .wav, .ogg o .webm). Cambia 'hablante' por los nombres reales. El audio 3 debe grabarse CON ruido de fondo (ventilador, tráfico, música baja).",
+  "audios": [
+    {
+      "archivo": "audio1.m4a",
+      "hablante": "Integrante 1",
+      "condicion": "sin ruido",
+      "duracion_s": null,
+      "dijo": "¿Cómo se aplica la integración por partes a la integral de x por e elevado a la x? ¿Qué elijo como u según la regla ILATE?"
+    },
+    {
+      "archivo": "audio2.m4a",
+      "hablante": "Integrante 2",
+      "condicion": "sin ruido",
+      "duracion_s": null,
+      "dijo": "¿Qué sustitución trigonométrica debo usar cuando aparece la raíz cuadrada de nueve menos x al cuadrado dentro de una integral?"
+    },
+    {
+      "archivo": "audio3.m4a",
+      "hablante": "Integrante 1",
+      "condicion": "con ruido",
+      "duracion_s": null,
+      "dijo": "¿Cuál es la antiderivada de la secante de theta, y por qué aparece el logaritmo natural del valor absoluto de secante más tangente?"
+    },
+    {
+      "archivo": "audio4.m4a",
+      "hablante": "Integrante 2",
+      "condicion": "sin ruido",
+      "duracion_s": null,
+      "dijo": "¿Qué diferencia hay entre una integral definida y una indefinida, y cómo se evalúa una definida con el teorema fundamental del cálculo?"
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "fecha": "2026-11-11T18:20:23",
+  "modelo": "qwen/qwen3.8-27b",
+  "aciertos": 14,
+  "total": 15,
+  "porcentaje": 93.3,
+  "filas": [
+    {
+      "campo": "enunciado",
+      "real": "\\int \\frac{dx}{\\sqrt{4x^2+1}}",
+      "extraido": "\\int \\frac{dx}{\\sqrt{4x^2 + 1}}",
+      "correcto": true,
+      "imagen": "ej1_sust_trig.png"
+    },
+    {
+      "campo": "tipo_integral",
+      "real": "indefinida",
+      "extraido": "indefinida",
+      "correcto": true,
+      "imagen": "ej1_sust_trig.png"
+    },
+    {
+      "campo": "tecnica",
+      "real": "sustitucion_trigonometrica",
+      "extraido": "sustitucion_trigonometrica",
+      "correcto": true,
+      "imagen": "ej1_sust_trig.png"
+    },
+    {
+      "campo": "resultado_final",
+      "real": "\\frac{1}{2}\\ln|\\sqrt{4x^2+1}+2x|+C",
+      "extraido": "\\frac{1}{2}\\ln|\\sqrt{4x^2 + 1} + 2x| + C",
+      "correcto": true,
+      "imagen": "ej1_sust_trig.png"
+    },
+    {
+      "campo": "numero_pasos",
+      "real": 4,
+      "extraido": 4,
+      "correcto": true,
+      "imagen": "ej1_sust_trig.png"
+    },
+    {
+      "campo": "enunciado",
+      "real": "\\int x e^{x} dx",
+      "extraido": "∫ x e^x dx",
+      "correcto": true,
+      "imagen": "ej2_partes.png"
+    },
+    {
+      "campo": "tipo_integral",
+      "real": "indefinida",
+      "extraido": "indefinida",
+      "correcto": true,
+      "imagen": "ej2_partes.png"
+    },
+    {
+      "campo": "tecnica",
+      "real": "partes",
+      "extraido": "partes",
+      "correcto": true,
+      "imagen": "ej2_partes.png"
+    },
+    {
+      "campo": "resultado_final",
+      "real": "x e^{x} - e^{x} + C",
+      "extraido": "x e^x - e^x + C",
+      "correcto": true,
+      "imagen": "ej2_partes.png"
+    },
+    {
+      "campo": "numero_pasos",
+      "real": 4,
+      "extraido": 4,
+      "correcto": true,
+      "imagen": "ej2_partes.png"
+    },
+    {
+      "campo": "enunciado",
+      "real": "\\int_{0}^{1} 2x\\cos(x^{2}) dx",
+      "extraido": "∫₀¹ 2x cos(x²) dx",
+      "correcto": false,
+      "imagen": "ej3_definida_sust.png"
+    },
+    {
+      "campo": "tipo_integral",
+      "real": "definida",
+      "extraido": "definida",
+      "correcto": true,
+      "imagen": "ej3_definida_sust.png"
+    },
+    {
+      "campo": "tecnica",
+      "real": "sustitucion",
+      "extraido": "sustitucion",
+      "correcto": true,
+      "imagen": "ej3_definida_sust.png"
+    },
+    {
+      "campo": "resultado_final",
+      "real": "\\sin(1)",
+      "extraido": "sin(1)",
+      "correcto": true,
+      "imagen": "ej3_definida_sust.png"
+    },
+    {
+      "campo": "numero_pasos",
+      "real": 3,
+      "extraido": 3,
+      "correcto": true,
+      "imagen": "ej3_definida_sust.png"
+    }
+  ],
+  "detalle": [
+    {
+      "imagen": "ej1_sust_trig.png",
+      "respuesta_cruda": "{\n  \"enunciado\": \"\\\\int \\\\frac{dx}{\\\\sqrt{4x^2 + 1}}\",\n  \"tipo_integral\": \"indefinida\",\n  \"tecnica\": \"sustitucion_trigonometrica\",\n  \"resultado_final\": \"\\\\frac{1}{2}\\\\ln|\\\\sqrt{4x^2 + 1} + 2x| + C\",\n  \"numero_pasos\": 4\n}",
+      "valido": true,
+      "motivo_invalido": null
+    },
+    {
+      "imagen": "ej2_partes.png",
+      "respuesta_cruda": "{\n  \"enunciado\": \"∫ x e^x dx\",\n  \"tipo_integral\": \"indefinida\",\n  \"tecnica\": \"partes\",\n  \"resultado_final\": \"x e^x - e^x + C\",\n  \"numero_pasos\": 4\n}",
+      "valido": true,
+      "motivo_invalido": null
+    },
+    {
+      "imagen": "ej3_definida_sust.png",
+      "respuesta_cruda": "{\n  \"enunciado\": \"∫₀¹ 2x cos(x²) dx\",\n  \"tipo_integral\": \"definida\",\n  \"tecnica\": \"sustitucion\",\n  \"resultado_final\": \"sin(1)\",\n  \"numero_pasos\": 3\n}",
+      "valido": true,
+      "motivo_invalido": null
+    }
+  ]
+}

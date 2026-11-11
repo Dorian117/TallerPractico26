@@ -1,0 +1,8 @@
+groq>=0.30
+python-dotenv>=1.0
+pydantic>=2.0
+mutagen>=1.47
+truststore>=0.9
+# Solo para regenerar las imágenes de ejemplo (generar_imagenes.py):
+matplotlib>=3.8
+pillow>=10.0

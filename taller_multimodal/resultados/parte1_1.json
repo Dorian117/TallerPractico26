@@ -1,0 +1,7 @@
+{
+  "fecha": "2026-11-11T18:01:44",
+  "modelo": "qwen/qwen3.8-27b",
+  "imagen": "ej4_tabla_casos.png",
+  "pregunta": "¿Qué sustitución trigonométrica debo usar para integrar una expresión que contiene √(9 − x²)? Justifica con la tabla de la imagen.",
+  "respuesta": "Para integrar una expresión que contiene $\\sqrt{9 - x^2}$, debes usar la sustitución trigonométrica:\n\n**$x = 3 \\sin \\theta$**\n\n**Justificación según la tabla:**\n\nLa tabla muestra que para la expresión general $\\sqrt{a^2 - x^2}$, la sustitución recomendada es $x = a \\sin \\theta$.\n\nEn tu caso, $\\sqrt{9 - x^2}$ se puede reescribir como $\\sqrt{3^2 - x^2}$, lo que significa que $a = 3$.\n\nPor lo tanto, aplicando la regla de la tabla, la sustitución correcta es $x = 3 \\sin \\theta$.\n\n*(Nota: La tabla también indica que con esta sustitución, el resultado de la raíz será $\\sqrt{a^2 - x^2} = a \\cos \\theta$, es decir, $\\sqrt{9 - x^2} = 3 \\cos \\theta$).*"
+}

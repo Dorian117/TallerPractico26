@@ -1,0 +1,24 @@
+{
+  "_nota": "Valores reales que se leen en cada imagen. Si cambias una imagen, actualiza SUS valores aquí.",
+  "ej1_sust_trig.png": {
+    "enunciado": "\\int \\frac{dx}{\\sqrt{4x^2+1}}",
+    "tipo_integral": "indefinida",
+    "tecnica": "sustitucion_trigonometrica",
+    "resultado_final": "\\frac{1}{2}\\ln|\\sqrt{4x^2+1}+2x|+C",
+    "numero_pasos": 4
+  },
+  "ej2_partes.png": {
+    "enunciado": "\\int x e^{x} dx",
+    "tipo_integral": "indefinida",
+    "tecnica": "partes",
+    "resultado_final": "x e^{x} - e^{x} + C",
+    "numero_pasos": 4
+  },
+  "ej3_definida_sust.png": {
+    "enunciado": "\\int_{0}^{1} 2x\\cos(x^{2}) dx",
+    "tipo_integral": "definida",
+    "tecnica": "sustitucion",
+    "resultado_final": "\\sin(1)",
+    "numero_pasos": 3
+  }
+}

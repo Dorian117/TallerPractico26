@@ -1,0 +1,49 @@
+{
+  "fecha": "2026-11-11T18:32:27",
+  "modelo_audio": "whisper-large-v3-turbo",
+  "modelo_texto": "qwen/qwen3.8-27b",
+  "con_vocabulario": true,
+  "wer_promedio": 0.062,
+  "audios": [
+    {
+      "archivo": "audio1.m4a",
+      "hablante": "Integrante 1",
+      "condicion": "sin ruido",
+      "duracion_s": 11.5,
+      "dijo": "¿Cómo se aplica la integración por partes a la integral de x por e elevado a la x? ¿Qué elijo como u según la regla ILATE?",
+      "transcripcion": "¿Cómo se aplica la integración por partes a la integral de x por e elevado a la x? ¿Qué debería elegir según la regla de ILATE?",
+      "wer": 0.154,
+      "respuesta": "Para integrar $\\int x e^x \\, dx$ por partes, usamos la fórmula $\\int u \\, dv = uv - \\int v \\, du$.\n\nSegún la regla **ILATE** (Inversa, Logaritmo, Algebraico, Trigonométrica, Exponencial), elegimos $u$ como el término que aparece primero en la lista. Aquí, $x$ es **Algebraico** y $e^x$ es **Exponencial**. Como el Algebraico precede al Exponencial, elegimos:\n\n*   $u = x \\implies du = dx$\n*   $dv = e^x \\, dx \\implies v = e^x$\n\nSustituyendo en la fórmula:\n$$ \\int x e^x \\, dx = x e^x - \\int e^x \\, dx $$\n$$ = x e^x - e^x + C $$\n$$ = e^x(x - 1) + C $$"
+    },
+    {
+      "archivo": "audio2.m4a",
+      "hablante": "Integrante 2",
+      "condicion": "sin ruido",
+      "duracion_s": 9.2,
+      "dijo": "¿Qué sustitución trigonométrica debo usar cuando aparece la raíz cuadrada de nueve menos x al cuadrado dentro de una integral?",
+      "transcripcion": "¿Qué sustitución trigonométrica debo usar cuando aparece la raíz cuadrada de 9 menos x al cuadrado dentro de una integral?",
+      "wer": 0.05,
+      "respuesta": "Para la expresión $\\sqrt{9-x^2}$, utiliza la sustitución:\n\n$$x = 3\\sin(\\theta)$$\n\n**Razón:**\nEsta elección aprovecha la identidad trigonométrica $\\cos^2(\\theta) = 1 - \\sin^2(\\theta)$.\n\n**Desarrollo:**\n1.  **Diferencial:** $dx = 3\\cos(\\theta) \\, d\\theta$.\n2.  **Simplificación de la raíz:**\n    $$ \\sqrt{9 - (3\\sin\\theta)^2} = \\sqrt{9 - 9\\sin^2\\theta} = \\sqrt{9(1-\\sin^2\\theta)} = 3\\cos\\theta $$\n\n**Nota:** Asume que $\\theta$ está en el intervalo $[-\\pi/2, \\pi/2]$ para que $\\cos(\\theta) \\geq 0$."
+    },
+    {
+      "archivo": "audio3.m4a",
+      "hablante": "Integrante 1",
+      "condicion": "con ruido",
+      "duracion_s": 8.7,
+      "dijo": "¿Cuál es la antiderivada de la secante de theta, y por qué aparece el logaritmo natural del valor absoluto de secante más tangente?",
+      "transcripcion": "¿Cuál es la antiderivada de la secante de theta? ¿Y por qué aparece el logaritmo natural del valor absoluto de secante más tangente?",
+      "wer": 0.0,
+      "respuesta": "La antiderivada es:\n$$ \\int \\sec \\theta \\, d\\theta = \\ln|\\sec \\theta + \\tan \\theta| + C $$\n\n**¿Por qué aparece ese logaritmo?**\nAl multiplicar numerador y denominador por $(\\sec \\theta + \\tan \\theta)$, la integral se transforma en:\n$$ \\int \\frac{\\sec \\theta \\tan \\theta}{\\sec^2 \\theta - 1} \\, d\\theta $$\nHaciendo el cambio de variable $u = \\sec \\theta$ (donde $du = \\sec \\theta \\tan \\theta \\, d\\theta$), obtenemos:\n$$ \\int \\frac{du}{u^2 - 1} $$\nEsta es una integral racional estándar que se resuelve mediante fracciones parciales, resultando en $\\frac{1}{2}\\ln\\left|\\frac{u-1}{u+1}\\right|$. Al simplificar algebraicamente esta expresión y sustituir $u = \\sec \\theta$, se llega a la forma compacta $\\ln|\\sec \\theta + \\tan \\theta|$. El valor absoluto es necesario porque el dominio de la función logarítmica exige argumentos positivos."
+    },
+    {
+      "archivo": "audio4.m4a",
+      "hablante": "Integrante 2",
+      "condicion": "sin ruido",
+      "duracion_s": 11.2,
+      "dijo": "¿Qué diferencia hay entre una integral definida y una indefinida, y cómo se evalúa una definida con el teorema fundamental del cálculo?",
+      "transcripcion": "¿Qué diferencias hay entre una integral definida y una indefinida? ¿Y cómo se evalúa una definida con el teorema fundamental del cálculo?",
+      "wer": 0.045,
+      "respuesta": "La **integral indefinida** $\\int f(x) dx$ representa la familia de antiderivadas $F(x) + C$, donde $C$ es una constante arbitraria. No tiene límites de integración.\n\nLa **integral definida** $\\int_a^b f(x) dx$ es un **número real** que representa el área neta bajo la curva $f(x)$ entre $x=a$ y $x=b$.\n\nPara evaluar una integral definida, usamos el **Teorema Fundamental del Cálculo (Parte 2)**:\n\n$$ \\int_a^b f(x) \\, dx = F(b) - F(a) $$\n\nDonde $F(x)$ es **cualquier** antiderivada de $f(x)$.\n\n**Pasos:**\n1. Encuentra la antiderivada $F(x)$ (sin la constante $C$).\n2. Evalúa $F(x)$ en el límite superior $b$.\n3. Evalúa $F(x)$ en el límite inferior $a$.\n4. Resta: $F(b) - F(a)$.\n\n**Ejemplo:** $\\int_0^1 2x \\, dx = [x^2]_0^1 = 1^2 - 0^2 = 1$."
+    }
+  ]
+}

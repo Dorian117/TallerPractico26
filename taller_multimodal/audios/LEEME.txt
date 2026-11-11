@@ -1,0 +1,5 @@
+Graba aqui los 4 audios de audios/guion.json (10 a 30 segundos cada uno):
+  - Al menos 2 integrantes distintos (campo "hablante").
+  - audio3 con ruido de fondo.
+  - Formatos: m4a, mp3, wav, ogg o webm (maximo 25 MB).
+Guardalos con el nombre de "archivo" del guion (por ejemplo audio1.m4a).

@@ -1,0 +1,49 @@
+{
+  "fecha": "2026-11-11T18:34:12",
+  "modelo_audio": "whisper-large-v3-turbo",
+  "modelo_texto": "qwen/qwen3.8-27b",
+  "con_vocabulario": false,
+  "wer_promedio": 0.102,
+  "audios": [
+    {
+      "archivo": "audio1.m4a",
+      "hablante": "Integrante 1",
+      "condicion": "sin ruido",
+      "duracion_s": 11.5,
+      "dijo": "¿Cómo se aplica la integración por partes a la integral de x por e elevado a la x? ¿Qué elijo como u según la regla ILATE?",
+      "transcripcion": "¿Cómo se aplica la integración por partes a la integral de x por e elevado a la x? ¿Qué debería elegir según la regla de y la t?",
+      "wer": 0.269,
+      "respuesta": "Para integrar $\\int x e^x \\, dx$ por partes, usamos la fórmula $\\int u \\, dv = uv - \\int v \\, du$.\n\nSegún la regla **LIATE** (Logarítmicas, Inversas trig, Algebraicas, Trigonométricas, Exponenciales), elegimos $u$ como la función que aparece primero en la lista. Aquí, $x$ es algebraica y $e^x$ es exponencial. Por tanto:\n\n*   **$u = x$** (Algebraica)\n*   **$dv = e^x \\, dx$** (Exponencial)\n\nDerivamos $u$ e integramos $dv$:\n*   $du = dx$\n*   $v = e^x$\n\nSustituimos en la fórmula:\n$$ \\int x e^x \\, dx = x e^x - \\int e^x \\, dx $$\n$$ = x e^x - e^x + C $$\n$$ = e^x(x - 1) + C $$\n\n**Conclusión:** Elige $u=x$ porque es algebraica y $dv=e^x dx$ porque es exponencial, simplificando la integral restante."
+    },
+    {
+      "archivo": "audio2.m4a",
+      "hablante": "Integrante 2",
+      "condicion": "sin ruido",
+      "duracion_s": 9.2,
+      "dijo": "¿Qué sustitución trigonométrica debo usar cuando aparece la raíz cuadrada de nueve menos x al cuadrado dentro de una integral?",
+      "transcripcion": "¿Qué sustitución trigonométrica debo usar cuando aparece la raíz cuadrada de 9 menos x al cuadrado dentro de una integral?",
+      "wer": 0.05,
+      "respuesta": "Para la expresión $\\sqrt{9-x^2}$, utiliza la sustitución:\n\n$$x = 3\\sin(\\theta)$$\n\n**Razón:**\nEsta elección aprovecha la identidad trigonométrica $\\cos^2(\\theta) = 1 - \\sin^2(\\theta)$.\n\n**Desarrollo:**\n1.  **Diferencial:** $dx = 3\\cos(\\theta) \\, d\\theta$.\n2.  **Simplificación de la raíz:**\n    $$ \\sqrt{9 - (3\\sin\\theta)^2} = \\sqrt{9 - 9\\sin^2\\theta} = \\sqrt{9(1-\\sin^2\\theta)} = 3\\cos\\theta $$\n\n**Nota:** Asume que $\\theta$ está en el intervalo $[-\\pi/2, \\pi/2]$ para que $\\cos(\\theta) \\geq 0$."
+    },
+    {
+      "archivo": "audio3.m4a",
+      "hablante": "Integrante 1",
+      "condicion": "con ruido",
+      "duracion_s": 8.7,
+      "dijo": "¿Cuál es la antiderivada de la secante de theta, y por qué aparece el logaritmo natural del valor absoluto de secante más tangente?",
+      "transcripcion": "¿Cuál es la antiderivada de la secante de teta? ¿Y por qué aparece el logaritmo natural del valor absoluto de secante más tangente?",
+      "wer": 0.043,
+      "respuesta": "La antiderivada es:\n$$ \\int \\sec(\\theta) \\, d\\theta = \\ln|\\sec(\\theta) + \\tan(\\theta)| + C $$\n\n**¿Por qué aparece ese logaritmo?**\nSe resuelve multiplicando y dividiendo por $\\sec(\\theta) + \\tan(\\theta)$:\n$$ \\int \\frac{\\sec(\\theta)(\\sec(\\theta) + \\tan(\\theta))}{\\sec(\\theta) + \\tan(\\theta)} \\, d\\theta $$\nEl numerador se convierte en la derivada del denominador. Si $u = \\sec(\\theta) + \\tan(\\theta)$, entonces $du = (\\sec(\\theta)\\tan(\\theta) + \\sec^2(\\theta)) \\, d\\theta = \\sec(\\theta)(\\sec(\\theta) + \\tan(\\theta)) \\, d\\theta$.\nLa integral queda $\\int \\frac{1}{u} \\, du$, cuya solución es $\\ln|u|$. El valor absoluto es necesario porque el dominio de la función logarítmica natural está restringido a números positivos."
+    },
+    {
+      "archivo": "audio4.m4a",
+      "hablante": "Integrante 2",
+      "condicion": "sin ruido",
+      "duracion_s": 11.2,
+      "dijo": "¿Qué diferencia hay entre una integral definida y una indefinida, y cómo se evalúa una definida con el teorema fundamental del cálculo?",
+      "transcripcion": "¿Qué diferencias hay entre una integral definida y una indefinida? ¿Y cómo se evalúa una definida con el teorema fundamental del cálculo?",
+      "wer": 0.045,
+      "respuesta": "La **integral indefinida** $\\int f(x) dx$ representa la familia de antiderivadas $F(x) + C$, donde $C$ es una constante arbitraria. No tiene límites de integración.\n\nLa **integral definida** $\\int_a^b f(x) dx$ es un **número real** que representa el área neta bajo la curva $f(x)$ entre $x=a$ y $x=b$.\n\nPara evaluar una integral definida, usamos el **Teorema Fundamental del Cálculo (Parte 2)**:\n\n1.  Encuentra una antiderivada $F(x)$ tal que $F'(x) = f(x)$.\n2.  Evalúa la diferencia de los valores de $F$ en los límites:\n    $$ \\int_a^b f(x) dx = F(b) - F(a) $$\n\n**Ejemplo:**\nSi $\\int_0^1 x^2 dx$, la antiderivada es $F(x) = \\frac{x^3}{3}$.\nResultado: $F(1) - F(0) = \\frac{1^3}{3} - \\frac{0^3}{3} = \\frac{1}{3}$."
+    }
+  ]
+}

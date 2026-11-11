@@ -1,0 +1,10 @@
+{
+  "fecha": "2026-11-11T18:22:01",
+  "modelo": "qwen/qwen3.8-27b",
+  "imagenes": [
+    "ej2_partes.png",
+    "ej5_error_signo.png"
+  ],
+  "pregunta": "Las dos imágenes resuelven la misma integral por partes. Compara las soluciones: ¿cuál está bien y cuál tiene un error? Indica en qué paso está el error y cómo se corrige.",
+  "respuesta": "**Solución correcta:** La primera imagen.\n\n**Solución con error:** La segunda imagen (resuelta por otro estudiante).\n\n**Error:** En el **Paso 4**.\nEl estudiante escribe: $= xe^x + e^x + C$.\nEl error es el signo. Debe ser un signo **menos** ($-$), no más ($+$).\n\n**Corrección:**\nLa fórmula de integración por partes es $\\int u \\, dv = uv - \\int v \\, du$.\nEn el Paso 3 se tiene correctamente: $xe^x - \\int e^x \\, dx$.\nAl integrar $\\int e^x \\, dx$, se obtiene $e^x$.\nPor lo tanto, el Paso 4 correcto es:\n$$xe^x - e^x + C$$\n\nEl estudiante de la segunda imagen olvidó el signo negativo que viene de la fórmula de integración por partes."
+}

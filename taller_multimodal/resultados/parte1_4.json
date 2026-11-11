@@ -1,0 +1,19 @@
+{
+  "fecha": "2026-11-11T18:22:25",
+  "resultados": [
+    {
+      "caso": "imagenes",
+      "modelo": "qwen/qwen3.8-27b",
+      "fallo": true,
+      "tipo": "BadRequestError",
+      "status_code": 400,
+      "mensaje": "Error code: 400 - {'error': {'message': 'Too many images provided.  This model supports up to 3 images', 'type': 'invalid_request_error'}}",
+      "cuerpo": {
+        "error": {
+          "message": "Too many images provided.  This model supports up to 3 images",
+          "type": "invalid_request_error"
+        }
+      }
+    }
+  ]
+}
