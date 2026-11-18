@@ -27,7 +27,7 @@ import os
 import random
 import re
 import time
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Callable
 
@@ -57,8 +57,9 @@ class RespuestaLLM:
     modelo: str
     tokens_entrada: int = 0
     tokens_salida: int = 0
-    detenido_por: str = ""        # end_turn | max_tokens | refusal | ...
+    detenido_por: str = ""        # end_turn | tool_use | max_tokens | refusal | ...
     desde_cache: bool = False
+    bloques: list = field(default_factory=list)   # contenido en bloques (solo generar_con_tools): text | tool_use | thinking
 
 
 # ---------------------------------------------------------------------------
@@ -149,14 +150,46 @@ class LLMAnthropic:
         if system:
             kwargs["system"] = system
         r = _con_reintentos(lambda: self._sdk().messages.create(**kwargs), self._clasificar)
+        return self._respuesta(r)
+
+    def generar_con_tools(self, *, system: str | None, mensajes: list[dict], tools: list[dict],
+                          max_tokens: int, sin_tools: bool = False) -> RespuestaLLM:
+        """Como `generar`, pero con herramientas. El modelo decide si llama alguna (tool_choice
+        por defecto = auto). `sin_tools=True` le prohibe llamarlas (ultima iteracion del agente)
+        sin quitar la definicion de tools, que la API exige mientras haya bloques tool_use en el historial."""
+        kwargs = dict(model=self.modelo, max_tokens=max_tokens, messages=mensajes, tools=tools)
+        if system:
+            kwargs["system"] = system
+        if sin_tools:
+            kwargs["tool_choice"] = {"type": "none"}
+        r = _con_reintentos(lambda: self._sdk().messages.create(**kwargs), self._clasificar)
+        return self._respuesta(r)
+
+    def _respuesta(self, r) -> RespuestaLLM:
         u = r.usage
         entrada = (u.input_tokens or 0) + (getattr(u, "cache_creation_input_tokens", 0) or 0) \
             + (getattr(u, "cache_read_input_tokens", 0) or 0)
         return RespuestaLLM(
             texto="".join(b.text for b in r.content if b.type == "text").strip(),
             modelo=self.modelo, tokens_entrada=entrada, tokens_salida=u.output_tokens or 0,
-            detenido_por=r.stop_reason or "",
+            detenido_por=r.stop_reason or "", bloques=_bloques(r.content),
         )
+
+
+def _bloques(contenido) -> list[dict]:
+    """Bloques del SDK -> dicts que se pueden reenviar tal cual en el historial (y guardar en la cache).
+    Se copian solo los campos que la API acepta de vuelta; los bloques de razonamiento se conservan."""
+    salida = []
+    for b in contenido:
+        if b.type == "text" and b.text:
+            salida.append({"type": "text", "text": b.text})
+        elif b.type == "tool_use":
+            salida.append({"type": "tool_use", "id": b.id, "name": b.name, "input": b.input})
+        elif b.type == "thinking":
+            salida.append({"type": "thinking", "thinking": b.thinking, "signature": b.signature})
+        elif b.type == "redacted_thinking":
+            salida.append({"type": "redacted_thinking", "data": b.data})
+    return salida
 
 
 class LLMGemini:
@@ -222,6 +255,19 @@ class LLMFalso:
         return RespuestaLLM(texto=texto, modelo=self.modelo, tokens_entrada=len(json.dumps(mensajes)) // 4,
                             tokens_salida=len(texto) // 4, detenido_por="end_turn")
 
+    def generar_con_tools(self, *, system: str | None, mensajes: list[dict], tools: list[dict],
+                          max_tokens: int, sin_tools: bool = False) -> RespuestaLLM:
+        """Por defecto responde solo texto (como un saludo: sin tools). Para simular llamadas a tools,
+        pasar `responder` que devuelva un RespuestaLLM ya armado (ver tests/test_agente.py)."""
+        self.llamadas.append({"system": system, "mensajes": mensajes, "max_tokens": max_tokens,
+                              "tools": [t["name"] for t in tools], "sin_tools": sin_tools})
+        r = self._responder(system, mensajes)
+        if isinstance(r, RespuestaLLM):
+            return r
+        return RespuestaLLM(texto=r, modelo=self.modelo, tokens_entrada=len(json.dumps(mensajes)) // 4,
+                            tokens_salida=len(r) // 4, detenido_por="end_turn",
+                            bloques=[{"type": "text", "text": r}])
+
 
 # ---------------------------------------------------------------------------
 # Cache en disco
@@ -249,7 +295,7 @@ class _Cache:
     def escribir(self, clave: str, r: RespuestaLLM) -> None:
         # Una respuesta truncada o rechazada no se guarda: la proxima vez se
         # volveria a servir la mala en vez de reintentar.
-        if not r.texto or r.detenido_por in ("max_tokens", "refusal"):
+        if (not r.texto and not r.bloques) or r.detenido_por in ("max_tokens", "refusal"):
             return
         self.dir.mkdir(parents=True, exist_ok=True)
         tmp = self.dir / f"{clave}.tmp"
@@ -272,6 +318,19 @@ class LLMConCache:
         self._cache.escribir(clave, r)
         return r
 
+    def generar_con_tools(self, *, system: str | None, mensajes: list[dict], tools: list[dict],
+                          max_tokens: int, sin_tools: bool = False) -> RespuestaLLM:
+        # las tools y el modo sin_tools cambian la respuesta, asi que entran en la clave
+        extra = json.dumps(tools, sort_keys=True, ensure_ascii=False) + ("#sin_tools" if sin_tools else "")
+        clave = clave_cache(self.modelo, (system or "") + "\n#TOOLS#" + extra, mensajes, max_tokens)
+        previa = self._cache.leer(clave)
+        if previa is not None:
+            return previa
+        r = self.base.generar_con_tools(system=system, mensajes=mensajes, tools=tools,
+                                        max_tokens=max_tokens, sin_tools=sin_tools)
+        self._cache.escribir(clave, r)
+        return r
+
 
 class LLMCacheOFalso:
     """Modo de desarrollo/pruebas (sin --live): sirve la cache REAL si existe y,
@@ -288,6 +347,17 @@ class LLMCacheOFalso:
         if self.solo_cache:
             raise SinCacheError("Peticion no encontrada en la cache y el modo solo-cache no llama a la API.")
         return self._falso.generar(system=system, mensajes=mensajes, max_tokens=max_tokens)
+
+    def generar_con_tools(self, *, system: str | None, mensajes: list[dict], tools: list[dict],
+                          max_tokens: int, sin_tools: bool = False) -> RespuestaLLM:
+        extra = json.dumps(tools, sort_keys=True, ensure_ascii=False) + ("#sin_tools" if sin_tools else "")
+        previa = self._cache.leer(clave_cache(self.modelo, (system or "") + "\n#TOOLS#" + extra, mensajes, max_tokens))
+        if previa is not None:
+            return previa
+        if self.solo_cache:
+            raise SinCacheError("Peticion no encontrada en la cache y el modo solo-cache no llama a la API.")
+        return self._falso.generar_con_tools(system=system, mensajes=mensajes, tools=tools,
+                                             max_tokens=max_tokens, sin_tools=sin_tools)
 
 
 # ---------------------------------------------------------------------------

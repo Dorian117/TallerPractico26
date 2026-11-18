@@ -110,3 +110,29 @@ HISTORIAL_MAX_TURNOS = 6
 # basta el contexto inmediato; no hace falta reenviar respuestas enteras.
 CONDENSACION_TURNOS = 4
 CONDENSACION_RECORTE = 600
+
+# ---------------------------------------------------------------------------
+# AGENTE (Avance 3). Todos los limites viven AQUI, en el codigo; ninguno depende
+# de que el modelo "se acuerde" de una instruccion del prompt.
+# ---------------------------------------------------------------------------
+# Llamadas al LLM por pregunta (una respuesta sin tools = 1 llamada). Al agotarlas
+# no se entra en bucle: se pide al modelo la respuesta final sin tools o, si no la
+# da, se devuelve un mensaje fijo (ver agent.py).
+MAX_ITER = 5
+# buscar_en_base: fragmentos por llamada y longitud de cada uno. Con 1000 solo se
+# recortan 4 de los 88 chunks del indice (mediana 543, maximo 1322); con 800 serian 18.
+K_MAX = 4
+MAX_CHARS = 1000
+# Longitud maxima de la consulta que el modelo manda a las tools de busqueda.
+CONSULTA_MAX = 300
+# calcular_integral / verificar_antiderivada: tamano de la expresion y tiempo de calculo.
+CALCULO_EXPR_MAX = 200
+CALCULO_TIMEOUT_S = 10
+# buscar_en_web: la consulta sale a un servicio externo, asi que va mas acotada.
+WEB_MAX_RESULTADOS = 3
+WEB_EXTRACTO_MAX = 300
+WEB_CONSULTA_MAX = 200
+WEB_TIMEOUT_S = 15
+# Registro de uso de tools (JSON Lines). LOG_USO=0 lo desactiva.
+LOGS_DIR = RAIZ / "logs"
+LOG_USO_ACTIVO = os.getenv("LOG_USO", "1").strip() != "0"

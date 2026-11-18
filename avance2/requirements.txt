@@ -20,5 +20,8 @@ pymupdf==1.28.2
 python-docx==1.2.0
 beautifulsoup4==4.15.0
 
+# Calculo simbolico de las tools de tarea del agente (ya llega como dependencia de torch; se fija por claridad)
+sympy==1.14.0
+
 # Chat web
 streamlit==1.65.0

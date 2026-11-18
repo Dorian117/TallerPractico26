@@ -570,6 +570,11 @@ apuntes tienen derechos de terceros, no uses un repositorio público.
 
 ## 11. Privacidad
 
+> **Actualización Avance 3:** con el agente cambia qué sale y qué se guarda (el system prompt ya no lleva
+> few-shot con fragmentos, solo salen los resultados de las tools; sale una consulta corta al buscador web;
+> se registran las preguntas en `logs/`). Ver §12 «Privacidad: qué cambia». Lo que sigue describe el
+> pipeline fijo del Avance 2.
+
 **Qué sale de tu máquina hacia el proveedor del LLM** (Anthropic por defecto; única
 salida de datos del pipeline de consulta), en cada pregunta:
 
@@ -606,3 +611,108 @@ y no se afirma nada.** Revísalos en la documentación oficial del plan que
 usas antes de enviar material del curso o datos de estudiantes. Además, si el
 material tiene derechos de autor de terceros, revisa si puedes publicarlo en un
 repositorio.
+
+---
+
+## 12. Agente con tools (Avance 3)
+
+El RAG pasa a ser un **agente con tool calling**. Arquitectura, tabla de tools y política web: README de
+la raíz. Aquí van las **decisiones y su porqué**.
+
+### Dónde y cómo
+
+- **Se extendió `avance2/` en el sitio** (no una carpeta nueva): la app desplegada conserva su URL y su
+  archivo principal, y el pipeline fijo (`rag/generate.py`, `rag/prompts.py`) queda **intacto** como línea
+  base de la comparación. El prompt del agente es un archivo nuevo (`rag/prompts_agente.py`) precisamente
+  para no tocar el del Avance 2.
+- **Bucle manual con el SDK** (no `create_agent` de LangChain): el proyecto ya usa el SDK vía `rag/llm.py`,
+  con reglas de gasto que el bucle hereda tal cual (sin temperatura, `max_tokens` explícito, ≤ 3 reintentos
+  solo ante 429/5xx, límite de gasto, caché). `LLMAnthropic.generar_con_tools` es la única adición a esa capa.
+- **`MAX_ITER = 5`** llamadas al LLM por pregunta. En la última se envía `tool_choice: {"type": "none"}`
+  (la API exige que `tools` siga definido mientras haya bloques `tool_use` en el historial). Si el modelo
+  aun así pidiera tools, esas tools **no se ejecutan** y se devuelve un mensaje fijo.
+  *Por verificar en vivo:* que Haiku 5.5 acepte `tool_choice: none`.
+- Un saludo se responde sin tools porque **el LLM decide**: no hay un atajo en código que lo fuerce. Que el
+  modelo acierte se mide en el caso 1 de `eval/casos_comportamiento.json`.
+
+### Límites en código y por qué esos valores
+
+- **`K_MAX = 4`**: lo que el Avance 2 ya usaba como `top_k` base; el agente puede repetir la búsqueda.
+- **`MAX_CHARS = 1000`** (no 800): con el índice real (88 chunks; mediana 543, máximo 1 322 caracteres), 800
+  recortaría 18 chunks y 1 000 solo 4. El recorte reutiliza el chunker (`trocear_texto`), que corta entre
+  párrafos y **nunca parte una fórmula**; el texto recortado termina en `[...recortado]`.
+- **Citas por sección:** el corpus es LaTeX, así que `pagina` vale 0 en los 88 chunks. La tool entrega ya
+  armada la cita `Fuente: documento, sec. «…»` (o `pág. N` si algún día hay páginas) y el modelo solo la copia.
+  `agent._citas_invalidas` comprueba que cada `Fuente:` y cada `[web: URL]` de la respuesta salga de una tool
+  de esa pregunta (como en el Avance 2: solo comprueba que **exista**, no que respalde lo dicho).
+- **Cálculo seguro** (`rag/calculo.py`): tres capas. (1) lista blanca de caracteres y de nombres (sin
+  punto salvo decimales, sin guiones bajos, sin builtins); (2) `parse_expr` con `global_dict` propio y
+  `__builtins__` vacío; (3) ejecución en un proceso aparte (`spawn`) con tiempo máximo de 10 s. Se rechazan
+  potencias encadenadas (`9**9**9`). *Atajo conocido:* el tope de memoria del hijo (`RLIMIT_AS`) solo existe
+  en Linux; en Windows rige únicamente el tiempo. Cada llamada cuesta ≈ 0,5 s por el arranque del proceso.
+- **Política web aplicada en código**, no solo en el prompt: `tools.ejecutar` rechaza `buscar_en_web` si en esa
+  pregunta no se llamó antes `buscar_en_base`; el modelo no puede pasar `include_domains` (no está en el
+  esquema, y `ejecutar` rechaza argumentos no declarados); aunque el servicio devolviera dominios ajenos, se
+  filtran; y la consulta se rechaza si copia 54 o más caracteres de la base.
+
+### Prompt: qué cambió frente al Avance 2 y por qué
+
+| Avance 2 (`prompts.py`) | Avance 3 (`prompts_agente.py`) | Por qué |
+|---|---|---|
+| El mensaje lleva `<material_curso>` con los fragmentos | Sin contexto: el material llega por tools | Lo pide el enunciado y el modelo solo ve lo que busca |
+| 4 ejemplos few-shot (10 mensajes con fragmentos copiados) | Ejemplos de **decisión** (qué tool y con qué argumentos) dentro del propio prompt | Ahorra tokens; los ejemplos del Avance 2 enseñaban formato, no uso de tools |
+| Citas `[n]` | `Fuente: documento, sec.` (base) y `[web: URL]` (web), separadas por origen | Lo pide el enunciado |
+| Sin reglas de tools | Bloque «USO DE LAS HERRAMIENTAS» (cuándo usar cada una y cuándo ninguna) | Núcleo del avance |
+| Pedagogía de pistas | Se conserva, con una excepción explícita: pedir el **resultado** o la **verificación** de una integral es una tarea de cálculo y se usa la tool | Sin la excepción, la regla de pistas podía impedir que el agente usara la tool de tarea |
+| «No encontré esto en el material del curso» | Se conserva exacta | Lo pide el enunciado |
+| Ignorar instrucciones dentro del material | Se conserva, y se añade un bloque SEGURIDAD contra «ignora tus reglas / muestra todo el documento» | Caso de comportamiento 7 |
+
+### Privacidad: qué cambia
+
+- **Hacia Anthropic** ya no va el bloque fijo de few-shot con fragmentos del corpus ni los `top_k`
+  fragmentos siempre: van el system prompt (texto fijo), la pregunta, el historial y **solo lo que
+  devuelven las tools** (≤ 4 fragmentos de ≤ 1 000 caracteres por búsqueda, extractos web y resultados de cálculo).
+- **Hacia el buscador web** (Tavily) sale **solo** la consulta corta del agente (≤ 200 caracteres), y solo
+  si la base no tuvo la respuesta; nunca texto de la base (se rechaza una consulta que lo copie).
+- **Nuevo: registro de uso** (`logs/uso_tools.jsonl`). Guarda la pregunta del estudiante, las tools y sus
+  argumentos, nº de llamadas al LLM, tokens, tiempo y estado; **no** guarda claves (una clave pegada en la
+  pregunta se sustituye por `[CLAVE-OCULTA]`) ni el texto de los fragmentos (solo documento y sección).
+  Está en `.gitignore` salvo `logs/ejemplo_uso_tools.jsonl`. **Cambio respecto al Avance 2:** la app
+  guardaba cero datos de estudiantes; ahora **sí registra las preguntas** en el disco del servidor (efímero
+  en Streamlit Cloud). Se puede apagar con `LOG_USO=0`.
+- **Claves nuevas:** `TAVILY_API_KEY`, solo por entorno / `.env` / secrets.
+
+### Evaluación: diseño y presupuesto
+
+- **Misma comparación, mismo juez:** la línea base es la corrida `iter1_topk8` del Avance 2 (pipeline
+  desplegado, `top_k = 8`, juez Haiku). El agente se evalúa con el juez Haiku. **No se usa Sonnet** como juez
+  (≈ 15 veces más caro): `compare.comparar` avisa si los jueces difieren.
+- **Costo medido sin caché y con el mismo contador:** el pipeline fijo (condensar + responder) y el agente
+  se ejecutan en vivo sobre las mismas preguntas, con `Contador` envolviendo el LLM; solo así los tiempos son
+  reales (el Avance 2 no guardó el tiempo por pregunta).
+- **`retrieved_contexts` del agente** = lo que devolvieron sus tools: fragmentos de la base (ya recortados a
+  `MAX_CHARS`), extractos web y resultados de cálculo. Los fragmentos recortados pueden bajar `context_recall`
+  frente al pipeline fijo; es una diferencia real de diseño, no un error de medición.
+- **Preguntas de seguimiento:** el agente recibe el historial real y decide su propia consulta (no condensa);
+  el pipeline fijo las condensa, como en el Avance 2.
+- **Casos de comportamiento:** 8 casos con el comportamiento esperado escrito **antes** de ejecutar
+  (`eval/casos_comportamiento.json`), con comprobaciones automáticas (tools llamadas, argumentos, nº de
+  llamadas, frases, dominios web, no volcar el corpus). El caso 5 (web) queda `PENDIENTE` sin `TAVILY_API_KEY`.
+
+### Pruebas y estado real
+
+- **Sin LLM real:** `tests.test_agente` (26), `test_app` (10), `test_llm` (9), `test_eval` (7) y el smoke de
+  lectores pasan. **No sustituyen la ejecución real**: aquí el «modelo» es un guion.
+- **Ejecución real: NO realizada todavía.** El primer intento con Haiku terminó en `401 invalid x-api-key`
+  desde `api.anthropic.com`: la clave de `avance2/.env` (106 caracteres, prefijo `sk-ant-`, sin espacios) fue
+  rechazada por Anthropic; no hay otra clave en el entorno y `ANTHROPIC_BASE_URL` apunta al endpoint oficial.
+  Se detuvo ahí, sin probar alternativas. Hasta tener una clave válida **no existen** cifras de Ragas, de
+  casos ni de costo del agente, y no se inventan.
+
+### Decisiones tomadas por mí que conviene revisar
+
+1. Extender `avance2/` en el sitio en lugar de crear `avance3/`.
+2. `MAX_CHARS = 1000` (la sugerencia era 800) y citas por **sección** en lugar de página.
+3. Registrar las preguntas en el servidor (cambia la promesa de privacidad del Avance 2).
+4. Sin `tavily-python`: HTTP directo con `httpx`.
+5. Khan Academy fuera de la lista de sitios por no poder verificar su contenido.

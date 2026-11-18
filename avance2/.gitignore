@@ -17,3 +17,7 @@ chroma_db/
 
 # Corridas de evaluacion simuladas (no son resultados validos)
 eval/results/*.OFFLINE.*
+
+# Registro de uso de tools (contiene preguntas): solo se versiona el ejemplo
+logs/*
+!logs/ejemplo_uso_tools.jsonl

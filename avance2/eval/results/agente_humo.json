@@ -1,0 +1,86 @@
+{
+  "nombre": "agente_humo",
+  "fecha": "2026-11-18T18:31:29",
+  "modo": "live",
+  "arquitectura": "agente",
+  "modelo_tutor": "claude-haiku-5-5",
+  "proveedor": "anthropic",
+  "juez_final": false,
+  "parametros": {
+    "chunk_tamano": 1800,
+    "chunk_solape": 200,
+    "top_k": 4,
+    "umbral": null,
+    "embeddings": "intfloat/multilingual-e5-small",
+    "texto_embedding": "limpio",
+    "max_tokens_respuesta": 8000,
+    "max_chars_fragmento": 1000,
+    "max_iter": 5
+  },
+  "dataset": {
+    "ruta": "C:\\Users\\herre\\Downloads\\TallerPractico26\\avance2\\eval\\dataset.jsonl",
+    "n": 1,
+    "sha256": "050d46d4d22c51d0"
+  },
+  "casos": [
+    {
+      "id": 1,
+      "tipo": "Saludo o conversación casual",
+      "pregunta": "Hola, buenas tardes. ¿Cómo estás?",
+      "esperado": "Responde el saludo sin llamar ninguna tool, con una sola llamada al LLM.",
+      "obtenido": "¡Hola, buenas tardes! Estoy bien, gracias por preguntar. Soy tu tutor de Cálculo II y puedo ayudarte con técnicas de integración: antiderivación, sustitución, simplificación algebraica, integración por partes, integrales trigonométricas y sustitución trigonométrica. ¿Con qué integral o tema te gustaría trabajar hoy?",
+      "tools": [],
+      "argumentos": [],
+      "n_llamadas_llm": 1,
+      "cumple": true,
+      "fallos": [],
+      "respuesta": "¡Hola, buenas tardes! Estoy bien, gracias por preguntar. Soy tu tutor de Cálculo II y puedo ayudarte con técnicas de integración: antiderivación, sustitución, simplificación algebraica, integración por partes, integrales trigonométricas y sustitución trigonométrica.\n\n¿Con qué integral o tema te gustaría trabajar hoy?"
+    },
+    {
+      "id": 2,
+      "tipo": "Pregunta compuesta (dos temas)",
+      "pregunta": "Explícame cuándo se usa la regla ILATE en integración por partes y también cuáles son los casos de la sustitución trigonométrica.",
+      "esperado": "Busca en la base más de una vez (una por tema), cubre ambos temas y cita con 'Fuente: documento, sec.'.",
+      "obtenido": "## Regla ILATE en integración por partes La integración por partes se basa en $\\int u\\,dv = uv - \\int v\\,du$. El problema es elegir qué parte del integrando será $u$ y cuál será $dv$. La regla ILATE da un orden de prioridad para escoger $u$: la función que aparezca primero en la lista es la que conviene derivar. | Prioridad | Letra | Tipo de funció",
+      "tools": [
+        "buscar_en_base",
+        "buscar_en_base"
+      ],
+      "argumentos": [
+        {
+          "consulta": "regla ILATE integración por partes"
+        },
+        {
+          "consulta": "sustitución trigonométrica casos"
+        }
+      ],
+      "n_llamadas_llm": 2,
+      "cumple": true,
+      "fallos": [],
+      "respuesta": "## Regla ILATE en integración por partes\n\nLa integración por partes se basa en $\\int u\\,dv = uv - \\int v\\,du$. El problema es elegir qué parte del integrando será $u$ y cuál será $dv$. La regla ILATE da un orden de prioridad para escoger $u$: la función que aparezca primero en la lista es la que conviene derivar.\n\n| Prioridad | Letra | Tipo de función | Ejemplos |\n|---|---|---|---|\n| 1° | I | Inversas trigonométricas | $\\arcsin(x)$, $\\arctan(x)$ |\n| 2° | L | Logarítmicas | $\\ln(x)$, $\\log_a(x)$ |\n| 3° | A | Algebraicas | $x^n$, $\\sqrt{x^2+2}$ |\n| 4° | T | Trigonométricas | $\\sin(x)$, $\\cos(x)$ |\n| 5° | E | Exponenciales | $e^x$, $2^x$ |\n\n**Cuándo se usa:** cuando el integrando es un producto de dos tipos de función de la tabla. Se toma como $u$ la de mayor prioridad (la que aparece antes en ILATE) y el resto como $dv$. Por ejemplo, en $\\int x\\ln(x)\\,dx$ aparecen una logarítmica y una algebraica; la logarítmica va como $u$ porque tiene prioridad sobre la algebraica.\n\n**Algoritmo:**\n1. Identificar $u$ y $dv$ con ILATE.\n2. Derivar $u$ para obtener $du$ e integrar $dv$ para obtener $v$.\n3. Sustituir en $\\int u\\,dv = uv - \\int v\\,du$.\n4. Resolver $\\int v\\,du$.\n\nSi $x^n$ multiplica a $\\sin(ax)$, $\\cos(ax)$ o $e^{ax}$, el curso recomienda el **método tabular**, que agiliza las aplicaciones repetidas de partes.\n\nFuente: Cálculo II: Método de Integración por Partes, sec. «La Regla Nemotécnica ILATE»\nFuente: Cálculo II: Método de Integración por Partes, sec. «La Regla Nemotécnica ILATE > Algoritmo General»\nFuente: Cálculo II: Método de Integración por Partes, sec. «Método Tabular»\n\n## Casos de sustitución trigonométrica\n\nSe usa para eliminar un radical mediante identidades pitagóricas. Los casos estándar son:\n\n| Expresión en el integrando | Sustitución | Diferencial | Identidad utilizada |\n|---|---|---|---|\n| $\\sqrt{a^2 - x^2}$ | $x = a\\sin(\\theta)$ | $dx = a\\cos(\\theta)\\,d\\theta$ | $a^2 - a^2\\sin^2(\\theta) = a^2\\cos^2(\\theta)$ |\n| $\\sqrt{a^2 + x^2}$ | $x = a\\tan(\\theta)$ | $dx = a\\sec^2(\\theta)\\,d\\theta$ | $a^2 + a^2\\tan^2(\\theta) = a^2\\sec^2(\\theta)$ |\n| $\\sqrt{x^2 - a^2}$ | $x = a\\sec(\\theta)$ | $dx = a\\sec(\\theta)\\tan(\\theta)\\,d\\theta$ | $a^2\\sec^2(\\theta) - a^2 = a^2\\tan^2(\\theta)$ |\n\nLas identidades que sostienen estos casos son $\\sin^2(x)+\\cos^2(x)=1$, $\\sec^2(x)=\\tan^2(x)+1$ y $\\tan^2(x)=\\sec^2(x)-1$.\n\nAl terminar la integral en $\\theta$ hay que volver a $x$ con un triángulo de referencia. Por ejemplo, en el caso $\\sqrt{x^2-a^2}$ con $a=1$, si $\\sin(\\theta)=\\frac{\\sqrt{x^2-1}}{x}$, el resultado de $\\int \\frac{dx}{(x^2-1)^{3/2}}$ queda como $-\\frac{x}{\\sqrt{x^2-1}} + C$.\n\nFuente: SUSTITUCIÓN TRIGONOMÉTRICA, sec. «Fundamentos y Razones Trigonométricas > Casos estándar de sustitución trigonométrica»\nFuente: SUSTITUCIÓN TRIGONOMÉTRICA, sec. «Fundamentos y Razones Trigonométricas»\nFuente: SUSTITUCIÓN TRIGONOMÉTRICA, sec. «Ejemplos Desarrollados > Ejemplo 3: Caso $\\sqrt{x^2 - a^2}$»\n\n¿Quieres que practiquemos con una integral concreta? Dime cuál te interesa y empieza por proponer tu primer paso (qué elegirías como $u$, o qué caso reconoces en el radical)."
+    },
+    {
+      "id": 3,
+      "tipo": "Tarea del dominio",
+      "pregunta": "¿Cuánto vale la integral definida de 0 a 3 de x^2 dx?",
+      "esperado": "Usa calcular_integral con la expresión x^2, variable x y límites 0 y 3 extraídos de la pregunta; responde 9 (valor que devuelve la tool).",
+      "obtenido": "El valor de la integral definida es $$\\int_0^3 x^2\\,dx = 9$$ Esto coincide con el cálculo por la regla de Barrow: una antiderivada de $x^2$ es $\\frac{x^3}{3}$, así que $$\\left[\\frac{x^3}{3}\\right]_0^3 = \\frac{3^3}{3} - \\frac{0^3}{3} = 9 - 0 = 9.$$ Si quieres, puedo ayudarte con integrales similares, como integrales con otros límites o con funciones",
+      "tools": [
+        "calcular_integral"
+      ],
+      "argumentos": [
+        {
+          "expresion": "x**2",
+          "variable": "x",
+          "limite_inferior": 0,
+          "limite_superior": 3
+        }
+      ],
+      "n_llamadas_llm": 2,
+      "cumple": true,
+      "fallos": [],
+      "respuesta": "El valor de la integral definida es\n\n$$\\int_0^3 x^2\\,dx = 9$$\n\nEsto coincide con el cálculo por la regla de Barrow: una antiderivada de $x^2$ es $\\frac{x^3}{3}$, así que\n\n$$\\left[\\frac{x^3}{3}\\right]_0^3 = \\frac{3^3}{3} - \\frac{0^3}{3} = 9 - 0 = 9.$$\n\nSi quieres, puedo ayudarte con integrales similares, como integrales con otros límites o con funciones que requieran sustitución o integración por partes."
+    }
+  ],
+  "filas": []
+}

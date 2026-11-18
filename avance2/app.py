@@ -2,26 +2,30 @@
 
     streamlit run app.py
 
-Reutiliza el pipeline de rag/ sin cambios (condensar -> recuperar -> generar).
-La clave de la API se lee del entorno / .env o de st.secrets; nunca esta en el repo.
+Avance 3: la app usa el AGENTE con tools (rag/agent.py). El pipeline fijo del Avance 2
+(rag/generate.py) sigue en el repo como linea base de la evaluacion.
+Las claves (ANTHROPIC_API_KEY, TAVILY_API_KEY) se leen del entorno / .env o de st.secrets; nunca estan en el repo.
 """
 from __future__ import annotations
 
+import json
 import re
 import sys
 
 import streamlit as st
 
 from rag import config
-from rag.generate import Turno, responder
+from rag.agent import responder_agente
+from rag.generate import Turno
 from rag.llm import MENSAJE_LIMITE, LimiteDeUsoError, _secreto, crear_llm
 
 st.set_page_config(page_title="Tutor de Cálculo II", page_icon="∫", layout="centered")
 
 SALUDO = (
-    "Hola, soy tu tutor de Cálculo II. Respondo **solo con el material del curso**: "
-    "antiderivación, simplificación algebraica, sustitución, integración por partes, "
-    "integrales trigonométricas y sustitución trigonométrica. "
+    "Hola, soy tu tutor de Cálculo II. Respondo con el **material del curso** (y, solo si hace falta "
+    "información pública, con sitios web de matemáticas confiables): antiderivación, simplificación "
+    "algebraica, sustitución, integración por partes, integrales trigonométricas y sustitución "
+    "trigonométrica. También puedo calcular y verificar integrales. "
     "Cuéntame qué integral estás resolviendo y hasta dónde llegaste."
 )
 
@@ -47,7 +51,7 @@ def obtener_llm():
 # Estado de la conversacion
 # ---------------------------------------------------------------------------
 def reiniciar() -> None:
-    st.session_state.mensajes = []        # [{rol, texto, fuentes, pie}]
+    st.session_state.mensajes = []        # [{rol, texto, detalle, pie}]
     st.session_state.preguntas = 0
     st.session_state.tokens_entrada = 0
     st.session_state.tokens_salida = 0
@@ -68,25 +72,43 @@ def historial() -> list[Turno]:
     return [Turno(m["rol"], m["texto"]) for m in st.session_state.mensajes]
 
 
-def fuentes_de(r) -> list[dict]:
-    return [{
-        "rango": i, "documento": f.documento, "seccion": f.seccion, "pagina": f.pagina,
-        "distancia": f.distancia, "vista": f.texto[: config.APP_FUENTE_VISTA]
-        + (" […]" if len(f.texto) > config.APP_FUENTE_VISTA else ""),
-    } for i, f in enumerate(r.fragmentos, start=1)]
+def detalle_de(r) -> dict:
+    """Lo que se guarda y se muestra de cada respuesta: herramientas usadas y fuentes separadas por origen."""
+    corto = lambda t: t[: config.APP_FUENTE_VISTA] + (" […]" if len(t) > config.APP_FUENTE_VISTA else "")  # noqa: E731
+    return {
+        "herramientas": [{"nombre": c.nombre, "argumentos": c.argumentos, "segundos": round(c.segundos, 1),
+                          "error": c.resultado.get("error") if c.error else None} for c in r.llamadas_tools],
+        "base": [{"documento": f["documento"], "seccion": f["seccion"], "pagina": f["pagina"],
+                  "distancia": f["distancia"], "vista": corto(f["texto"])} for f in r.fragmentos_base],
+        "web": [{"titulo": x["titulo"], "url": x["url"], "extracto": x["extracto"]} for x in r.resultados_web],
+    }
 
 
-def mostrar_fuentes(fuentes: list[dict]) -> None:
-    if not fuentes:
-        return
-    with st.expander(f"Fuentes ({len(fuentes)} fragmentos del material)"):
-        st.caption("Distancia coseno: 0 = idéntico; menor es más parecido a tu pregunta. "
-                   "Los números coinciden con las citas [n] de la respuesta.")
-        for f in fuentes:
-            pag = f" · pág. {f['pagina']}" if f["pagina"] else ""
-            st.markdown(f"**[{f['rango']}]** {f['documento']} › {f['seccion']}{pag} · "
-                        f"distancia **{f['distancia']:.4f}**")
-            st.code(f["vista"], language="latex")
+def mostrar_detalle(d: dict) -> None:
+    if d.get("herramientas"):
+        with st.expander(f"Herramientas usadas ({len(d['herramientas'])})"):
+            for i, h in enumerate(d["herramientas"], start=1):
+                st.markdown(f"**{i}. `{h['nombre']}`** · {h['segundos']} s" + (" · ⚠ error" if h["error"] else ""))
+                st.code(json.dumps(h["argumentos"], ensure_ascii=False, indent=2), language="json")
+                if h["error"]:
+                    st.caption(h["error"])
+    elif d.get("herramientas") == []:
+        st.caption("Sin herramientas: respondí directamente.")
+    if d.get("base") or d.get("web"):
+        with st.expander(f"Fuentes (base: {len(d['base'])} · web: {len(d['web'])})"):
+            if d["base"]:
+                st.markdown("**Base de conocimiento**")
+                st.caption("Distancia coseno: 0 = idéntico; menor es más parecido a la consulta del agente.")
+                for f in d["base"]:
+                    pag = f" · pág. {f['pagina']}" if f["pagina"] else ""
+                    st.markdown(f"{f['documento']} › {f['seccion']}{pag} · distancia **{f['distancia']:.4f}**")
+                    st.code(f["vista"], language="latex")
+            if d["web"]:
+                st.markdown("**Web (sitios permitidos)**")
+                for x in d["web"]:
+                    titulo = re.sub(r"[\[\]]", "", x["titulo"]) or x["url"]
+                    st.markdown(f"[{titulo}]({x['url']})")
+                    st.caption(x["extracto"])
 
 
 # ---------------------------------------------------------------------------
@@ -94,7 +116,8 @@ def mostrar_fuentes(fuentes: list[dict]) -> None:
 # ---------------------------------------------------------------------------
 with st.sidebar:
     st.header("Tutor de Cálculo II")
-    st.caption(f"Modelo: `{config.LLM_MODEL}` · recuperación: {config.APP_TOP_K} fragmentos")
+    st.caption(f"Agente con herramientas · modelo `{config.LLM_MODEL}` · máx. {config.K_MAX} fragmentos por búsqueda · "
+               f"búsqueda web: {'activa' if _secreto('TAVILY_API_KEY') else 'no configurada'}")
     if st.button("Nueva conversación", use_container_width=True):
         reiniciar()
         st.rerun()
@@ -105,8 +128,11 @@ with st.sidebar:
         st.markdown(
             "- Los apuntes se vectorizan **localmente**; el índice es propio.\n"
             "- Al proveedor del modelo solo se envían: tu pregunta, la conversación, "
-            "los fragmentos recuperados y las instrucciones fijas del tutor.\n"
-            "- La aplicación no guarda tus preguntas."
+            "los fragmentos que devuelven las herramientas y las instrucciones fijas del tutor.\n"
+            "- Al buscador web solo sale una consulta corta del agente, y solo si la base no tiene la "
+            "respuesta; nunca texto de la base.\n"
+            "- Se registra cada uso de herramientas en el servidor (pregunta, herramientas, tokens; sin "
+            "texto de los apuntes). El registro no se publica."
         )
 
 # ---------------------------------------------------------------------------
@@ -132,7 +158,7 @@ for m in st.session_state.mensajes:
     with st.chat_message(m["rol"]):
         st.markdown(md(m["texto"]))
         if m["rol"] == "assistant":
-            mostrar_fuentes(m.get("fuentes", []))
+            mostrar_detalle(m.get("detalle", {}))
             if m.get("pie"):
                 st.caption(m["pie"])
 
@@ -149,8 +175,8 @@ if pregunta:
         st.markdown(md(pregunta))
     with st.chat_message("assistant"):
         try:
-            with st.spinner("Buscando en el material y preparando la respuesta…"):
-                r = responder(pregunta, previo, top_k=config.APP_TOP_K, llm=obtener_llm())
+            with st.spinner("Pensando qué herramientas necesito…"):
+                r = responder_agente(pregunta, previo, llm=obtener_llm())
         except LimiteDeUsoError:
             st.error(MENSAJE_LIMITE)
             st.stop()
@@ -159,17 +185,18 @@ if pregunta:
             st.error("No pude responder en este momento. Intenta de nuevo en unos segundos.")
             st.stop()
         st.markdown(md(r.texto))
-        fuentes = fuentes_de(r)
-        mostrar_fuentes(fuentes)
-        pie = f"{r.tokens_entrada:,} tokens de entrada · {r.tokens_salida:,} de salida · {r.segundos:.1f} s"
+        detalle = detalle_de(r)
+        mostrar_detalle(detalle)
+        pie = (f"{r.n_llamadas_llm} llamada(s) al modelo · {r.tokens_entrada:,} tokens de entrada · "
+               f"{r.tokens_salida:,} de salida · {r.segundos:.1f} s")
         if r.citas_invalidas:
-            pie += f" · citas a fragmentos inexistentes: {r.citas_invalidas}"
+            pie += f" · fuentes citadas que no coinciden con ninguna herramienta: {r.citas_invalidas}"
         for a in r.avisos:
             pie += f" · aviso: {a}"
         st.caption(pie)
     st.session_state.mensajes += [
         {"rol": "user", "texto": pregunta},
-        {"rol": "assistant", "texto": r.texto, "fuentes": fuentes, "pie": pie},
+        {"rol": "assistant", "texto": r.texto, "detalle": detalle, "pie": pie},
     ]
     st.session_state.preguntas += 1
     st.session_state.tokens_entrada += r.tokens_entrada

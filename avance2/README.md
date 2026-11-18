@@ -12,6 +12,11 @@ umbral, diagnóstico e iteración de un parámetro (`top_k` 4 → 8); resultados
 construida y probada en local con 4 turnos reales; el despliegue lo haces tú siguiendo
 [`docs/DESPLIEGUE.md`](docs/DESPLIEGUE.md) (decisión abierta: dónde desplegar).
 
+**Avance 3 (agente con tools):** la app y la CLI de evaluación usan ahora un **agente con tool
+calling** (`rag/agent.py`): `buscar_en_base`, `calcular_integral`, `verificar_antiderivada` y
+`buscar_en_web` (Tavily, sitios fijos). Arquitectura, límites y política web: README de la raíz del
+repositorio y `docs/DECISIONES.md` §12. El pipeline fijo del Avance 2 sigue disponible como línea base.
+
 ## Privacidad
 
 - Los embeddings se calculan **localmente** (`intfloat/multilingual-e5-small`) y el índice es una carpeta tuya (`chroma_db/`).
@@ -38,6 +43,9 @@ copy .env.example .env                    # y completa ANTHROPIC_API_KEY
 | `python -m rag.cli` | Tutor interactivo por consola (`nueva` reinicia, `salir` termina) |
 | `streamlit run app.py` | Chat web (necesita `ANTHROPIC_API_KEY` en `.env` o en `.streamlit/secrets.toml`; el primer arranque tarda ≈ 1 min) |
 | `python -m tests.test_app` | Tests de la app con LLM falso (0 gasto) |
+| `python -m tests.test_agente` | 26 tests del agente y sus tools con cliente simulado (0 gasto, sin red) |
+| `python -m tests.prueba_tool_busqueda` | Prueba `buscar_en_base` SIN LLM e imprime su salida (0 gasto) |
+| `python -m eval.evaluar_agente --todo --live` | Evalúa el agente: Ragas (vs pipeline fijo), casos de comportamiento y costo. Opciones: `--ragas`, `--casos`, `--costo`, `--limite N`; sin `--live` no gasta (resultado no válido) |
 | `python -m rag.cli --demo` | Demo guionizada de 3 turnos (**llamadas reales al LLM**, con caché en disco) |
 | `python -m tests.test_llm` | Tests de la capa LLM sin LLM real (`--live` añade 1 llamada mínima real) |
 | `python -m tests.test_eval` | Tests de la evaluación sin LLM real |
@@ -65,6 +73,11 @@ rag/llm.py         capa de LLM: Anthropic (defecto) / Gemini / falso; reintentos
 rag/prompts.py     system prompt, few-shot (user/assistant), delimitadores, condensación
 rag/generate.py    condensar → recuperar → generar
 rag/cli.py         tutor por consola
+rag/agent.py       Avance 3: bucle del agente (MAX_ITER) y registro de uso en logs/uso_tools.jsonl
+rag/tools.py       Avance 3: buscar_en_base, calcular_integral, verificar_antiderivada, despacho y esquemas
+rag/tools_web.py   Avance 3: buscar_en_web (Tavily) con sitios fijos y límites
+rag/calculo.py     Avance 3: cálculo simbólico seguro con sympy (parseo con lista blanca)
+rag/prompts_agente.py  Avance 3: system prompt del agente (sin contexto; con reglas de tools y citas)
 eval/              run_eval.py, juez.py (juez Anthropic para Ragas), bench_embeddings.py
 docs/DECISIONES.md decisiones, alternativas, cifras reales, privacidad
 docs/DESPLIEGUE.md guía de despliegue, qué se publica, prueba de 4 turnos, capturas

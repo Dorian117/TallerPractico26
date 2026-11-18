@@ -3,23 +3,26 @@
     python -m tests.test_app
 
 Usan streamlit.testing.v1.AppTest sobre app.py y el indice real (embeddings
-locales). Comprueban: carga, un turno con fuentes, seguimiento (condensacion),
+locales). Comprueban: carga, saludo sin tools, un turno con tools y fuentes por origen, seguimiento,
 limite de preguntas, reinicio, mensaje de limite de uso, falta de clave y que
 un error interno no filtra detalles al usuario.
 """
 from __future__ import annotations
 
+import json
 import os
 import sys
 from pathlib import Path
 
 os.environ["LLM_PROVIDER"] = "falso"          # antes de importar rag.config
+os.environ["LOG_USO"] = "0"                   # los tests no escriben en logs/uso_tools.jsonl
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import streamlit as st  # noqa: E402
 from streamlit.testing.v1 import AppTest  # noqa: E402
 
 from rag import config, llm  # noqa: E402
+from rag.llm import RespuestaLLM  # noqa: E402
 
 APP = str(Path(__file__).resolve().parent.parent / "app.py")
 Q1 = r"¿Cómo se resuelve $\int \sqrt{9-x^2}\,dx$ con sustitución trigonométrica?"
@@ -43,28 +46,49 @@ def test_carga_sin_excepciones():
     assert len(at.chat_input) == 1 and not at.chat_input[0].disabled
 
 
-def test_un_turno_con_fuentes():
+def _usa_base(system, mensajes):
+    """LLM guionizado: 1a llamada pide buscar_en_base; 2a responde citando la fuente devuelta."""
+    ultimo = mensajes[-1]["content"]
+    if isinstance(ultimo, str):
+        return RespuestaLLM("", "falso", 10, 5, "tool_use", bloques=[
+            {"type": "tool_use", "id": "t1", "name": "buscar_en_base", "input": {"consulta": "regla ILATE"}}])
+    return "ILATE ordena las funciones.\n\n" + json.loads(ultimo[0]["content"])["fragmentos"][0]["fuente"]
+
+
+def test_saludo_sin_herramientas():
     falso = llm.LLMFalso()
+    at = _app(falso)
+    at.chat_input[0].set_value("Hola").run()
+    assert not at.exception, at.exception
+    assert len(falso.llamadas) == 1 and at.session_state.mensajes[1]["detalle"]["herramientas"] == []
+    assert not any("Fuentes" in e.label for e in at.expander)
+    assert falso.llamadas[0]["max_tokens"] == config.MAX_TOKENS_RESPUESTA
+
+
+def test_un_turno_con_herramientas_y_fuentes_por_origen():
+    falso = llm.LLMFalso(_usa_base)
     at = _app(falso)
     at.chat_input[0].set_value(Q1).run()
     assert not at.exception, at.exception
     assert at.session_state.preguntas == 1 and len(at.session_state.mensajes) == 2
-    assert len(falso.llamadas) == 1, "sin historial no se condensa: una sola llamada"
-    assert falso.llamadas[0]["max_tokens"] == config.MAX_TOKENS_RESPUESTA
-    fuentes = at.session_state.mensajes[1]["fuentes"]
-    assert len(fuentes) == config.APP_TOP_K and all(f["distancia"] >= 0 for f in fuentes)
-    assert any("Fuentes" in e.label for e in at.expander)
+    d = at.session_state.mensajes[1]["detalle"]
+    assert [h["nombre"] for h in d["herramientas"]] == ["buscar_en_base"]
+    assert d["herramientas"][0]["argumentos"] == {"consulta": "regla ILATE"}
+    assert 0 < len(d["base"]) <= config.K_MAX and d["web"] == []
+    etiquetas = [e.label for e in at.expander]
+    assert any(e.startswith("Herramientas usadas") for e in etiquetas) and any(e.startswith("Fuentes (base:") for e in etiquetas)
 
 
-def test_seguimiento_condensa_y_conserva_historial():
+def test_seguimiento_conserva_historial():
     falso = llm.LLMFalso()
     at = _app(falso)
     at.chat_input[0].set_value(Q1).run()
     at.chat_input[0].set_value("¿Y si fuera $16-x^2$?").run()
     assert not at.exception, at.exception
     assert at.session_state.preguntas == 2 and len(at.session_state.mensajes) == 4
-    assert len(falso.llamadas) == 3, "turno 1: 1 llamada; turno 2: condensar + responder"
-    assert falso.llamadas[1]["system"] is None, "la condensacion no lleva el system prompt del tutor"
+    assert len(falso.llamadas) == 2, "el agente no condensa: una llamada por turno sin tools"
+    previo = [m["content"] for m in falso.llamadas[1]["mensajes"]]
+    assert Q1 in previo and previo[-1] == "¿Y si fuera $16-x^2$?", "la 2.a llamada lleva el historial real"
 
 
 def test_limite_de_preguntas_deshabilita_el_chat_y_nueva_conversacion_reinicia():
@@ -91,7 +115,7 @@ def test_saltos_de_linea_simples_se_conservan():
 
 def test_limite_de_uso_muestra_el_mensaje_fijo():
     class Agotado(llm.LLMFalso):
-        def generar(self, **kw):
+        def generar_con_tools(self, **kw):
             raise llm.LimiteDeUsoError("billing")
     at = _app(Agotado())
     at.chat_input[0].set_value(Q1).run()
@@ -101,7 +125,7 @@ def test_limite_de_uso_muestra_el_mensaje_fijo():
 
 def test_error_interno_no_filtra_detalles():
     class Roto(llm.LLMFalso):
-        def generar(self, **kw):
+        def generar_con_tools(self, **kw):
             raise RuntimeError("detalle-interno-secreto sk-ant-xxx")
     at = _app(Roto())
     at.chat_input[0].set_value(Q1).run()
